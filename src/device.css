@@ -2,10 +2,10 @@
     overflow-x: auto;
     margin: 0 0.5em;
     padding: 0.5em 0 1em;
-    border-bottom: 8px dashed var(--orange);
 }
 
 .device svg {
     display: block;
     margin: auto;
+    border: 8px dashed var(--base02);
 }

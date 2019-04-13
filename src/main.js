@@ -2,6 +2,7 @@ import Dropdown from "./dropdown.js";
 import Device from "./device.js";
 import Form from "./form.js";
 import Button from "./button.js";
+import Editor from "./editor.js";
 import {
   fetchKeyboard,
   fetchKeyboards
@@ -34,8 +35,6 @@ class App extends React.Component {
   componentDidMount() {
     const spinner = document.querySelector("#spinner");
     spinner.parentNode.removeChild(spinner);
-
-    // Prism.highlightAll();
   }
 
   handleHashCallback(keyboards, keyboard, info) {
@@ -156,9 +155,9 @@ class App extends React.Component {
             })
           }),
         ),
-        e("div", {
-          style: {overflowY: "auto"}
-        }, e("pre", null, e("code", {className: "language-json"}, code))),
+        e(Editor, {
+          code,
+        }),
         e(Button, {
           onChangeCallback: this.handleChangeCallback,
           api

@@ -28,7 +28,8 @@ It's a small app, but if you really want to test it you can do it with ease:
 
 - Add spinner;
 - Fix messed up CSS and rename components decently;
-- Add navbar at the top-right corner;
+- Add navbar/accordion;
+- Add pro-tip!
 - Fix router;
 - Make the `info.json` source code editable?
 - Make the keyboard representation editable?
