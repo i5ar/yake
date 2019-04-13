@@ -6,12 +6,8 @@ Keyboard maintainers can also use it to verify the correctness of the `info.json
 ## Features
 
 - Mobile friendly;
-- Rotated keys:
-
-      "r": 15,
-      "rx": 5,
-      "ry": 5
-- *Polygon* ISO keys:
+- Rotated keys (`r`, `rx`, `ry`):
+- ISO keys (for the time being only polygons):
 
       "p": [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
 
@@ -21,7 +17,7 @@ In order to run it locally, spin a web server and snap your fingers.
 
 ## Test
 
-It's a small app, but if you really want to test it you can:
+It's a small app, but if you really want to test it you can do it with ease:
 
 - Mocha, Chai and React Utils for BDD;
 - Selenium for automated test:
