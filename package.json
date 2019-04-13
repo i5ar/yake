@@ -1,0 +1,37 @@
+{
+  "name": "YAKE",
+  "version": "1.0.0",
+  "description": "Yet another keyboard explorer (designed the way I want).",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "caddy",
+    "test": "python tests/main.py",
+    "build": "parcel build index.html && ncp keyboards/ dist/keyboards/ && ncp keyboards.json dist/keyboards.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "GNU GPL",
+  "homepage": "",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "mocha": "^6.0.2",
+    "ncp": "^2.0.0",
+    "parcel-bundler": "^1.12.3",
+    "stylelint-config-recommended": "^2.1.0"
+  },
+  "dependencies": {
+    "prismjs": "^1.16.0",
+    "purecss": "^1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0"
+  }
+}

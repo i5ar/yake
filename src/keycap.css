@@ -1,0 +1,8 @@
+.keycap text {
+    user-select: none;
+    font: bold 0.8em var(--monospace);
+}
+
+.keycap text::selection {
+    background: none;
+}

@@ -1,0 +1,34 @@
+.dropdown {
+    margin: 0.5em;
+    width: 100%;
+}
+
+.dropdown span {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: inherit;
+}
+
+.dropdown span select {
+    background-color: var(--orange);
+    color: var(--base2);
+    font-size: inherit;
+    font-family: var(--monospace);
+    padding: .5em 1em;
+    border: 0;
+    margin: 0;
+    border-radius: 2px;
+    text-overflow: "";
+    width: inherit;
+}
+
+.dropdown span select[disabled] {
+    color: var(--base02-alpha);
+}
+
+@media only screen and (min-width: 768px) {
+    .dropdown {
+        width: initial;
+    }
+}

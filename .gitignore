@@ -1,0 +1,15 @@
+__pycache__/
+venv*/
+drivers/
+dist/
+node_modules/
+activate.bat
+*.log
+*.exe
+.cache/
+.vscode/
+
+# Dependencies
+react.production.min.js
+react-dom.production.min.js
+react-router-dom.min.js

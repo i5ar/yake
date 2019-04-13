@@ -1,0 +1,86 @@
+@import "./src/dropdown.css";
+@import "./src/form.css";
+@import "./src/device.css";
+@import "./src/keycap.css";
+
+:root {
+    --monospace: "Roboto Mono", monospace;
+    --sans-serif: "Roboto", sans-serif;
+    /* NOTE: Black background. */
+    --base03: #002b36;
+    /* NOTE: Black text. */
+    --base02: #073642;
+    /* NOTE: White text. */
+    --base2: #eee8d5;
+    --orange: #cb4b16;
+    --green: #859900;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: var(--base03);
+}
+
+div#root {
+    height: inherit;
+}
+
+/* NOTE: Spinner. */
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    position: absolute;
+    top: 50%;
+    width: 4rem;
+    height: 4rem;
+    border: 3px solid var(--base02);
+    border-top-color: var(--base2);
+    border-radius: 50%;
+    animation: rotation 0.8s ease infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* NOTE: GitHub Corners. */
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+    0%,
+    100% {
+        transform: rotate(0)
+    }
+    20%,
+    60% {
+        transform: rotate(-25deg)
+    }
+    40%,
+    80% {
+        transform: rotate(10deg)
+    }
+}
+
+@media (max-width:500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}
