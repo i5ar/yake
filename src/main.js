@@ -35,7 +35,7 @@ class App extends React.Component {
     const spinner = document.querySelector("#spinner");
     spinner.parentNode.removeChild(spinner);
 
-    Prism.highlightAll();
+    // Prism.highlightAll();
   }
 
   handleHashCallback(keyboards, keyboard, info) {
@@ -45,7 +45,7 @@ class App extends React.Component {
       info: s.api ? info.keyboards[keyboard] : info,
       keyboard,
       layout: s.api ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-      code: JSON.stringify(info, null, 4),
+      code: s.api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
     }));
   }
 
@@ -59,7 +59,7 @@ class App extends React.Component {
           keyboard,
           layout: s.api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
           custom: false,
-          code: JSON.stringify(info, null, 4),
+          code: s.api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
         }));
         if (this.selectElement) this.selectElement.focus();
         if (this.formElement) this.formElement.reset();
@@ -87,6 +87,7 @@ class App extends React.Component {
             info: value ? info.keyboards[keyboard] : info,
             keyboard,
             layout: value ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+            code: value ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
           });
         });
       });
@@ -112,11 +113,7 @@ class App extends React.Component {
     return (
       e(ReactRouterDOM.HashRouter, null,
         e(
-          "div", {
-            style: {
-              // flex: "1 0 auto",
-            }
-          },
+          "div", null,
           e(
             "div", {
               style: {

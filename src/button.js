@@ -25,10 +25,16 @@ export default class Button extends React.Component {
         display: "inline-flex",
       }
     }, opts.map(el => e("label", {
-      style: {margin: ".5em"},
+      style: {
+        margin: ".5em",
+        cursor: "pointer"
+      },
       className: "pure-radio",
     }, e("input", {
-      style: {margin: "0 .5em"},
+      style: {
+        margin: "0 .5em",
+        cursor: "pointer"
+      },
       type: "radio",
       name: "api",
       checked: api ? el === opts[0] : el === opts[1],
