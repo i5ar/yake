@@ -18,7 +18,7 @@ class App extends React.Component {
       api: false,
       keyboards: [],
       info: {},
-      keyboard: "placeholder",
+      keyboard: "spezzata",
       layout: "",
       initial: true,
       custom: false,
@@ -111,12 +111,7 @@ class App extends React.Component {
 
     return e(ReactRouterDOM.HashRouter, null,
       e(
-        "div", {
-          style: {
-            display: "flex",
-            height: "inherit"
-          }
-        },
+        "div", null,
         e(
           "nav", {
             style: {
@@ -126,8 +121,23 @@ class App extends React.Component {
               flexDirection: "column",
             }
           },
-          e("h1", null, "Yake"),
-          e("ul", null, e("li", null, "foo"), e("li", null, "bar"))
+          e(
+            "h1", {style: {
+              margin: "0.5em",
+              padding: "0.25em",
+              fontFamily: "monospace"
+            }}, "Yake"),
+          // e(
+          //   "ul", {
+          //     style: {
+          //       listStyleType: "none",
+          //       padding: "0 1em",
+          //     }
+          //   }, e(
+          //     "li", null, e("a", {
+          //       href: "#",
+          //     }, "about"))
+          // )
         ),
         e(
           "div", {
@@ -199,8 +209,6 @@ const Root = () => e(
   "div", {
     style: {
       height: "inherit",
-      display: "flex",
-      flexDirection: "column"
     }
   },
   e(App));

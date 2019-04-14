@@ -75,12 +75,25 @@ div#root {
     }
 }
 
-@media (max-width:500px) {
+@media (max-width:768px) {
     .github-corner:hover .octo-arm {
         animation: none
     }
 
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
+    }
+}
+
+/* NOTE: Flexbox */
+#root > div > div {
+    display: flex;
+    height: inherit;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 768px) {
+    #root > div > div {
+        flex-direction: row;
     }
 }
