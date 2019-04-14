@@ -13,7 +13,10 @@ export default class Editor extends React.Component {
 
   handlePrism() {
     const code = Prism.highlight(this.props.code, Prism.languages.json, "json");
-    if (this.textInput) this.textInput.insertAdjacentHTML("afterbegin", code);
+    if (this.textInput) {
+      this.textInput.innerHTML = "";
+      this.textInput.insertAdjacentHTML("afterbegin", code);
+    }
   }
 
   render() {
