@@ -76,16 +76,15 @@ div#root {
 }
 
 @media (max-width:768px) {
-    .github-corner:hover .octo-arm {
-        animation: none
-    }
-
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
 }
 
-/* NOTE: Flexbox */
+/* NOTE: Flexbox. */
 #root > div > div {
     display: flex;
     height: inherit;
