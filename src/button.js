@@ -27,7 +27,8 @@ export default class Button extends React.Component {
     }, opts.map(el => e("label", {
       style: {
         margin: ".5em",
-        cursor: "pointer"
+        cursor: "pointer",
+        flexGrow: 0
       },
       className: "pure-radio",
     }, e("input", {
@@ -40,6 +41,16 @@ export default class Button extends React.Component {
       checked: api ? el === opts[0] : el === opts[1],
       onChange: this.handleChange,
       value: el === "QMK",
-    }), el)));
+    }), el)), e("div", {
+      style: {
+        margin: "0.5em",
+        textAlign: "right",
+        flexGrow: 1
+      }
+    },
+    "Made with a ",
+    e("i", {className: "far fa-keyboard"}),
+    " by ",
+    e("a", {href: "#"}, "@i5ar")));
   }
 }

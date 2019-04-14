@@ -96,3 +96,13 @@ div#root {
         flex-direction: row;
     }
 }
+
+/* NOTE: Links. */
+a {
+    color: var(--base2);
+    text-decoration: none;
+}
+a:hover {
+    background-color: var(--base03);
+    color: var(--orange);
+}

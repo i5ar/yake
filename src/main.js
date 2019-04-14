@@ -119,25 +119,37 @@ class App extends React.Component {
               color: "#eee8d5",
               display: "flex",
               flexDirection: "column",
+              fontFamily: "monospace",
             }
           },
           e(
-            "h1", {style: {
-              margin: "0.5em",
-              padding: "0.25em",
-              fontFamily: "monospace"
-            }}, "Yake"),
-          // e(
-          //   "ul", {
-          //     style: {
-          //       listStyleType: "none",
-          //       padding: "0 1em",
-          //     }
-          //   }, e(
-          //     "li", null, e("a", {
-          //       href: "#",
-          //     }, "about"))
-          // )
+            "h1", {
+              style: {
+                padding: "8px 0.5em",
+                margin: "8px",
+              }
+            }, "Yake"),
+          e(
+            "ul", {
+              style: {
+                padding: "initial",
+                listStyleType: "none",
+                borderBottom: "1px solid #002b36",
+              }
+            }, e(
+              "li", {
+                style: {
+                  borderTop: "1px solid #002b36",
+                }
+              }, e("a", {
+                href: "#",
+                style: {
+                  display: "block",
+                  padding: "1em",
+                }
+              }, "about")
+            )
+          )
         ),
         e(
           "div", {
