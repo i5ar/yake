@@ -21,7 +21,10 @@ export default class Editor extends React.Component {
 
   render() {
     return e("div", {
-      style: {overflowY: "auto"}
+      style: {
+        overflowY: "auto",
+        minHeight: "8em"
+      }
     },
     e("pre", {
       className: "line-numbers language-json",

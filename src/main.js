@@ -18,7 +18,7 @@ class App extends React.Component {
       api: false,
       keyboards: [],
       info: {},
-      keyboard: "spezzata",
+      keyboard: "placeholder",
       layout: "",
       initial: true,
       custom: false,
@@ -109,70 +109,100 @@ class App extends React.Component {
       code,
     } = this.state;
 
-    return (
-      e(ReactRouterDOM.HashRouter, null,
+    return e(ReactRouterDOM.HashRouter, null,
+      e(
+        "div", {
+          style: {
+            display: "flex",
+            height: "inherit"
+          }
+        },
         e(
-          "div", null,
-          e(
-            "div", {
-              style: {
-                display: "flex",
-                flexWrap: "wrap",
-                padding: "0.5em 0",
-                justifyContent: "center",
-              },
-            },
-            e(ReactRouterDOM.withRouter(Dropdown), {
-              selectRef: elm => this.selectElement = elm,
-              name: "keyboard",
-              value: keyboard,
-              options: keyboards && keyboards.length ? keyboards : null,
-              onChangeCallback: this.handleChangeCallback,
-              api,
-              initial,
-              custom,
-              onHashCallback: this.handleHashCallback,
-            }),
-            e(Dropdown, {
-              name: "layout",
-              value: layout,
-              options: info && info.layouts && k(info.layouts).length ? k(
-                info.layouts) : null,
-              onChangeCallback: this.handleChangeCallback,
-            }),
-            e(Form, {
-              formRef: elm => this.formElement = elm,
-              onChangeCallback: this.handleChangeCallback,
-            })
-          ),
-          e(ReactRouterDOM.Route, {
-            path: `/${keyboard}`,
-            children: match => e(Device, {
-              ...match,
-              api,
-              info,
-              layout,
-            })
-          }),
+          "nav", {
+            style: {
+              backgroundColor: "#073642",
+              color: "#eee8d5",
+              display: "flex",
+              flexDirection: "column",
+            }
+          },
+          e("h1", null, "Yake"),
+          e("ul", null, e("li", null, "foo"), e("li", null, "bar"))
         ),
-        e(Editor, {
-          code,
-        }),
-        e(Button, {
-          onChangeCallback: this.handleChangeCallback,
-          api
-        })
+        e(
+          "div", {
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              overflowX: "auto"
+            }
+          },
+          e(
+            "div", null,
+            e(
+              "div", {
+                style: {
+                  display: "flex",
+                  flexWrap: "wrap",
+                  padding: "0.5em 0",
+                  justifyContent: "center",
+                },
+              },
+              e(ReactRouterDOM.withRouter(Dropdown), {
+                selectRef: elm => this.selectElement = elm,
+                name: "keyboard",
+                value: keyboard,
+                options: keyboards && keyboards.length ? keyboards : null,
+                onChangeCallback: this.handleChangeCallback,
+                api,
+                initial,
+                custom,
+                onHashCallback: this.handleHashCallback,
+              }),
+              e(Dropdown, {
+                name: "layout",
+                value: layout,
+                options: info && info.layouts && k(info.layouts).length ? k(
+                  info.layouts) : null,
+                onChangeCallback: this.handleChangeCallback,
+              }),
+              e(Form, {
+                formRef: elm => this.formElement = elm,
+                onChangeCallback: this.handleChangeCallback,
+              })
+            ),
+            e(ReactRouterDOM.Route, {
+              path: `/${keyboard}`,
+              children: match => e(Device, {
+                ...match,
+                api,
+                info,
+                layout,
+              })
+            }),
+          ),
+          e(Editor, {
+            code,
+          }),
+          e(Button, {
+            onChangeCallback: this.handleChangeCallback,
+            api
+          })
+        )
       )
     );
   }
 }
 
-const Root = () => e("div", {
-  style: {
-    height: "inherit",
-    display: "flex",
-    flexDirection: "column"
-  }
-}, e(App));
+const Root = () => e(
+  "div", {
+    style: {
+      height: "inherit",
+      display: "flex",
+      flexDirection: "column"
+    }
+  },
+  e(App));
 
 ReactDOM.render(e(Root), document.querySelector("#root"));
