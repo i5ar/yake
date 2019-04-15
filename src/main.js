@@ -8,6 +8,9 @@ import {
   fetchKeyboard,
   fetchKeyboards
 } from "./common/service.js";
+import {
+  getProtip
+} from "./common/protips.js";
 
 const e = React.createElement;
 const k = Object.keys;
@@ -37,6 +40,16 @@ class App extends React.Component {
   componentDidMount() {
     const spinner = document.querySelector("#spinner");
     spinner.parentNode.removeChild(spinner);
+
+    const protip = getProtip();
+    const n = new Noty({
+      layout: "bottomRight",
+      theme: "sunset",
+      text: `
+      <h3>Protip</h3>
+      <p>${protip}</p>`,
+    });
+    n.show();
   }
 
   handleHashCallback(keyboards, keyboard, info) {

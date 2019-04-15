@@ -11,7 +11,7 @@ export default class Footer extends React.Component {
       }
     },
     e("p", null,
-      "Made with a ",
+      "Made with ",
       e("i", {className: "far fa-keyboard"}),
       " by ",
       e("a", {href: "#"}, "@i5ar")));

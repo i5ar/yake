@@ -23,7 +23,7 @@ export default class Editor extends React.Component {
     return e("div", {
       style: {
         overflowY: "auto",
-        minHeight: "8em"
+        minHeight: "16em"
       }
     },
     e("pre", {
