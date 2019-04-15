@@ -29,6 +29,7 @@ div#root {
 }
 
 /* NOTE: Spinner. */
+
 .cell {
     display: flex;
     justify-content: center;
@@ -56,6 +57,7 @@ div#root {
 }
 
 /* NOTE: GitHub Corners. */
+
 .github-corner:hover .octo-arm {
     animation: octocat-wave 560ms ease-in-out
 }
@@ -65,10 +67,12 @@ div#root {
     100% {
         transform: rotate(0)
     }
+
     20%,
     60% {
         transform: rotate(-25deg)
     }
+
     40%,
     80% {
         transform: rotate(10deg)
@@ -79,12 +83,14 @@ div#root {
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }
+
     .github-corner:hover .octo-arm {
         animation: none
     }
 }
 
 /* NOTE: Flexbox. */
+
 #root > div > div {
     display: flex;
     height: inherit;
@@ -98,11 +104,17 @@ div#root {
 }
 
 /* NOTE: Links. */
+
+li.selected {
+    background-color: var(--base03);
+}
+
 a {
     color: var(--base2);
     text-decoration: none;
 }
+
 a:hover {
-    background-color: var(--base03);
+    text-decoration: underline;
     color: var(--orange);
 }

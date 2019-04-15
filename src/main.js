@@ -1,7 +1,8 @@
 import Dropdown from "./dropdown.js";
 import Device from "./device.js";
 import Form from "./form.js";
-import Button from "./button.js";
+import Nav from "./nav.js";
+import Footer from "./footer.js";
 import Editor from "./editor.js";
 import {
   fetchKeyboard,
@@ -30,6 +31,7 @@ class App extends React.Component {
 
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
+    this.handleClickCallback = this.handleClickCallback.bind(this);
   }
 
   componentDidMount() {
@@ -75,18 +77,27 @@ class App extends React.Component {
           custom: true,
         });
       };
-    } else if (name === "api") {
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
+  }
+
+  handleClickCallback(name, value) {
+    if (name === "api") {
       let {keyboard} = this.state;
-      fetchKeyboards(value).then(keyboards => {
+      const api = !!+value;
+      fetchKeyboards(api).then(keyboards => {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
-        fetchKeyboard(value, keyboard).then(info => {
+        fetchKeyboard(api, keyboard).then(info => {
           this.setState({
-            api: value,
+            api,
             keyboards,
-            info: value ? info.keyboards[keyboard] : info,
+            info: api ? info.keyboards[keyboard] : info,
             keyboard,
-            layout: value ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-            code: value ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
+            layout: api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+            code: api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
           });
         });
       });
@@ -112,45 +123,10 @@ class App extends React.Component {
     return e(ReactRouterDOM.HashRouter, null,
       e(
         "div", null,
-        e(
-          "nav", {
-            style: {
-              backgroundColor: "#073642",
-              color: "#eee8d5",
-              display: "flex",
-              flexDirection: "column",
-              fontFamily: "monospace",
-            }
-          },
-          e(
-            "h1", {
-              style: {
-                padding: "8px 0.5em",
-                margin: "8px",
-              }
-            }, "Yake"),
-          e(
-            "ul", {
-              style: {
-                padding: "initial",
-                listStyleType: "none",
-                borderBottom: "1px solid #002b36",
-              }
-            }, e(
-              "li", {
-                style: {
-                  borderTop: "1px solid #002b36",
-                }
-              }, e("a", {
-                href: "#",
-                style: {
-                  display: "block",
-                  padding: "1em",
-                }
-              }, "about")
-            )
-          )
-        ),
+        e(Nav, {
+          api,
+          onClickCallback: this.handleClickCallback,
+        }),
         e(
           "div", {
             style: {
@@ -207,7 +183,7 @@ class App extends React.Component {
           e(Editor, {
             code,
           }),
-          e(Button, {
+          e(Footer, {
             onChangeCallback: this.handleChangeCallback,
             api
           })
