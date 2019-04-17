@@ -5,10 +5,15 @@ export default class Form extends React.Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(evt) {
     this.props.onChangeCallback(evt.target.name, evt.target.files[0]);
+  }
+
+  handleClick(evt) {
+    evt.target.value = "";
   }
 
   render() {
@@ -22,6 +27,7 @@ export default class Form extends React.Component {
         name: "info",
         accept: ".json",
         onChange: this.handleChange,
+        onClick: this.handleClick,
       })
     );
   }

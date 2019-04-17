@@ -19,10 +19,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      api: false,
+      api: true,
       keyboards: [],
       info: {},
-      keyboard: "spezzata",
+      keyboard: "",
       layout: "",
       initial: true,
       custom: false,
