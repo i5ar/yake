@@ -43,6 +43,7 @@ class App extends React.Component {
 
     const protip = getProtip();
     const n = new Noty({
+      timeout: 4000,
       layout: "bottomRight",
       theme: "sunset",
       text: `
