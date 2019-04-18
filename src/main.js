@@ -43,6 +43,7 @@ class App extends React.Component {
 
     const protip = getProtip();
     const n = new Noty({
+      timeout: 4000,
       layout: "bottomRight",
       theme: "sunset",
       text: `
@@ -88,6 +89,7 @@ class App extends React.Component {
           keyboard: info.keyboard_name.toLowerCase(),
           layout: k(info.layouts)[0],
           custom: true,
+          code: JSON.stringify(info, null, 4),
         });
       };
     } else {
