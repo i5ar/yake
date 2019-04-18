@@ -19,7 +19,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      api: true,
+      api: false,
       keyboards: [],
       info: {},
       keyboard: "",
@@ -88,6 +88,7 @@ class App extends React.Component {
           keyboard: info.keyboard_name.toLowerCase(),
           layout: k(info.layouts)[0],
           custom: true,
+          code: JSON.stringify(info, null, 4),
         });
       };
     } else {
