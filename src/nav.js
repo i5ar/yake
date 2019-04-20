@@ -35,7 +35,7 @@ export default class Nav extends React.Component {
             margin: "8px"
           }
         },
-        "Yake"
+        "YAKE"
       ),
       e(
         "ul",
