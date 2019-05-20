@@ -12,6 +12,43 @@ export default class Device extends React.Component {
       layout
     } = this.props;
 
+    const defs = e(
+      "defs", null,
+      e(
+        "linearGradient", {
+          id: "GRADIENT"
+        },
+        e(
+          "stop", {
+            offset: "0%",
+            stopColor: "black",
+            stopOpacity: "0"
+          }
+        ),
+        e(
+          "stop", {
+            offset: "40%",
+            stopColor: "black",
+            stopOpacity: "0.1"
+          }
+        ),
+        e(
+          "stop", {
+            offset: "60%",
+            stopColor: "black",
+            stopOpacity: "0.1"
+          }
+        ),
+        e(
+          "stop", {
+            offset: "100%",
+            stopColor: "black",
+            stopOpacity: "0"
+          }
+        )
+      )
+    );
+
     if (info && info.layouts && info.layouts[layout]) {
       for (let i = 0; i < info.layouts[layout].layout.length; i++) {
         keycaps.push(
@@ -38,11 +75,15 @@ export default class Device extends React.Component {
       "div", {
         className: "device"
       },
-      e("svg", {
-        width,
-        height,
-        viewBox: `0 0 ${width} ${height}`
-      }, keycaps)
+      e(
+        "svg", {
+          width,
+          height,
+          viewBox: `0 0 ${width} ${height}`
+        },
+        defs,
+        e("g", null, keycaps)
+      )
     );
   }
 }

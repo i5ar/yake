@@ -63,7 +63,7 @@ export default class Keycap extends React.Component {
           width: widthInner || 40,
           height: heightInner || 40,
           rx: radius,
-          fill: "url(#gradient)"
+          fill: "url(#GRADIENT)"
         }), text
       );
     }
@@ -119,7 +119,7 @@ export default class Keycap extends React.Component {
       }),
       e(Path, {
         d: dInner,
-        fill: "url(#gradient)"
+        fill: "url(#GRADIENT)"
       }), text
     );
   }
