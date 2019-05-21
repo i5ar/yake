@@ -32,10 +32,11 @@ export default class Nav extends React.Component {
         {
           style: {
             padding: "8px 1em",
-            margin: "8px"
-          }
-        },
-        "YAKE"
+            margin: "8px 8px 0 0",
+            cursor: "pointer",
+          },
+          onClick: evt => this.handleClick("gradient", evt),
+        }, "YAKE"
       ),
       e(
         "ul",

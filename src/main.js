@@ -27,8 +27,10 @@ class App extends React.Component {
       initial: true,
       custom: false,
       code: "",
+      gradient: true,
     };
 
+    this.deviceInput = null;
     this.selectElement = null;
     this.formElement = null;
 
@@ -116,6 +118,11 @@ class App extends React.Component {
           });
         });
       });
+    }
+    else if (name === "gradient") {
+      this.setState(s => ({
+        gradient: !s.gradient
+      }));
     } else {
       this.setState({
         [name]: value,
@@ -133,6 +140,7 @@ class App extends React.Component {
       initial,
       custom,
       code,
+      gradient,
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
@@ -189,9 +197,11 @@ class App extends React.Component {
               path: `/${keyboard}`,
               children: match => e(Device, {
                 ...match,
+                deviceRef: elm => this.deviceElement = elm,
                 api,
                 info,
                 layout,
+                gradient,
               })
             }),
           ),
@@ -199,6 +209,7 @@ class App extends React.Component {
             code,
           }),
           e(Footer, {
+            deviceHtml: this.deviceElement,
             onChangeCallback: this.handleChangeCallback,
             api
           })

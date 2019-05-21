@@ -9,7 +9,8 @@ export default class Device extends React.Component {
     const keycaps = [];
     const {
       info,
-      layout
+      layout,
+      gradient,
     } = this.props;
 
     const defs = e(
@@ -65,15 +66,17 @@ export default class Device extends React.Component {
             label: info.layouts[layout].layout[i].label,
             code: "KC_NO",
             keys: [],
+            gradient,
           })
         );
       }
     }
-    const width = info && info.width ? 54 * info.width + 1 : 0;
-    const height = info && info.height ? 54 * info.height + 1 : 0;
+    const width = info && info.width ? 54 * info.width + 1 + 10 : 0;
+    const height = info && info.height ? 54 * info.height + 1 + 10 : 0;
     return e(
       "div", {
-        className: "device"
+        className: "device",
+        ref: this.props.deviceRef,
       },
       e(
         "svg", {
@@ -82,7 +85,18 @@ export default class Device extends React.Component {
           viewBox: `0 0 ${width} ${height}`
         },
         defs,
-        e("g", null, keycaps)
+        !gradient && e("rect", {
+          width,
+          height,
+          rx: 5,
+          fill: "#073642",
+        }),
+        e(
+          "g", {
+            transform: "translate(5, 5)"
+          },
+          e("g", null, keycaps)
+        )
       )
     );
   }

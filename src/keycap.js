@@ -3,10 +3,11 @@ import Rectangle from "./rectangle.js";
 import Path from "./path.js";
 
 const e = React.createElement;
+const f = React.Fragment;
 
 export default class Keycap extends React.Component {
   render() {
-    const {w, h, p, label} = this.props;
+    const {w, h, p, label, gradient} = this.props;
     const u = 54;
     const radius = 5;
     const fill = ["#ffc93e", "#e5a100", "#073642"];
@@ -57,14 +58,15 @@ export default class Keycap extends React.Component {
           rx: radius,
           fill: fill[0],
         }),
-        e(Rectangle, {
+        gradient && e(Rectangle, {
           x: 7,
           y: 4,
           width: widthInner || 40,
           height: heightInner || 40,
           rx: radius,
           fill: "url(#GRADIENT)"
-        }), text
+        }),
+        text
       );
     }
 
@@ -117,10 +119,11 @@ export default class Keycap extends React.Component {
         d: dInner,
         fill: fill[0],
       }),
-      e(Path, {
+      gradient && e(Path, {
         d: dInner,
         fill: "url(#GRADIENT)"
-      }), text
+      }),
+      text
     );
   }
 }
