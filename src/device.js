@@ -89,7 +89,7 @@ export default class Device extends React.Component {
           width,
           height,
           rx: 5,
-          fill: "#073642",
+          fill: "#eee8d5",
         }),
         e(
           "g", {
