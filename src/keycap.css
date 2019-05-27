@@ -1,6 +1,6 @@
 .keycap text {
     user-select: none;
-    font: bold 0.8em var(--monospace);
+    font: bold 0.75em var(--monospace);
 }
 
 .keycap text::selection {

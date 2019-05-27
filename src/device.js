@@ -10,7 +10,8 @@ export default class Device extends React.Component {
     const {
       info,
       layout,
-      gradient,
+      profile,
+      case_,
     } = this.props;
 
     const defs = e(
@@ -66,7 +67,7 @@ export default class Device extends React.Component {
             label: info.layouts[layout].layout[i].label,
             code: "KC_NO",
             keys: [],
-            gradient,
+            profile,
           })
         );
       }
@@ -85,7 +86,7 @@ export default class Device extends React.Component {
           viewBox: `0 0 ${width} ${height}`
         },
         defs,
-        !gradient && e("rect", {
+        case_ && e("rect", {
           width,
           height,
           rx: 5,

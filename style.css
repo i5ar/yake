@@ -24,8 +24,18 @@ body {
     background-color: var(--base03);
 }
 
-div#root {
+/* NOTE: Flexbox. */
+
+#root {
+    display: flex;
     height: inherit;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 768px) {
+    #root {
+        flex-direction: row;
+    }
 }
 
 /* NOTE: Spinner. */
@@ -86,20 +96,6 @@ div#root {
 
     .github-corner:hover .octo-arm {
         animation: none
-    }
-}
-
-/* NOTE: Flexbox. */
-
-#root > div > div {
-    display: flex;
-    height: inherit;
-    flex-direction: column;
-}
-
-@media only screen and (min-width: 768px) {
-    #root > div > div {
-        flex-direction: row;
     }
 }
 

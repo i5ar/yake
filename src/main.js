@@ -13,13 +13,14 @@ import {
 } from "./common/protips.js";
 
 const e = React.createElement;
+const f = React.Fragment;
 const k = Object.keys;
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      api: true,
+      api: false,
       keyboards: [],
       info: {},
       keyboard: "",
@@ -27,7 +28,8 @@ class App extends React.Component {
       initial: true,
       custom: false,
       code: "",
-      gradient: true,
+      profile: true,
+      case_: false,
     };
 
     this.deviceInput = null;
@@ -118,11 +120,6 @@ class App extends React.Component {
           });
         });
       });
-    }
-    else if (name === "gradient") {
-      this.setState(s => ({
-        gradient: !s.gradient
-      }));
     } else {
       this.setState({
         [name]: value,
@@ -140,18 +137,23 @@ class App extends React.Component {
       initial,
       custom,
       code,
-      gradient,
+      profile,
+      case_,
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
       e(
-        "div", null,
+        f, null,
         e(Nav, {
           api,
+          profile,
+          case_,
           onClickCallback: this.handleClickCallback,
+          deviceHtml: this.deviceElement,
+          onChangeCallback: this.handleChangeCallback,
         }),
         e(
-          "div", {
+          "main", {
             style: {
               display: "flex",
               flexDirection: "column",
@@ -201,18 +203,15 @@ class App extends React.Component {
                 api,
                 info,
                 layout,
-                gradient,
+                profile,
+                case_,
               })
             }),
           ),
           e(Editor, {
             code,
           }),
-          e(Footer, {
-            deviceHtml: this.deviceElement,
-            onChangeCallback: this.handleChangeCallback,
-            api
-          })
+          e(Footer)
         )
       )
     );
@@ -220,7 +219,7 @@ class App extends React.Component {
 }
 
 const Root = () => e(
-  "div", {
+  f, {
     style: {
       height: "inherit",
     }

@@ -1,7 +1,5 @@
 const protips = [
   "Focus the dropdown to quickly change option with arrow keys.",
-  "Click the keyboard icon to download the SVG.",
-  "Click the title to toggle the profiles."
 ];
 
 function getRandomInt(max) {

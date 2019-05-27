@@ -5,11 +5,30 @@ export default class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick(name, evt) {
-    evt.preventDefault();
-    this.props.onClickCallback(name, evt.target.id);
+  handleClick(evt) {
+    if (evt.target.id === "api") {
+      evt.preventDefault();
+      this.props.onClickCallback(evt.target.id, evt.target.dataset.api);
+    } else if (evt.target.id === "download") {
+      evt.preventDefault();
+      const element = document.createElement("a");
+      element.setAttribute(
+        "href", "data:text/plain;charset=utf-8," + encodeURIComponent(this.props.deviceHtml.innerHTML));
+      element.setAttribute("download", "keyboard.svg");
+      element.style.display = "none";
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  }
+
+  handleChange(evt) {
+    const {name} = evt.target;
+    const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
+    this.props.onChangeCallback(name, value);
   }
 
   render() {
@@ -28,39 +47,99 @@ export default class Nav extends React.Component {
         }
       },
       e(
-        "h1",
-        {
+        "div", {
           style: {
-            padding: "8px 1em",
-            margin: "8px 8px 0 0",
-            cursor: "pointer",
-          },
-          onClick: evt => this.handleClick("gradient", evt),
-        }, "YAKE"
-      ),
-      e(
-        "ul",
-        {
-          style: {
-            padding: "initial",
-            listStyleType: "none",
-            borderBottom: "1px solid #002b36"
+            flex: 1
           }
         },
-        opts.map((el, i) => e("li", {
-          className: api === !!+i && "selected",
-          style: {
-            borderTop: "1px solid #002b36",
+        e(
+          "h1",
+          {
+            style: {
+              padding: "8px 1em",
+              margin: "8px 8px 0 0",
+            }
+          }, "YAKE"
+        ),
+        e(
+          "ul",
+          {
+            style: {
+              padding: "initial",
+              listStyleType: "none",
+              borderBottom: "1px solid #002b36"
+            }
           },
-        }, e("a", {
+          opts.map((el, i) => e("li", {
+            className: api === !!+i && "selected",
+            style: {
+              borderTop: "1px solid #002b36",
+            },
+          }, e("a", {
+            style: {
+              display: "block",
+              padding: "1em",
+            },
+            href: "#",
+            id: "api",
+            "data-api": i,
+            onClick: evt => this.handleClick(evt),
+          }, el))),
+        )
+      ),
+      e(
+        "div", {
           style: {
-            display: "block",
-            padding: "1em",
+            margin: "1em"
+          }
+        },
+        e(
+          "form", {
+            style: {
+              color: "#eee8d5",
+            },
           },
-          href: "#",
-          id: i,
-          onClick: evt => this.handleClick("api", evt),
-        }, el))),
+          e(
+            "label", {
+              style: {
+                display: "block"
+              },
+            },
+            e("input", {
+              style: {
+                margin: "0 1em 0 0"
+              },
+              name: "profile",
+              type: "checkbox",
+              checked: this.props.profile,
+              onChange: this.handleChange,
+            }), "Profile"),
+          e(
+            "label", {
+              style: {
+                display: "block",
+              },
+            },
+            e("input", {
+              style: {
+                margin: "0 1em 0 0"
+              },
+              name: "case_",
+              type: "checkbox",
+              checked: this.props.case_,
+              onChange: this.handleChange,
+            }), "Case"),
+        ),
+        e("div", {},
+          e("button", {
+            id: "download",
+            style: {
+              color: "#073642",
+              width: "100%",
+            },
+            onClick: evt => this.handleClick(evt),
+          }, "Download")
+        )
       )
     );
   }

@@ -7,7 +7,7 @@ const f = React.Fragment;
 
 export default class Keycap extends React.Component {
   render() {
-    const {w, h, p, label, gradient} = this.props;
+    const {w, h, p, label, profile} = this.props;
     const u = 54;
     const radius = 5;
     const fill = ["#ffc93e", "#e5a100", "#073642"];
@@ -32,7 +32,7 @@ export default class Keycap extends React.Component {
     };
 
     const text = e("text", {
-      x: 13,
+      x: 13,  // 13
       y: 37,
       fill: fill[2],
     }, label);
@@ -58,7 +58,7 @@ export default class Keycap extends React.Component {
           rx: radius,
           fill: fill[0],
         }),
-        gradient && e(Rectangle, {
+        profile && e(Rectangle, {
           x: 7,
           y: 4,
           width: widthInner || 40,
@@ -119,7 +119,7 @@ export default class Keycap extends React.Component {
         d: dInner,
         fill: fill[0],
       }),
-      gradient && e(Path, {
+      profile && e(Path, {
         d: dInner,
         fill: "url(#GRADIENT)"
       }),
