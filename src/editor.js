@@ -5,21 +5,29 @@ export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = null;
+    this.editor;
+  }
+
+  componentDidMount() {
+    this.editor = ace.edit("editor");
   }
 
   componentDidUpdate() {
-    this.handleAce();
+    const {info} = this.props;
+    const {row, column} = this.editor.getCursorPosition();
+    this.editor.getSession().setMode("ace/mode/json");
+    this.editor.getSession().on("change", (x, y) => this.updateAce(x, y));
+    this.editor.setTheme("ace/theme/solarized_light");
+    this.editor.setFontSize(18);
+    // NOTE: Update text and move cursor to the start.
+    this.editor.setValue(JSON.stringify(info, null, 4), -1);
+    // NOTE: Move cursor to the previous position.
+    this.editor.gotoLine(row + 1, column);
   }
 
-  handleAce() {
-    const editor = ace.edit("editor");
-    editor.getSession().setMode("ace/mode/json");
-    editor.setTheme("ace/theme/solarized_light");
-    editor.setFontSize(18);
-    if (this.textInput) {
-      // NOTE: Update text and move cursor to the start.
-      editor.setValue(this.props.code, -1);
-    }
+  updateAce(x, y) {
+    const code = this.editor.getSession().getValue();
+    this.props.handleChangeCodeCallback(code, x, y);
   }
 
   render() {

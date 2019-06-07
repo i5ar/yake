@@ -27,9 +27,9 @@ class App extends React.Component {
       layout: "",
       initial: true,
       custom: false,
-      code: "",
       profile: true,
       case_: false,
+      revision: 0,
     };
 
     this.deviceInput = null;
@@ -39,6 +39,7 @@ class App extends React.Component {
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
+    this.handleChangeCodeCallback = this.handleChangeCodeCallback.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +65,6 @@ class App extends React.Component {
       info: s.api ? info.keyboards[keyboard] : info,
       keyboard,
       layout: s.api ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-      code: s.api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
     }));
   }
 
@@ -78,7 +78,6 @@ class App extends React.Component {
           keyboard,
           layout: s.api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
           custom: false,
-          code: s.api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
         }));
         if (this.selectElement) this.selectElement.focus();
         if (this.formElement) this.formElement.reset();
@@ -93,7 +92,6 @@ class App extends React.Component {
           keyboard: info.keyboard_name.toLowerCase(),
           layout: k(info.layouts)[0],
           custom: true,
-          code: JSON.stringify(info, null, 4),
         });
       };
     } else {
@@ -116,13 +114,31 @@ class App extends React.Component {
             info: api ? info.keyboards[keyboard] : info,
             keyboard,
             layout: api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-            code: api ? JSON.stringify(info.keyboards[keyboard], null, 4) : JSON.stringify(info, null, 4),
           });
         });
       });
     } else {
       this.setState({
         [name]: value,
+      });
+    }
+  }
+
+  handleChangeCodeCallback(value, x, y) {
+    const rev = y.getUndoManager().getRevision();
+    if (rev !== this.state.revision) {
+      this.setState(s => {
+        let code;
+        try {
+          code = JSON.parse(value);
+        } catch (err) {
+          console.error(err);
+          code = s.info;
+        }
+        return {
+          revision: rev,
+          info: code,
+        };
       });
     }
   }
@@ -136,7 +152,6 @@ class App extends React.Component {
       keyboard,
       initial,
       custom,
-      code,
       profile,
       case_,
     } = this.state;
@@ -209,7 +224,8 @@ class App extends React.Component {
             }),
           ),
           e(Editor, {
-            code,
+            info,
+            handleChangeCodeCallback: this.handleChangeCodeCallback,
           }),
           e(Footer)
         )
