@@ -16,15 +16,6 @@ Keyboard maintainers can also use it to verify the correctness of the `info.json
 
 In order to run it locally, spin a web server and snap your fingers.
 
-## Test
-
-It's a small app, but if you really want to test it you can do it with ease:
-
-- Mocha, Chai and React Utils for BDD;
-- Selenium for automated test:
-
-      python tests/main.py
-
 ## Contribute
 
 Feel free pull and push.  
@@ -48,8 +39,8 @@ This project is not directly related to QMK Firmware.
 
 ### Third-party licenses
 
+- [Ace](https://github.com/ajaxorg/ace/blob/master/LICENSE);
 - [Noty](https://github.com/needim/noty/blob/master/LICENSE.txt);
-- [Prism](https://github.com/PrismJS/prism/blob/master/LICENSE);
 - [Pure](https://github.com/pure-css/pure/blob/master/LICENSE);
 - [React](https://github.com/facebook/react/blob/master/LICENSE);
 - [React Router](https://github.com/ReactTraining/react-router/blob/master/LICENSE).

@@ -8,14 +8,17 @@ export default class Editor extends React.Component {
   }
 
   componentDidUpdate() {
-    this.handlePrism();
+    this.handleAce();
   }
 
-  handlePrism() {
-    const code = Prism.highlight(this.props.code, Prism.languages.json, "json");
+  handleAce() {
+    const editor = ace.edit("editor");
+    editor.getSession().setMode("ace/mode/json");
+    editor.setTheme("ace/theme/solarized_light");
+    editor.setFontSize(18);
     if (this.textInput) {
-      this.textInput.innerHTML = "";
-      this.textInput.insertAdjacentHTML("afterbegin", code);
+      // NOTE: Update text and move cursor to the start.
+      editor.setValue(this.props.code, -1);
     }
   }
 
@@ -23,13 +26,16 @@ export default class Editor extends React.Component {
     return e("div", {
       style: {
         overflowY: "auto",
-        minHeight: "16em"
+        minHeight: "16em",
+        height: "100%",
       }
     },
-    e("pre", {
-      className: "line-numbers language-json",
-    }, e("code", {
+    e("div", {
+      id: "editor",
+      style: {
+        height: "100%",
+      },
       ref: el => this.textInput = el,
-    })));
+    }));
   }
 }
