@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import debounce from "./common/debounce.js";
+
 const e = React.createElement;
 
 export default class Editor extends React.Component {
@@ -6,6 +8,11 @@ export default class Editor extends React.Component {
     super(props);
     this.textInput = null;
     this.editor;
+
+    this.updateAce = debounce((x, y) => {
+      const code = this.editor.getSession().getValue();
+      this.props.handleChangeCodeCallback(code, x, y);
+    }, 800);
   }
 
   componentDidMount() {
@@ -23,11 +30,6 @@ export default class Editor extends React.Component {
     this.editor.setValue(JSON.stringify(info, null, 4), -1);
     // NOTE: Move cursor to the previous position.
     this.editor.gotoLine(row + 1, column);
-  }
-
-  updateAce(x, y) {
-    const code = this.editor.getSession().getValue();
-    this.props.handleChangeCodeCallback(code, x, y);
   }
 
   render() {
