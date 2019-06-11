@@ -1,0 +1,29 @@
+.navigation {
+    background-color: #073642;
+    color: #eee8d5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.navigation .download {
+    margin: 1em;
+}
+
+.navigation .download button {
+    color: #073642;
+    width: 100%;
+}
+
+.navigation div form {
+    margin: 1em;
+    width: auto;
+    color: #eee8d5;
+}
+
+.navigation div form input {
+    margin: 0 1em 0 0;
+}
+.navigation div form label {
+    display: block;
+}

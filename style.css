@@ -1,4 +1,5 @@
 @import "./src/dropdown.css";
+@import "./src/nav.css";
 @import "./src/form.css";
 @import "./src/device.css";
 @import "./src/keycap.css";
@@ -28,13 +29,13 @@ body {
 
 #root {
     display: flex;
-    height: inherit;
     flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
     #root {
         flex-direction: row;
+        height: inherit;
     }
 }
 

@@ -17,6 +17,7 @@
         "React": "readonly",
         "ReactDOM": "readonly",
         "ReactRouterDOM": "readonly",
+        "ReactDOMServer": "readonly",
         "ReactTestUtils": "readonly",
         "SharedArrayBuffer": "readonly"
     },

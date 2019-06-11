@@ -33,31 +33,21 @@ export default class Nav extends React.Component {
 
   render() {
     const {api} = this.props;
-    const opts = ["My keyboards", "QMK"];
+    const opts = ["TSMK", "QMK"];
 
     return e(
       "nav",
       {
-        style: {
-          backgroundColor: "#073642",
-          color: "#eee8d5",
-          display: "flex",
-          flexDirection: "column",
-          fontFamily: "monospace"
-        }
+        className: "navigation",
       },
       e(
-        "div", {
-          style: {
-            flex: 1
-          }
-        },
+        "div", null,
         e(
           "h1",
           {
             style: {
               padding: "8px 1em",
-              margin: "8px 8px 0 0",
+              margin: "8px 0 0 0",
             }
           }, "YAKE"
         ),
@@ -88,57 +78,34 @@ export default class Nav extends React.Component {
         )
       ),
       e(
-        "div", {
-          style: {
-            margin: "1em"
-          }
-        },
+        "div", null,
         e(
-          "form", {
-            style: {
-              color: "#eee8d5",
-            },
-          },
+          "form", null,
           e(
-            "label", {
-              style: {
-                display: "block"
-              },
-            },
+            "label", null,
             e("input", {
-              style: {
-                margin: "0 1em 0 0"
-              },
               name: "profile",
               type: "checkbox",
               checked: this.props.profile,
               onChange: this.handleChange,
             }), "Profile"),
           e(
-            "label", {
-              style: {
-                display: "block",
-              },
-            },
+            "label", null,
             e("input", {
-              style: {
-                margin: "0 1em 0 0"
-              },
               name: "case_",
               type: "checkbox",
               checked: this.props.case_,
               onChange: this.handleChange,
             }), "Case"),
         ),
-        e("div", {},
+        e(
+          "div", {
+            className: "download"
+          },
           e("button", {
             id: "download",
-            style: {
-              color: "#073642",
-              width: "100%",
-            },
             onClick: evt => this.handleClick(evt),
-          }, "Download")
+          }, "DownloadSVG")
         )
       )
     );

@@ -4,20 +4,21 @@ import Form from "./form.js";
 import Nav from "./nav.js";
 import Footer from "./footer.js";
 import Editor from "./editor.js";
-import Joystick from "./joystick.js";
+import Controller from "./controller.js";
 import {
   fetchKeyboard,
   fetchKeyboards
 } from "./common/service.js";
 import {
   protips
-} from "./common/protips.js";
+} from "./data/protips.js";
+import debounce from "./common/debounce.js";
 
 const e = React.createElement;
 const f = React.Fragment;
 const k = Object.keys;
 
-class App extends React.Component {
+class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +31,6 @@ class App extends React.Component {
       custom: false,
       profile: true,
       case_: false,
-      revision: 0,
     };
 
     this.deviceInput = null;
@@ -40,7 +40,7 @@ class App extends React.Component {
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
-    this.handleChangeCodeCallback = this.handleChangeCodeCallback.bind(this);
+    this.handleAceCallback = debounce(this.handleAceCallback.bind(this), 1000);
   }
 
   componentDidMount() {
@@ -137,22 +137,14 @@ class App extends React.Component {
     }
   }
 
-  handleChangeCodeCallback(value, x, y) {
-    const rev = y.getUndoManager().getRevision();
-    if (rev !== this.state.revision) {
-      this.setState(s => {
-        let code;
-        try {
-          code = JSON.parse(value);
-        } catch (err) {
-          console.error(err);
-          code = s.info;
-        }
-        return {
-          revision: rev,
-          info: code,
-        };
+  handleAceCallback(editor) {
+    try {
+      const code = JSON.parse(editor.session.getValue());
+      this.setState({
+        info: code,
       });
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -236,12 +228,12 @@ class App extends React.Component {
               })
             }),
           ),
-          e(Joystick, {
+          e(Controller, {
             info
           }),
           e(Editor, {
             info,
-            handleChangeCodeCallback: this.handleChangeCodeCallback,
+            handleAceCallback: this.handleAceCallback,
           }),
           e(Footer)
         )
@@ -249,13 +241,5 @@ class App extends React.Component {
     );
   }
 }
-
-const Root = () => e(
-  f, {
-    style: {
-      height: "inherit",
-    }
-  },
-  e(App));
 
 ReactDOM.render(e(Root), document.querySelector("#root"));

@@ -38,6 +38,7 @@
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.0/react-router-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom-server.browser.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
@@ -48,6 +49,8 @@
       document.write('<script src="react-dom.production.min.js">\x3C/script>');
     window.ReactRouterDOM ||
       document.write('<script src="react-router-dom.min.js">\x3C/script>');
+    window.ReactRouterDOM ||
+      document.write('<script src="react-dom-server.browser.production.min.js">\x3C/script>');
     window.ReactRouterDOM ||
       document.write('<script src="noty.min.js">\x3C/script>');
   </script>
