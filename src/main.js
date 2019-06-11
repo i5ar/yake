@@ -4,12 +4,13 @@ import Form from "./form.js";
 import Nav from "./nav.js";
 import Footer from "./footer.js";
 import Editor from "./editor.js";
+import Joystick from "./joystick.js";
 import {
   fetchKeyboard,
   fetchKeyboards
 } from "./common/service.js";
 import {
-  getProtip
+  protips
 } from "./common/protips.js";
 
 const e = React.createElement;
@@ -46,8 +47,7 @@ class App extends React.Component {
     const spinner = document.querySelector("#spinner");
     spinner.parentNode.removeChild(spinner);
 
-    const protip = getProtip();
-    const n = new Noty({
+    const makeNoty = (protip) => new Noty({
       timeout: 4000,
       layout: "bottomRight",
       theme: "sunset",
@@ -55,7 +55,20 @@ class App extends React.Component {
       <h3>Protip</h3>
       <p>${protip}</p>`,
     });
-    n.show();
+    if (document.cookie.includes("protip")) {
+      const match = "protip=";
+      const matchIndex = document.cookie.indexOf(match);
+      const protipIndex = parseInt(document.cookie[matchIndex + match.length], 10);
+      if (protipIndex < protips.length - 1) {
+        const n = makeNoty(protips[protipIndex + 1]);
+        n.show();
+        document.cookie = `protip=${protipIndex + 1}`;
+      }
+    } else {
+      const n = makeNoty(protips[0]);
+      n.show();
+      document.cookie = "protip=0";
+    }
   }
 
   handleHashCallback(keyboards, keyboard, info) {
@@ -223,6 +236,9 @@ class App extends React.Component {
               })
             }),
           ),
+          e(Joystick, {
+            info
+          }),
           e(Editor, {
             info,
             handleChangeCodeCallback: this.handleChangeCodeCallback,
