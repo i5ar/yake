@@ -10,6 +10,4 @@ activate.bat
 .vscode/
 
 # Dependencies
-react.production.min.js
-react-dom.production.min.js
-react-router-dom.min.js
+*.min.js
