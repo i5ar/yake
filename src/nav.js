@@ -104,8 +104,9 @@ export default class Nav extends React.Component {
           },
           e("button", {
             id: "download",
+            className: "pure-button",
             onClick: evt => this.handleClick(evt),
-          }, "DownloadSVG")
+          }, "Download SVG")
         )
       )
     );

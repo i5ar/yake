@@ -4,7 +4,7 @@ import Form from "./form.js";
 import Nav from "./nav.js";
 import Footer from "./footer.js";
 import Editor from "./editor.js";
-import Controller from "./controller.js";
+import Button from "./button.js";
 import {
   fetchKeyboard,
   fetchKeyboards
@@ -228,7 +228,7 @@ class Root extends React.Component {
               })
             }),
           ),
-          e(Controller, {
+          e(Button, {
             info
           }),
           e(Editor, {

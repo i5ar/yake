@@ -2,77 +2,46 @@
 const e = React.createElement;
 
 export default class Controller extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      active: false,
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    const _text = e(
-      "div", {
-        style: {
-          color: "var(--base03)",
-          fontFamily: "var(--monospace)",
-        }
+  render() {
+    return e(
+      "div",
+      {
+        className: "controller"
       },
-      e("div", null,
+      e(
+        "div",
+        {
+          className: "pure-form"
+        },
         e(
-          "button", null, "+"
+          "div",
+          null,
+          e("button", {className: "pure-button"}, "+"),
+          e("input", {type: "text"}),
+          e("button", {className: "pure-button"}, "-")
         ),
         e(
-          "button", null, "-"
+          "div",
+          null,
+          e("button", {className: "pure-button"}, "←"),
+          e("input", {type: "text"}),
+          e("button", {className: "pure-button"}, "→")
+        ),
+        e(
+          "div",
+          null,
+          e("button", {className: "pure-button"}, "↑"),
+          e("input", {type: "text"}),
+          e("button", {className: "pure-button"}, "↓")
+        ),
+        e(
+          "div",
+          null,
+          e("button", {className: "pure-button"}, "↻"),
+          e("input", {type: "text"}),
+          e("button", {className: "pure-button"}, "↺")
         )
-      ),
-      e("div", null,
-        e(
-          "button", null, "←"
-        ),
-        e(
-          "button", null, "↑"
-        ),
-        e(
-          "button", null, "↓"
-        ),
-        e(
-          "button", null, "→"
-        )
-      ),
-      e("div", null,
-        e("button", null, "↻")
       )
     );
-
-    const n = new Noty({
-      layout: "bottomRight",
-      closeWith: ["button"],
-      theme: "sunset",
-      text: ReactDOMServer.renderToString(_text),
-      callbacks: {
-        onClose: () => {
-          this.setState({
-            active: false,
-          });
-        },
-        onShow: () => {
-          this.setState({
-            active: true,
-          });
-        }
-      }
-    });
-    n.show();
-  }
-
-  render() {
-    return e("button", {
-      type: "button",
-      className: "pure-button",
-      onClick: this.handleClick,
-      disabled: this.state.active,
-    }, "Open controller");
   }
 }
