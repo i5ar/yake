@@ -13,14 +13,14 @@ export default class Dropdown extends React.Component {
   }
 
   componentDidMount() {
-    const {api, name, value, initial, history} = this.props;
+    const {hasApi, name, value, isInitial, history} = this.props;
     if (name === "keyboard") {
-      if (!initial && value) history.push(`/${value}`);
-      else if (initial) {
+      if (!isInitial && value) history.push(`/${value}`);
+      else if (isInitial) {
         let keyboard = history.location.pathname.substr(1);
-        fetchKeyboards(api).then(keyboards => {
+        fetchKeyboards(hasApi).then(keyboards => {
           if (!keyboards.includes(keyboard)) keyboard = value || keyboards[0];
-          fetchKeyboard(api, keyboard).then(info => {
+          fetchKeyboard(hasApi, keyboard).then(info => {
             this.handleHash(keyboards, keyboard, info);
           });
         });
@@ -37,10 +37,10 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
-    const {options, name, value, custom, selectRef} = this.props;
+    const {options, name, value, isCustom, selectRef} = this.props;
     const option = options ? options.map(
       value => e("option", {value}, value)) : e("option");
-    if (custom) option.push(e("option", {value}, value));
+    if (isCustom) option.push(e("option", {value}, value));
 
     const span = e("span", null,
       e("select", {

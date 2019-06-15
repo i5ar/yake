@@ -1,6 +1,7 @@
 .controller {
     display: none;
     background-color: var(--base2);
+    justify-content: space-between;
 }
 
 .controller.active {
@@ -31,6 +32,7 @@
     border-radius: 0 2px 0 0;
 }
 
+.controller div textarea,
 .controller div input[type=text],
 .controller div input[type=number] {
     color: var(--base03);

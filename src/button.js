@@ -7,7 +7,7 @@ export default class Button extends React.Component {
   constructor() {
     super();
     this.state = {
-      active: false,
+      active: true,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -20,7 +20,7 @@ export default class Button extends React.Component {
   }
 
   render() {
-    const {info, layout} = this.props;
+    const {info, layout, keydev} = this.props;
 
     return e("div", null, e(
       "button", {
@@ -37,6 +37,7 @@ export default class Button extends React.Component {
       active: this.state.active,
       info,
       layout,
+      keydev,
       handleClickCallback_: this.props.handleClickCallback_,
     }));
   }

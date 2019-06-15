@@ -10,8 +10,8 @@ export default class Device extends React.Component {
     const {
       info,
       layout,
-      profile,
-      case_,
+      hasProfile,
+      hasCase,
     } = this.props;
 
     const defs = e(
@@ -67,7 +67,9 @@ export default class Device extends React.Component {
             label: info.layouts[layout].layout[i].label,
             code: "KC_NO",
             keys: [],
-            profile,
+            index: i,
+            hasProfile,
+            handleClickCallback_: this.props.handleClickCallback_,
           })
         );
       }
@@ -86,7 +88,7 @@ export default class Device extends React.Component {
           viewBox: `0 0 ${width} ${height}`
         },
         defs,
-        case_ && e("rect", {
+        hasCase && e("rect", {
           width,
           height,
           rx: 5,

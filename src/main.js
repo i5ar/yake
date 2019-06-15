@@ -22,15 +22,16 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      api: false,
+      hasApi: false,
       keyboards: [],
       info: {},
       keyboard: "",
       layout: "",
-      initial: true,
-      custom: false,
-      profile: true,
-      case_: false,
+      isInitial: true,
+      isCustom: false,
+      hasProfile: true,
+      hasCase: false,
+      keydev: null,
     };
 
     this.protip;
@@ -76,24 +77,24 @@ class Root extends React.Component {
 
   handleHashCallback(keyboards, keyboard, info) {
     this.setState(s => ({
-      initial: false,
+      isInitial: false,
       keyboards,
-      info: s.api ? info.keyboards[keyboard] : info,
+      info: s.hasApi ? info.keyboards[keyboard] : info,
       keyboard,
-      layout: s.api ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+      layout: s.hasApi ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
     }));
   }
 
   handleChangeCallback(name, value) {
     if (name === "keyboard") {
-      const {api} = this.state;
+      const {hasApi} = this.state;
       const keyboard = value;
-      fetchKeyboard(api, keyboard).then(info => {
+      fetchKeyboard(hasApi, keyboard).then(info => {
         this.setState(s => ({
-          info: s.api ? info.keyboards[keyboard] : info,
+          info: s.hasApi ? info.keyboards[keyboard] : info,
           keyboard,
-          layout: s.api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-          custom: false,
+          layout: s.hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+          isCustom: false,
         }));
         if (this.selectElement) this.selectElement.focus();
         if (this.formElement) this.formElement.reset();
@@ -107,7 +108,7 @@ class Root extends React.Component {
           info,
           keyboard: info.keyboard_name.toLowerCase(),
           layout: k(info.layouts)[0],
-          custom: true,
+          isCustom: true,
         });
       };
     } else {
@@ -120,16 +121,16 @@ class Root extends React.Component {
   handleClickCallback(name, value) {
     if (name === "api") {
       let {keyboard} = this.state;
-      const api = !!+value;
-      fetchKeyboards(api).then(keyboards => {
+      const hasApi = !!+value;
+      fetchKeyboards(hasApi).then(keyboards => {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
-        fetchKeyboard(api, keyboard).then(info => {
+        fetchKeyboard(hasApi, keyboard).then(info => {
           this.setState({
-            api,
+            hasApi,
             keyboards,
-            info: api ? info.keyboards[keyboard] : info,
+            info: hasApi ? info.keyboards[keyboard] : info,
             keyboard,
-            layout: api ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+            layout: hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
           });
         });
       });
@@ -174,7 +175,20 @@ class Root extends React.Component {
         }
       }));
     } else if (evt.target.name === "increase-x") {
-      console.log(evt.target.name);
+      const {value} = evt.target.parentNode.childNodes[1];
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === this.state.keydev) return {...l, x: (parseFloat(value) + 0.25)};
+                return l;
+              })
+            }
+          }
+        }
+      }));
     } else if (evt.target.name === "decrease-x") {
       console.log(evt.target.name);
     } else if (evt.target.name === "increase-y") {
@@ -185,6 +199,12 @@ class Root extends React.Component {
       console.log(evt.target.name);
     } else if (evt.target.name === "counterclockwise-r") {
       console.log(evt.target.name);
+    } else if (evt.name === "keydev") {
+      const index = parseInt(evt.index, 10);
+      // const hasFocus = evt.target.parentNode === document.activeElement;
+      this.setState({
+        keydev: index
+      });
     }
   }
 
@@ -201,24 +221,25 @@ class Root extends React.Component {
 
   render() {
     const {
-      api,
+      hasApi,
       keyboards,
       info,
       layout,
       keyboard,
-      initial,
-      custom,
-      profile,
-      case_,
+      isInitial,
+      isCustom,
+      hasProfile,
+      hasCase,
+      keydev,
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
       e(
         f, null,
         e(Nav, {
-          api,
-          profile,
-          case_,
+          hasApi,
+          hasProfile,
+          hasCase,
           onClickCallback: this.handleClickCallback,
           deviceHtml: this.deviceElement,
           onChangeCallback: this.handleChangeCallback,
@@ -249,9 +270,9 @@ class Root extends React.Component {
                 value: keyboard,
                 options: keyboards && keyboards.length ? keyboards : null,
                 onChangeCallback: this.handleChangeCallback,
-                api,
-                initial,
-                custom,
+                hasApi,
+                isInitial,
+                isCustom,
                 onHashCallback: this.handleHashCallback,
               }),
               e(Dropdown, {
@@ -271,21 +292,25 @@ class Root extends React.Component {
               children: match => e(Device, {
                 ...match,
                 deviceRef: elm => this.deviceElement = elm,
-                api,
                 info,
                 layout,
-                profile,
-                case_,
+                hasProfile,
+                keydev,
+                hasCase,
+                handleClickCallback_: this.handleClickCallback_,
+
               })
             }),
           ),
           e(Button, {
             info,
             layout,
+            keydev,
             handleClickCallback_: this.handleClickCallback_,
           }),
           e(Editor, {
             info,
+            keydev,
             handleAceCallback: this.handleAceCallback,
           }),
           e(Footer)

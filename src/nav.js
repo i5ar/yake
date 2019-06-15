@@ -56,7 +56,7 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    const {api} = this.props;
+    const {hasApi} = this.props;
     const opts = ["YAKE", "QMK"];
 
     return e(
@@ -85,7 +85,7 @@ export default class Nav extends React.Component {
             }
           },
           opts.map((el, i) => e("li", {
-            className: api === !!+i && "selected",
+            className: hasApi === !!+i && "selected",
             style: {
               borderTop: "1px solid #002b36",
             },
@@ -108,17 +108,17 @@ export default class Nav extends React.Component {
           e(
             "label", null,
             e("input", {
-              name: "profile",
+              name: "hasProfile",
               type: "checkbox",
-              checked: this.props.profile,
+              checked: this.props.hasProfile,
               onChange: this.handleChange,
             }), "Profile"),
           e(
             "label", null,
             e("input", {
-              name: "case_",
+              name: "hasCase",
               type: "checkbox",
-              checked: this.props.case_,
+              checked: this.props.hasCase,
               onChange: this.handleChange,
             }), "Case"),
         ),

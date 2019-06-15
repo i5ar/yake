@@ -1,6 +1,10 @@
+.keycap {
+    stroke-width: 4px;
+}
+
 .keycap text {
-    user-select: none;
     font: bold 0.75em var(--monospace);
+    user-select: none;
 }
 
 .keycap text::selection {
