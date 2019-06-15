@@ -15,6 +15,7 @@
     --base02: #073642;
     /* NOTE: White text. */
     --base2: #eee8d5;
+    --base3: #fdf6e3;
     --orange: #cb4b16;
     --green: #859900;
 }
@@ -92,7 +93,7 @@ body {
     }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }

@@ -2,40 +2,35 @@
     display: none;
     background-color: var(--base2);
     justify-content: space-between;
+    flex-wrap: wrap;
+    border-bottom: 2px dotted var(--base3);
 }
 
 .controller.active {
     display: flex;
 }
 
-.controller > div {
+.controller > form {
     margin: 1em;
 }
 
-.controller div button {
-    border: 1px solid #ccc;
+.controller input[type=text],
+.controller input[type=number] {
     border-radius: 0;
-    font-family: var(--monospace);
-    color: var(--base03);
-    width: 3em;
-}
-.controller div div:first-child button:first-child {
-    border-radius: 2px 0 0 0;
-}
-.controller div div:last-child button:last-child {
-    border-radius: 0 0 2px 0;
-}
-.controller div div:last-child button:first-child {
-    border-radius: 0 0 0 2px;
-}
-.controller div div:first-child button:last-child {
-    border-radius: 0 2px 0 0;
+    width: 6em;
 }
 
-.controller div textarea,
-.controller div input[type=text],
-.controller div input[type=number] {
-    color: var(--base03);
-    border-radius: 0;
-    height: 2.45em;
+.controller div:last-child input[type=text],
+.controller div:last-child input[type=number] {
+    border-radius: 0 0 2px 2px;
+}
+
+.controller div:first-child input[type=text],
+.controller div:first-child input[type=number] {
+    border-radius: 2px 2px 0 0;
+}
+
+.controller div:only-child input[type=text],
+.controller div:only-child input[type=number] {
+    border-radius: 2px;
 }
