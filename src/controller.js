@@ -2,12 +2,47 @@
 const e = React.createElement;
 
 export default class Controller extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(evt) {
+    this.props.handleClickCallback_(evt);
+  }
+
   render() {
+    const {info, layout, active} = this.props;
+
     return e(
       "div",
       {
-        className: "controller"
+        className: active ? "controller active" : "controller",
       },
+      e(
+        "div", {
+          className: "pure-form"
+        },
+        e(
+          "div",
+          null,
+          e("button", {
+            name: "remove",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "-"),
+          e("input", {
+            type: "text",
+            size: 4,
+            value: info.layouts ? info.layouts[layout].layout.length : 0,
+          }),
+          e("button", {
+            name: "add",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "+")
+        ),
+      ),
       e(
         "div",
         {
@@ -16,30 +51,47 @@ export default class Controller extends React.Component {
         e(
           "div",
           null,
-          e("button", {className: "pure-button"}, "+"),
-          e("input", {type: "text"}),
-          e("button", {className: "pure-button"}, "-")
+          e("button", {
+            name: "decrease-x",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "←"),
+          e("input", {type: "text", size: 4}),
+          e("button", {
+            name: "increase-x",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "→")
         ),
         e(
           "div",
           null,
-          e("button", {className: "pure-button"}, "←"),
-          e("input", {type: "text"}),
-          e("button", {className: "pure-button"}, "→")
+          e("button", {
+            name: "decrease-y",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "↓"),
+          e("input", {type: "text", size: 4}),
+          e("button", {
+            name: "increase-y",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "↑")
         ),
         e(
           "div",
           null,
-          e("button", {className: "pure-button"}, "↑"),
-          e("input", {type: "text"}),
-          e("button", {className: "pure-button"}, "↓")
-        ),
-        e(
-          "div",
-          null,
-          e("button", {className: "pure-button"}, "↻"),
-          e("input", {type: "text"}),
-          e("button", {className: "pure-button"}, "↺")
+          e("button", {
+            name: "clockwise-r",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "↻"),
+          e("input", {type: "text", size: 4}),
+          e("button", {
+            name: "counterclockwise-r",
+            className: "pure-button",
+            onClick: this.handleClick,
+          }, "↺")
         )
       )
     );

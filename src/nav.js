@@ -6,6 +6,24 @@ export default class Nav extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+    this.about = new Noty({
+      layout: "bottom",
+      theme: "solarized",
+      type: "info",
+      text: `
+      YAKE (Yet Another Keyboard Editor) is a simple keyboard designer based on QMK.
+      `,
+    });
+
+    this.policy = new Noty({
+      layout: "bottom",
+      theme: "solarized",
+      type: "info",
+      text: `
+      This application set cookies to improve usability, that's all.
+      `,
+    });
   }
 
   handleClick(evt) {
@@ -22,6 +40,12 @@ export default class Nav extends React.Component {
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
+    } else if (evt.target.id === "about") {
+      evt.preventDefault();
+      this.about.show();
+    } else if (evt.target.id === "policy") {
+      evt.preventDefault();
+      this.policy.show();
     }
   }
 
@@ -33,7 +57,7 @@ export default class Nav extends React.Component {
 
   render() {
     const {api} = this.props;
-    const opts = ["TSMK", "QMK"];
+    const opts = ["YAKE", "QMK"];
 
     return e(
       "nav",
@@ -73,7 +97,7 @@ export default class Nav extends React.Component {
             href: "#",
             id: "api",
             "data-api": i,
-            onClick: evt => this.handleClick(evt),
+            onClick: this.handleClick,
           }, el))),
         )
       ),
@@ -105,8 +129,24 @@ export default class Nav extends React.Component {
           e("button", {
             id: "download",
             className: "pure-button",
-            onClick: evt => this.handleClick(evt),
+            onClick: this.handleClick,
           }, "Download SVG")
+        ),
+        e(
+          "div", {
+            className: "more",
+          },
+          e("a", {
+            href: "#",
+            id: "about",
+            onClick: this.handleClick,
+          }, "About"),
+          e("span", null, " · "),
+          e("a", {
+            href: "#",
+            id: "policy",
+            onClick: this.handleClick,
+          }, "Policy"),
         )
       )
     );

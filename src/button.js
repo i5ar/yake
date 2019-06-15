@@ -14,37 +14,30 @@ export default class Button extends React.Component {
   }
 
   handleClick() {
-    const n = new Noty({
-      layout: "bottom",
-      closeWith: ["button"],
-      theme: "solarized",
-      type: "info",
-      text: ReactDOMServer.renderToString(e(Controller)),
-      callbacks: {
-        onClose: () => {
-          this.setState({
-            active: false,
-          });
-        },
-        onShow: () => {
-          this.setState({
-            active: true,
-          });
-        }
-      }
-    });
-    n.show();
+    this.setState(s => ({
+      active: !s.active,
+    }));
   }
 
   render() {
-    return e("div", {
-      className: "controller",
-    }, e(
+    const {info, layout} = this.props;
+
+    return e("div", null, e(
       "button", {
+        style: {
+          width: "100%",
+          borderRadius: 0,
+          backgroundColor: "var(--orange)",
+        },
         type: "button",
         className: "pure-button",
         onClick: this.handleClick,
-        disabled: this.state.active,
-      }, "Open controller"));
+      }, this.state.active ? "Close" : "Open"),
+    e(Controller, {
+      active: this.state.active,
+      info,
+      layout,
+      handleClickCallback_: this.props.handleClickCallback_,
+    }));
   }
 }

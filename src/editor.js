@@ -26,13 +26,13 @@ export default class Editor extends React.Component {
   }
 
   componentDidUpdate() {
-    const {info} = this.props;
-    // NOTE: Run only once.
     const value = this.editor.session.getValue();
     const prevInfo = value ? JSON.parse(value, null, 4) : "";
-    if (info.keyboard_folder !== prevInfo.keyboard_folder) {
+    const cursor = this.editor.getCursorPosition();
+    if (this.props.info !== prevInfo) {
       // NOTE: Update text and move cursor to the start.
-      this.editor.setValue(JSON.stringify(info, null, 4), -1);
+      this.editor.setValue(JSON.stringify(this.props.info, null, 4), -1);
+      this.editor.selection.moveTo(cursor.row, cursor.column);
     }
   }
 

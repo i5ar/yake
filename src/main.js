@@ -33,6 +33,8 @@ class Root extends React.Component {
       case_: false,
     };
 
+    this.protip;
+
     this.deviceInput = null;
     this.selectElement = null;
     this.formElement = null;
@@ -40,6 +42,7 @@ class Root extends React.Component {
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
+    this.handleClickCallback_ = this.handleClickCallback_.bind(this);
     this.handleAceCallback = debounce(this.handleAceCallback.bind(this), 1000);
   }
 
@@ -47,10 +50,10 @@ class Root extends React.Component {
     const spinner = document.querySelector("#spinner");
     spinner.parentNode.removeChild(spinner);
 
-    const makeNoty = (protip) => new Noty({
+    const makeProtip = (protip) => new Noty({
       timeout: 4000,
       layout: "bottomRight",
-      theme: "sunset",
+      theme: "solarized",
       text: `
       <h3>Protip</h3>
       <p>${protip}</p>`,
@@ -60,13 +63,13 @@ class Root extends React.Component {
       const matchIndex = document.cookie.indexOf(match);
       const protipIndex = parseInt(document.cookie[matchIndex + match.length], 10);
       if (protipIndex < protips.length - 1) {
-        const n = makeNoty(protips[protipIndex + 1]);
-        n.show();
+        this.protip = makeProtip(protips[protipIndex + 1]);
+        this.protip.show();
         document.cookie = `protip=${protipIndex + 1}`;
       }
     } else {
-      const n = makeNoty(protips[0]);
-      n.show();
+      this.protip = makeProtip(protips[0]);
+      this.protip.show();
       document.cookie = "protip=0";
     }
   }
@@ -134,6 +137,54 @@ class Root extends React.Component {
       this.setState({
         [name]: value,
       });
+    }
+  }
+
+  handleClickCallback_(evt) {
+    if (evt.target.name === "add") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: [
+                ...s.info.layouts[this.state.layout].layout,
+                {
+                  w: 1,
+                  x: 0,
+                  y: 0,
+                  label: ""
+                }
+              ]
+            }
+          }
+        }
+      }));
+    } else if (evt.target.name === "remove") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.filter((l, i) => {
+                return i < s.info.layouts[this.state.layout].layout.length - 1;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.target.name === "increase-x") {
+      console.log(evt.target.name);
+    } else if (evt.target.name === "decrease-x") {
+      console.log(evt.target.name);
+    } else if (evt.target.name === "increase-y") {
+      console.log(evt.target.name);
+    } else if (evt.target.name === "decrease-y") {
+      console.log(evt.target.name);
+    } else if (evt.target.name === "clockwise-r") {
+      console.log(evt.target.name);
+    } else if (evt.target.name === "counterclockwise-r") {
+      console.log(evt.target.name);
     }
   }
 
@@ -229,7 +280,9 @@ class Root extends React.Component {
             }),
           ),
           e(Button, {
-            info
+            info,
+            layout,
+            handleClickCallback_: this.handleClickCallback_,
           }),
           e(Editor, {
             info,
