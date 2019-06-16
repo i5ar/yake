@@ -70,6 +70,7 @@ export default class Device extends React.Component {
             index: i,
             hasProfile,
             handleClickCallback_: this.props.handleClickCallback_,
+            handleKeyDownCallback: this.props.handleKeyDownCallback,
           })
         );
       }

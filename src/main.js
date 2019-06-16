@@ -45,6 +45,7 @@ class Root extends React.Component {
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
     this.handleClickCallback_ = this.handleClickCallback_.bind(this);
+    this.handleKeyDownCallback = this.handleKeyDownCallback.bind(this);
     this.handleAceCallback = debounce(this.handleAceCallback.bind(this), 1000);
   }
 
@@ -305,25 +306,31 @@ class Root extends React.Component {
         keydev: index
       });
     } else if (evt.target.name === "add") {
-      this.setState(s => ({
-        keydev: s.info.layouts[s.layout].layout.length,
-        info: {
-          ...s.info,
-          layouts: {
-            [s.layout]: {
-              layout: [
-                ...s.info.layouts[s.layout].layout,
-                {
-                  w: 1,
-                  x: 0,
-                  y: 0,
-                  label: ""
-                }
-              ]
+      this.setState(s => {
+        const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
+        const w = _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].w || 1 : 1;
+        return {
+          keydev: s.info.layouts[s.layout].layout.length,
+          info: {
+            ...s.info,
+            layouts: {
+              [s.layout]: {
+                layout: [
+                  ...s.info.layouts[s.layout].layout,
+                  {
+                    x: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].x + w : 0,
+                    y: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].y : 0,
+                    r: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].r : 0,
+                    rx: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].rx : 0,
+                    ry: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].ry : 0,
+                    label: ""
+                  }
+                ]
+              }
             }
           }
-        }
-      }));
+        };
+      });
     } else if (evt.target.name === "remove") {
       this.setState(s => ({
         keydev: null,
@@ -352,6 +359,141 @@ class Root extends React.Component {
       });
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  handleKeyDownCallback(evt) {
+    const {keydev} = this.state;
+    if (evt.key === "ArrowRight") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, x: parseFloat(l.x) + 0.25};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "ArrowLeft") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, x: parseFloat(l.x) - 0.25};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "ArrowUp") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, y: parseFloat(l.y) - 0.25};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "ArrowDown") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, y: parseFloat(l.y) + 0.25};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "Delete") {
+      this.setState(s => ({
+        keydev: null,
+        info: {
+          ...s.info,
+          layouts: {
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.filter((l, i) => {
+                if (s.keydev === null) {
+                  return i < s.info.layouts[s.layout].layout.length - 1;
+                }
+                return i !== s.keydev;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "Insert") {
+      this.setState(s => {
+        const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
+        const w = s.info.layouts[s.layout].layout[_keydev].w || 1;
+        return {
+          keydev: s.info.layouts[s.layout].layout.length,
+          info: {
+            ...s.info,
+            layouts: {
+              [s.layout]: {
+                layout: [
+                  ...s.info.layouts[s.layout].layout,
+                  {
+                    x: s.info.layouts[s.layout].layout[_keydev].x + w,
+                    y: s.info.layouts[s.layout].layout[_keydev].y,
+                    r: s.info.layouts[s.layout].layout[_keydev].r,
+                    rx: s.info.layouts[s.layout].layout[_keydev].rx,
+                    ry: s.info.layouts[s.layout].layout[_keydev].ry,
+                    label: ""
+                  }
+                ]
+              }
+            }
+          }
+        };
+      });
+    } else if (evt.key === "Home") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, x: 0, y: 0};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (evt.key === "End") {
+      // TODO: Get keyboard size.
+    } else if (evt.key.length === 1 && evt.key !== " " && evt.location === 0) {
+      const _key = evt.key;
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === keydev) return {...l, label: _key};
+                return l;
+              })
+            }
+          }
+        }
+      }));
     }
   }
 
@@ -434,6 +576,7 @@ class Root extends React.Component {
                 keydev,
                 hasCase,
                 handleClickCallback_: this.handleClickCallback_,
+                handleKeyDownCallback: this.handleKeyDownCallback,
               })
             }),
           ),

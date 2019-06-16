@@ -10,12 +10,20 @@ export default class Keycap extends React.Component {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.gRef = React.createRef();
   }
 
   handleClick(evt) {
     this.props.handleClickCallback_({...evt, name: "keydev", index: this.props.index});
+  }
+
+  handleKeyDown(evt) {
+    // NOTE: Disable browser specific shortcuts.
+    evt.preventDefault();
+
+    this.props.handleKeyDownCallback(evt);
   }
 
   render() {
@@ -40,6 +48,7 @@ export default class Keycap extends React.Component {
       tabIndex: -1,
       ref: this.gRef,
       onClick: this.handleClick,
+      onKeyDown: this.handleKeyDown,
       className: "keycap",
       transform: `
                 rotate(${r} ${rx} ${ry})
