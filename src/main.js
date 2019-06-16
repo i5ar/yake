@@ -121,42 +121,45 @@ class Root extends React.Component {
 
   handleChangeCallback_(evt) {
     const {name, value} = evt.target;
-    if (name === "keycaps") {
-      this.setState(s => {
-        if (value < s.info.layouts[this.state.layout].layout.length) {
-          return {
-            info: {
-              ...s.info,
-              layouts: {
-                [this.state.layout]: {
-                  layout: s.info.layouts[this.state.layout].layout.filter((l, i) => {
-                    return i < s.info.layouts[this.state.layout].layout.length - 1;
-                  })
-                }
-              }
-            }
-          };
-        }
-        return {
-          info: {
-            ...s.info,
-            layouts: {
-              [this.state.layout]: {
-                layout: [
-                  ...s.info.layouts[this.state.layout].layout,
-                  {
-                    w: 1,
-                    x: 0,
-                    y: 0,
-                    label: ""
-                  }
-                ]
-              }
-            }
-          }
-        };
-      });
-    } else if (name === "x") {
+
+    // if (name === "keycaps") {
+    //   this.setState(s => {
+    //     if (value < s.info.layouts[this.state.layout].layout.length) {
+    //       return {
+    //         info: {
+    //           ...s.info,
+    //           layouts: {
+    //             [this.state.layout]: {
+    //               layout: s.info.layouts[this.state.layout].layout.filter((l, i) => {
+    //                 return i < s.info.layouts[this.state.layout].layout.length - 1;
+    //               })
+    //             }
+    //           }
+    //         }
+    //       };
+    //     }
+    //     return {
+    //       info: {
+    //         ...s.info,
+    //         layouts: {
+    //           [this.state.layout]: {
+    //             layout: [
+    //               ...s.info.layouts[this.state.layout].layout,
+    //               {
+    //                 w: 1,
+    //                 x: 0,
+    //                 y: 0,
+    //                 label: ""
+    //               }
+    //             ]
+    //           }
+    //         }
+    //       }
+    //     };
+    //   });
+    // }
+
+    if (name === "x") {
       this.setState(s => ({
         info: {
           ...s.info,
@@ -178,6 +181,20 @@ class Root extends React.Component {
             [this.state.layout]: {
               layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
                 if (i === this.state.keydev) return {...l, y: parseFloat(value)};
+                return l;
+              })
+            }
+          }
+        }
+      }));
+    } else if (name === "w") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === this.state.keydev) return {...l, w: parseFloat(value)};
                 return l;
               })
             }
@@ -281,42 +298,49 @@ class Root extends React.Component {
   }
 
   handleClickCallback_(evt) {
-    if (evt.target.name === "add") {
-      console.log("add");
-    } else if (evt.target.name === "remove") {
-      console.log("remove");
-    } else if (evt.target.name === "increase-x") {
-      console.log("increase-x");
-      const {value} = evt.target.parentNode.childNodes[1];
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, x: (parseFloat(value) + 0.25)};
-                return l;
-              })
-            }
-          }
-        }
-      }));
-    } else if (evt.target.name === "decrease-x") {
-      console.log(evt.target.name);
-    } else if (evt.target.name === "increase-y") {
-      console.log(evt.target.name);
-    } else if (evt.target.name === "decrease-y") {
-      console.log(evt.target.name);
-    } else if (evt.target.name === "clockwise-r") {
-      console.log(evt.target.name);
-    } else if (evt.target.name === "counterclockwise-r") {
-      console.log(evt.target.name);
-    } else if (evt.name === "keydev") {
+    if (evt.name === "keydev") {
       const index = parseInt(evt.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
       this.setState({
         keydev: index
       });
+    } else if (evt.target.name === "add") {
+      this.setState(s => ({
+        keydev: s.info.layouts[s.layout].layout.length,
+        info: {
+          ...s.info,
+          layouts: {
+            [s.layout]: {
+              layout: [
+                ...s.info.layouts[s.layout].layout,
+                {
+                  w: 1,
+                  x: 0,
+                  y: 0,
+                  label: ""
+                }
+              ]
+            }
+          }
+        }
+      }));
+    } else if (evt.target.name === "remove") {
+      this.setState(s => ({
+        keydev: null,
+        info: {
+          ...s.info,
+          layouts: {
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.filter((l, i) => {
+                if (s.keydev === null) {
+                  return i < s.info.layouts[s.layout].layout.length - 1;
+                }
+                return i !== s.keydev;
+              })
+            }
+          }
+        }
+      }));
     }
   }
 
@@ -410,7 +434,6 @@ class Root extends React.Component {
                 keydev,
                 hasCase,
                 handleClickCallback_: this.handleClickCallback_,
-
               })
             }),
           ),

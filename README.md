@@ -48,5 +48,7 @@ This project is not directly related to QMK Firmware.
 - [Ace](https://github.com/ajaxorg/ace/blob/master/LICENSE);
 - [Noty](https://github.com/needim/noty/blob/master/LICENSE.txt);
 - [Pure](https://github.com/pure-css/pure/blob/master/LICENSE);
+- [Popper](https://github.com/FezVrasta/popper.js/blob/master/LICENSE.md);
 - [React](https://github.com/facebook/react/blob/master/LICENSE);
-- [React Router](https://github.com/ReactTraining/react-router/blob/master/LICENSE).
+- [React Router](https://github.com/ReactTraining/react-router/blob/master/LICENSE);
+- [Tippy](https://github.com/atomiks/tippyjs/blob/master/LICENSE).

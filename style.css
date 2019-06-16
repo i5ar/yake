@@ -4,7 +4,6 @@
 @import "./src/device.css";
 @import "./src/controller.css";
 @import "./src/keycap.css";
-@import "./src/common/solarized.css";
 
 :root {
     --monospace: "Roboto Mono", monospace;
@@ -17,7 +16,9 @@
     --base2: #eee8d5;
     --base3: #fdf6e3;
     --orange: #cb4b16;
+    --red: #dc322f;
     --green: #859900;
+    --radius: 2px;
 }
 
 html, body {

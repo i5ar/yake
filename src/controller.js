@@ -8,6 +8,20 @@ export default class Controller extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  get width() {
+    if (this.keycap && this.keycap.w !== undefined) return this.keycap.w;
+    if (this.keycap && this.keycap.w === undefined) return "1";
+    return "";
+  }
+
+  componentDidMount() {
+    tippy("label", {
+      placement: "top-end",
+      animateFill: false,
+      theme: "solarized"
+    });
+  }
+
   handleClick(evt) {
     this.props.handleClickCallback_(evt);
   }
@@ -18,34 +32,53 @@ export default class Controller extends React.Component {
 
   render() {
     const {info, layout, active, keydev} = this.props;
-    const selectedKeycap = info.layouts ? info.layouts[layout].layout[keydev] : {};
 
+    this.keycap = info.layouts ? info.layouts[layout].layout[keydev] : {};
 
     return e(
       "div",
       {
         className: active ? "controller active" : "controller",
       },
-      e(
-        "form", {
-          className: "pure-form pure-form-aligned",
-          onChange: this.handleChange,
-        },
-        e(
-          "fieldset", {
-            className: "pure-control-group"
-          },
-          e(
-            "div", null,
-            e("label", null, "Keycaps: "),
-            e("input", {
-              type: "number",
-              name: "keycaps",
-              value: info.layouts ? info.layouts[layout].layout.length : 0,
-            })
-          )
-        )
+
+      e("div", null,
+        e("button", {
+          type: "button",
+          className: "pure-button success",
+          name: "add",
+          onClick: this.handleClick,
+        }, "Add keycap"),
+        e("button", {
+          type: "button",
+          className: "pure-button error",
+          name: "remove",
+          onClick: this.handleClick,
+        }, "Remove keycap"),
       ),
+
+      // e(
+      //   "form", {
+      //     className: "pure-form pure-form-aligned",
+      //     onChange: this.handleChange,
+      //   },
+      //   e(
+      //     "fieldset", {
+      //       className: "pure-control-group"
+      //     },
+      //     e(
+      //       "div", null,
+      //       e("label", {
+      //         "data-tippy-content": "layout.length",
+      //       }, "Keycaps: "),
+      //       e("input", {
+      //         type: "number",
+      //         name: "keycaps",
+      //         value: info.layouts ? info.layouts[layout].layout.length : 0,
+      //       })
+      //     )
+      //   )
+      // ),
+
       e(
         "form",
         {
@@ -58,33 +91,40 @@ export default class Controller extends React.Component {
           },
           e(
             "div", null,
-            e("label", null, "Move abscissa: "),
+            e("label", {
+              "data-tippy-content": "x",
+            }, "Move abscissa: "),
             e("input", {
               type: "number",
               step: 0.25,
               name: "x",
-              value: selectedKeycap && selectedKeycap.x !== undefined ? selectedKeycap.x : "",
+              value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : "",
             })
           ),
           e(
             "div", null,
-            e("label", null, "Move ordinate: "),
+            e("label", {
+              "data-tippy-content": "y",
+            }, "Move ordinate: "),
             e("input", {
               type: "number",
               step: 0.25,
               name: "y",
-              value: selectedKeycap && selectedKeycap.y !== undefined ? selectedKeycap.y : "",
+              value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : "",
             })
           ),
           e(
             "div", null,
-            e("label", null, "Rotate: "),
+            e("label", {
+              "data-tippy-content": "w",
+            }, "Width: "),
             e("input", {
               type: "number",
-              step: 5,
-              name: "r",
-              value: selectedKeycap && selectedKeycap.r !== undefined ? selectedKeycap.r : "",
-            }),
+              step: 0.25,
+              name: "w",
+              min: 1,
+              value: this.width
+            })
           )
         ),
       ),
@@ -97,30 +137,42 @@ export default class Controller extends React.Component {
           "fieldset", {
             className: "pure-control-group"
           },
-
           e(
             "div", null,
-            e("label", null, "Rotate abscissa: "),
-
+            e("label", {
+              "data-tippy-content": "r",
+            }, "Rotate: "),
+            e("input", {
+              type: "number",
+              step: 5,
+              name: "r",
+              value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
+            }),
+          ),
+          e(
+            "div", null,
+            e("label", {
+              "data-tippy-content": "rx",
+            }, "Rotate abscissa: "),
             e("input", {
               type: "number",
               step: 0.25,
               name: "rx",
-              value: selectedKeycap && selectedKeycap.rx !== undefined ? selectedKeycap.rx : "",
+              value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : "",
             })
           ),
           e(
             "div", null,
-            e("label", null, "Rotate ordinate: "),
-
+            e("label", {
+              "data-tippy-content": "ry",
+            }, "Rotate ordinate: "),
             e("input", {
               type: "number",
               step: 0.25,
               name: "ry",
-              value: selectedKeycap && selectedKeycap.ry !== undefined ? selectedKeycap.ry : "",
+              value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : "",
             })
           )
-
         )
       ),
       e(
@@ -134,27 +186,25 @@ export default class Controller extends React.Component {
           },
           e(
             "div", null,
-            e("label", null, "Label: "),
+            e("label", {
+              "data-tippy-content": "label",
+            }, "Label: "),
             e("input", {
-              style: {
-                width: "12em"
-              },
               type: "text",
               name: "label",
-              maxlength: selectedKeycap && selectedKeycap.w !== undefined ? 6 * (selectedKeycap.w - 0.25) : 4,
-              value: selectedKeycap && selectedKeycap.label !== undefined ? selectedKeycap.label : "",
+              maxlength: this.keycap && this.keycap.w !== undefined ? 6 * (this.keycap.w - 0.25) : 4,
+              value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : "",
             })
           ),
           e(
             "div", null,
-            e("label", null, "Points (ISO): "),
+            e("label", {
+              "data-tippy-content": "p",
+            }, "Points: "),
             e("input", {
-              style: {
-                width: "12em"
-              },
               type: "text",
               name: "p",
-              value: selectedKeycap && selectedKeycap.p !== undefined ? selectedKeycap.p : "",
+              value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : "",
             })
           )
         )
