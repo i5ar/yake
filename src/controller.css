@@ -23,7 +23,7 @@
 .controller input[type=text],
 .controller input[type=number] {
     border-radius: 0;
-    width: 5em;
+    width: 6em;
 }
 
 .controller div:first-child input[type=text],

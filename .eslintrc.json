@@ -14,6 +14,7 @@
         "Atomics": "readonly",
         "Mocha": "readonly",
         "Noty": "readonly",
+        "R": "readonly",
         "React": "readonly",
         "ReactDOM": "readonly",
         "ReactRouterDOM": "readonly",

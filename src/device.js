@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.js";
+import {
+  getSize
+} from "./common/size.js";
 
 
 const e = React.createElement;
+const k = Object.keys;
 
 export default class Device extends React.Component {
   render() {
@@ -75,8 +79,16 @@ export default class Device extends React.Component {
         );
       }
     }
-    const width = info && info.width ? 54 * info.width + 1 + 10 : 0;
-    const height = info && info.height ? 54 * info.height + 1 + 10 : 0;
+
+    let [width, height] = k(info).length !== 0 ? [info.width, info.height] : [0, 0];
+
+    // NOTE: Guess size when `width` and `height` are not present in `info.json`.
+    const size = getSize(info, layout);
+    const [_width, _height] = size || [0, 0];
+
+    width = 10 + 1 + 54 * (width || _width);
+    height = 10 + 1 + 54 * (height || _height);
+
     return e(
       "div", {
         className: "device",

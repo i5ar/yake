@@ -202,6 +202,20 @@ class Root extends React.Component {
           }
         }
       }));
+    } else if (name === "h") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            [this.state.layout]: {
+              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+                if (i === this.state.keydev) return {...l, h: parseInt(value, 10)};
+                return l;
+              })
+            }
+          }
+        }
+      }));
     } else if (name === "r") {
       this.setState(s => ({
         info: {

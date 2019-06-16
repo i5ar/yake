@@ -2,8 +2,7 @@
 
 YAKE (Yet Another Keyboard **Explorer**) has just become YAKE (Yet Another Keyboard **Editor**).
 
-Now, you can edit your keyboard directly from a text editor.  
-The data structure is based on QMK `info.json` file.
+A keyboard layout designer based on QMK ([`info.json`](https://beta.docs.qmk.fm/reference/reference_info_json)).
 
 ## Features
 
@@ -12,12 +11,19 @@ The data structure is based on QMK `info.json` file.
 - ISO keys (`p`):
 
       "p": [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+- Polygonal case:
+
+      "case": [{"p": [0, 0, 12, 0, 12, 4, 0, 4]}]
+- SVG export.
 
 ## Contribute
 
 Feel free to pull and push.
 
 > Make sure it doesn't work on IE!
+
+Please, avoid using server-side JavaScript implementations like Node.js and Deno:
+YAKE should be easy and fast to install (it should work out of the box).
 
 ### Installation
 
@@ -28,10 +34,14 @@ Download and spin a web server:
 
 ### Test
 
-Use Mocha and Chai on the browser (i.e. <http:localhost:5500/tests>).
+Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 
 ## TODO
 
+- [ ] Fix `rx`, `ry` in view box;
+- [ ] Lock controller to the bottom;
+- [ ] Add label position to the navbar;
+- [ ] Add polygonal case;
 - [ ] Add spinner;
 - [ ] Add accordion?
 - [x] Make the data structure (`info.json`) editable;

@@ -14,6 +14,12 @@ export default class Controller extends React.Component {
     return "";
   }
 
+  get height() {
+    if (this.keycap && this.keycap.h !== undefined) return this.keycap.h;
+    if (this.keycap && this.keycap.h === undefined) return "1";
+    return "";
+  }
+
   componentDidMount() {
     tippy("label", {
       placement: "top-end",
@@ -92,6 +98,34 @@ export default class Controller extends React.Component {
           e(
             "div", null,
             e("label", {
+              "data-tippy-content": "w",
+            }, "Width: "),
+            e("input", {
+              type: "number",
+              step: 0.25,
+              name: "w",
+              min: 1,
+              max: 15,
+              value: this.width
+            })
+          ),
+          e(
+            "div", null,
+            e("label", {
+              "data-tippy-content": "h",
+            }, "Height: "),
+            e("input", {
+              type: "number",
+              step: 1,
+              name: "h",
+              min: 1,
+              max: 2,
+              value: this.height
+            })
+          ),
+          e(
+            "div", null,
+            e("label", {
               "data-tippy-content": "x",
             }, "Move abscissa: "),
             e("input", {
@@ -112,21 +146,8 @@ export default class Controller extends React.Component {
               name: "y",
               value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : "",
             })
-          ),
-          e(
-            "div", null,
-            e("label", {
-              "data-tippy-content": "w",
-            }, "Width: "),
-            e("input", {
-              type: "number",
-              step: 0.25,
-              name: "w",
-              min: 1,
-              value: this.width
-            })
           )
-        ),
+        )
       ),
       e(
         "form", {
@@ -147,7 +168,7 @@ export default class Controller extends React.Component {
               step: 5,
               name: "r",
               value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
-            }),
+            })
           ),
           e(
             "div", null,
