@@ -33,6 +33,8 @@ export function getSize(info, layout) {
       const w = keys[i].w || 1;
       const h = keys[i].h || 1;
       const r = keys[i].r || 0;
+      const rx = keys[i].rx || 0;
+      const ry = keys[i].ry || 0;
 
       const hypotenuse = Math.sqrt(keys[i].x ** 2 + keys[i].y ** 2);
       const tanAlpha = keys[i].y / keys[i].x || 0;  // sohcah[toa]

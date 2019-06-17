@@ -9,8 +9,21 @@ const e = React.createElement;
 const k = Object.keys;
 
 export default class Device extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(evt) {
+    const client = evt.target.getBoundingClientRect();
+    const x = evt.clientX - client.left;
+    const y = evt.clientY - client.top;
+    console.log(x / 54, y / 54);
+  }
+
   render() {
     const keycaps = [];
+    const cases = [];
     const {
       info,
       layout,
@@ -80,6 +93,24 @@ export default class Device extends React.Component {
       }
     }
 
+    // NOTE: Case.
+    if (info && info.layouts && info.layouts[layout] && info.layouts[layout].case) {
+      for (let i = 0; i < info.layouts[layout].case.length; i++) {
+        const u = 54;
+        const radius = 5;
+        const p = info.layouts[layout].case[i].p.map(point => point * u);
+        cases.push(
+          e("polygon", {
+            points: p.join(","),
+            fill: "#eee8d5",
+            strokeWidth: radius * 2,
+            stroke: "#eee8d5",
+            strokeLinejoin: "round"
+          })
+        );
+      }
+    }
+
     let [width, height] = k(info).length !== 0 ? [info.width, info.height] : [0, 0];
 
     // NOTE: Guess size when `width` and `height` are not present in `info.json`.
@@ -98,15 +129,11 @@ export default class Device extends React.Component {
         "svg", {
           width,
           height,
-          viewBox: `0 0 ${width} ${height}`
+          viewBox: `0 0 ${width} ${height}`,
+          onClick: this.handleClick
         },
         defs,
-        hasCase && e("rect", {
-          width,
-          height,
-          rx: 5,
-          fill: "#eee8d5",
-        }),
+        hasCase ? e("g", null, cases) : null,
         e(
           "g", {
             transform: "translate(5, 5)"

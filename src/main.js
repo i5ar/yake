@@ -30,7 +30,7 @@ class Root extends React.Component {
       isInitial: true,
       isCustom: false,
       hasProfile: true,
-      hasCase: false,
+      hasCase: true,
       keydev: null,
     };
 
@@ -165,9 +165,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, x: parseFloat(value)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, x: parseFloat(value)};
                 return l;
               })
             }
@@ -179,9 +180,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, y: parseFloat(value)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, y: parseFloat(value)};
                 return l;
               })
             }
@@ -193,9 +195,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, w: parseFloat(value)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, w: parseFloat(value)};
                 return l;
               })
             }
@@ -207,9 +210,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, h: parseInt(value, 10)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, h: parseInt(value, 10)};
                 return l;
               })
             }
@@ -221,9 +225,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, r: parseInt(value, 10)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, r: parseInt(value, 10)};
                 return l;
               })
             }
@@ -235,9 +240,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, rx: parseFloat(value)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, rx: parseFloat(value)};
                 return l;
               })
             }
@@ -249,9 +255,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, ry: parseFloat(value)};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, ry: parseFloat(value)};
                 return l;
               })
             }
@@ -263,9 +270,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, label: value};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, label: value};
                 return l;
               })
             }
@@ -277,9 +285,10 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
-                if (i === this.state.keydev) return {...l, p: value.split(",")};
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === s.keydev) return {...l, p: value.split(",")};
                 return l;
               })
             }
@@ -328,6 +337,7 @@ class Root extends React.Component {
           info: {
             ...s.info,
             layouts: {
+              ...s.info.layouts,
               [s.layout]: {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
@@ -351,6 +361,7 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
+            ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.filter((l, i) => {
                 if (s.keydev === null) {
@@ -383,8 +394,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, x: parseFloat(l.x) + 0.25};
                 return l;
               })
@@ -397,8 +409,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, x: parseFloat(l.x) - 0.25};
                 return l;
               })
@@ -411,8 +424,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, y: parseFloat(l.y) - 0.25};
                 return l;
               })
@@ -425,8 +439,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, y: parseFloat(l.y) + 0.25};
                 return l;
               })
@@ -440,6 +455,7 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
+            ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.filter((l, i) => {
                 if (s.keydev === null) {
@@ -460,6 +476,7 @@ class Root extends React.Component {
           info: {
             ...s.info,
             layouts: {
+              ...s.info.layouts,
               [s.layout]: {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
@@ -482,8 +499,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, x: 0, y: 0};
                 return l;
               })
@@ -499,8 +517,9 @@ class Root extends React.Component {
         info: {
           ...s.info,
           layouts: {
-            [this.state.layout]: {
-              layout: s.info.layouts[this.state.layout].layout.map((l, i) => {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
                 if (i === keydev) return {...l, label: _key};
                 return l;
               })

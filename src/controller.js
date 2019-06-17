@@ -127,7 +127,7 @@ export default class Controller extends React.Component {
             "div", null,
             e("label", {
               "data-tippy-content": "x",
-            }, "Move abscissa: "),
+            }, "Abscissa: "),
             e("input", {
               type: "number",
               step: 0.25,
@@ -139,7 +139,7 @@ export default class Controller extends React.Component {
             "div", null,
             e("label", {
               "data-tippy-content": "y",
-            }, "Move ordinate: "),
+            }, "Ordinate: "),
             e("input", {
               type: "number",
               step: 0.25,
@@ -162,11 +162,13 @@ export default class Controller extends React.Component {
             "div", null,
             e("label", {
               "data-tippy-content": "r",
-            }, "Rotate: "),
+            }, "Rotation: "),
             e("input", {
               type: "number",
               step: 5,
               name: "r",
+              min: -180,
+              max: 180,
               value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
             })
           ),
@@ -174,7 +176,7 @@ export default class Controller extends React.Component {
             "div", null,
             e("label", {
               "data-tippy-content": "rx",
-            }, "Rotate abscissa: "),
+            }, "Abscissa rotat.: "),
             e("input", {
               type: "number",
               step: 0.25,
@@ -186,7 +188,7 @@ export default class Controller extends React.Component {
             "div", null,
             e("label", {
               "data-tippy-content": "ry",
-            }, "Rotate ordinate: "),
+            }, "Ordinate rotat.: "),
             e("input", {
               type: "number",
               step: 0.25,
