@@ -47,20 +47,20 @@ export default class Controller extends React.Component {
         className: active ? "controller active" : "controller",
       },
 
-      e("div", null,
-        e("button", {
-          type: "button",
-          className: "pure-button success",
-          name: "add",
-          onClick: this.handleClick,
-        }, "Add keycap"),
-        e("button", {
-          type: "button",
-          className: "pure-button error",
-          name: "remove",
-          onClick: this.handleClick,
-        }, "Remove keycap"),
-      ),
+      // e("div", null,
+      //   e("button", {
+      //     type: "button",
+      //     className: "pure-button success",
+      //     name: "add",
+      //     onClick: this.handleClick,
+      //   }, "Add keycap"),
+      //   e("button", {
+      //     type: "button",
+      //     className: "pure-button error",
+      //     name: "remove",
+      //     onClick: this.handleClick,
+      //   }, "Remove keycap"),
+      // ),
 
       // e(
       //   "form", {

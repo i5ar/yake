@@ -11,6 +11,14 @@
     display: flex;
 }
 
+.controller.active {
+    position: fixed;
+    z-index: 7;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
 .controller > div {
     width: 100%;
 }
