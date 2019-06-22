@@ -22,10 +22,13 @@ export default class Device extends React.Component {
   }
 
   render() {
+    const u = 54;
+    let origin;
     const keycaps = [];
-    const cases = [];
+    const shapes = [];
     const {
       info,
+      keydev,
       layout,
       hasProfile,
       hasCase,
@@ -70,6 +73,7 @@ export default class Device extends React.Component {
 
     if (info && info.layouts && info.layouts[layout]) {
       for (let i = 0; i < info.layouts[layout].layout.length; i++) {
+        // NOTE: Add keycaps.
         keycaps.push(
           e(Keycap, {
             x: info.layouts[layout].layout[i].x,
@@ -90,16 +94,31 @@ export default class Device extends React.Component {
             handleKeyDownCallback: this.props.handleKeyDownCallback,
           })
         );
+
+        // NOTE: Show origin rx, ry.
+        const {rx, ry} = info.layouts[layout].layout[i];
+        if (i === keydev) {
+          origin = e(
+            "g", {
+              transform: `translate(${rx * u || 0}, ${ry * u || 0})`
+            }, e("circle", {
+              cx: 5,
+              cy: 5,
+              r: 5,
+              fill: "var(--base2)"
+            })
+          );
+        }
       }
     }
 
     // NOTE: Case.
-    if (info && info.layouts && info.layouts[layout] && info.layouts[layout].case) {
-      for (let i = 0; i < info.layouts[layout].case.length; i++) {
-        const u = 54;
+    if (info && info.housing) {
+      const shape = k(info.housing)[0];
+      for (let i = 0; i < info.housing[shape].shape.length; i++) {
         const radius = 5;
-        const p = info.layouts[layout].case[i].p.map(point => point * u);
-        cases.push(
+        const p = info.housing[shape].shape[i].p.map(point => point * u);
+        shapes.push(
           e("polygon", {
             points: p.join(","),
             fill: "#eee8d5",
@@ -117,8 +136,8 @@ export default class Device extends React.Component {
     const size = getSize(info, layout);
     const [_width, _height] = size || [0, 0];
 
-    width = 10 + 1 + 54 * (width || _width);
-    height = 10 + 1 + 54 * (height || _height);
+    width = 10 + 1 + u * (width || _width);
+    height = 10 + 1 + u * (height || _height);
 
     return e(
       "div", {
@@ -133,7 +152,8 @@ export default class Device extends React.Component {
           onClick: this.handleClick
         },
         defs,
-        hasCase ? e("g", null, cases) : null,
+        hasCase ? e("g", null, shapes) : null,
+        origin,
         e(
           "g", {
             transform: "translate(5, 5)"

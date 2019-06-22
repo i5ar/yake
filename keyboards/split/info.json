@@ -3,10 +3,9 @@
     "keyboard_folder": "split",
     "url": "",
     "maintainer": "i5ar",
-    "points": [],
-    "layouts": {
-        "LAYOUT": {
-            "case": [
+    "housing": {
+        "SPLIT": {
+            "shape": [
                 {
                     "p": [
                         9.1, 2.3,
@@ -17,7 +16,11 @@
                         8.85, 3.45
                     ]
                 }
-            ],
+            ]
+        }
+    },
+    "layouts": {
+        "LAYOUT": {
             "layout": [
                 {
                     "label": "`",
