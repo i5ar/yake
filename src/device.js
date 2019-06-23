@@ -18,7 +18,7 @@ export default class Device extends React.Component {
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    // console.log(x / 54, y / 54);
+    console.log(x / 54, y / 54);
   }
 
   render() {
@@ -97,15 +97,31 @@ export default class Device extends React.Component {
 
         // NOTE: Show origin rx, ry.
         const {rx, ry} = info.layouts[layout].layout[i];
+        const fill = "var(--blue)";
         if (i === keydev) {
           origin = e(
             "g", {
               transform: `translate(${rx * u || 0}, ${ry * u || 0})`
-            }, e("circle", {
+            },
+            e("circle", {
               cx: 5,
               cy: 5,
               r: 5,
-              fill: "var(--base2)"
+              fill
+            }),
+            e("rect", {
+              width: 2,
+              height: 18,
+              x: 4,
+              y: -4,
+              fill
+            }),
+            e("rect", {
+              width: 18,
+              height: 2,
+              x: -4,
+              y: 4,
+              fill
             })
           );
         }
@@ -121,9 +137,9 @@ export default class Device extends React.Component {
         shapes.push(
           e("polygon", {
             points: p.join(","),
-            fill: "#eee8d5",
+            fill: info.housing[shape].color || "var(--base2)",
             strokeWidth: radius * 2,
-            stroke: "#eee8d5",
+            stroke: info.housing[shape].color || "var(--base2)",
             strokeLinejoin: "round"
           })
         );
