@@ -18,7 +18,7 @@ export default class Device extends React.Component {
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    console.log(x / 54, y / 54);
+    // console.log(x / 54, y / 54);
   }
 
   render() {
