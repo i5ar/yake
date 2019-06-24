@@ -72,6 +72,7 @@ export default class Keycap extends React.Component {
           height: heightOuter || 52,
           rx: radius,
           fill: fill[1],
+          stroke: this.props.keydev === this.props.index ? "var(--blue)" : null,
         }),
         e(Rectangle, {
           className: "inner border",
@@ -137,6 +138,7 @@ export default class Keycap extends React.Component {
         className: "outer border",
         d: dOuter,
         fill: fill[1],
+        stroke: this.props.keydev === this.props.index ? "var(--blue)" : null,
       }),
       e(Path, {
         className: "inner border",

@@ -325,9 +325,10 @@ class Root extends React.Component {
     if (evt.name === "keydev") {
       const index = parseInt(evt.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
-      this.setState({
-        keydev: index
-      });
+      this.setState(s => ({
+        // NOTE: Make the key `null` if the previous value was the same (toggle).
+        keydev: s.keydev === index ? null : index
+      }));
     } else if (evt.target.name === "add") {
       this.setState(s => {
         const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;

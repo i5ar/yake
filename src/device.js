@@ -89,6 +89,7 @@ export default class Device extends React.Component {
             code: "KC_NO",
             keys: [],
             index: i,
+            keydev,
             hasProfile,
             handleClickCallback_: this.props.handleClickCallback_,
             handleKeyDownCallback: this.props.handleKeyDownCallback,
