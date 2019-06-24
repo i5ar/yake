@@ -134,16 +134,32 @@ export default class Device extends React.Component {
       const shape = k(info.housing)[0];
       for (let i = 0; i < info.housing[shape].shape.length; i++) {
         const radius = 5;
-        const p = info.housing[shape].shape[i].p.map(point => point * u);
-        shapes.push(
-          e("polygon", {
-            points: p.join(","),
-            fill: info.housing[shape].color || "var(--base2)",
-            strokeWidth: radius * 2,
-            stroke: info.housing[shape].color || "var(--base2)",
-            strokeLinejoin: "round"
-          })
-        );
+        if (info.housing[shape].shape[i].p) {
+          const p = info.housing[shape].shape[i].p.map(point => point * u);
+          shapes.push(
+            e("polygon", {
+              points: p.join(","),
+              fill: info.housing[shape].color || "var(--base2)",
+              strokeWidth: radius * 2,
+              stroke: info.housing[shape].color || "var(--base2)",
+              strokeLinejoin: "round"
+            })
+          );
+        }
+        if (info.housing[shape].shape[i].w && info.housing[shape].shape[i].h) {
+          shapes.push(
+            e("rect", {
+              x: 5,
+              y: 5,
+              width: info.housing[shape].shape[i].w * u,
+              height: info.housing[shape].shape[i].h * u,
+              fill: info.housing[shape].color || "var(--base2)",
+              strokeWidth: radius * 2,
+              stroke: info.housing[shape].color || "var(--base2)",
+              strokeLinejoin: "round"
+            })
+          );
+        }
       }
     }
 

@@ -1,32 +1,23 @@
 .controller {
     display: none;
     background-color: var(--base2);
-    justify-content: space-between;
-    flex-wrap: wrap;
     border-bottom: var(--radius) dotted var(--base3);
     font-family: var(--monospace);
 }
 
 .controller.active {
+    display: inherit;
+}
+
+.controller > div:nth-child(2) {
     display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-/*
-.controller.active {
-    position: fixed;
-    z-index: 7;
-    bottom: 0;
-    right: 0;
-    left: 0;
-}
-*/
+/* Form */
 
-.controller > div {
-    width: 100%;
-}
-
-.controller > div,
-.controller > form {
+.controller div form {
     margin: 1em;
 }
 
@@ -56,7 +47,9 @@
     width: auto;
 }
 
-.controller div button {
+/* Buttons */
+
+.controller div:nth-child(1) button {
     border-radius: 0;
     width: 100%;
 }
@@ -82,7 +75,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .controller > div {
+    .controller div:nth-child(1) button {
         width: auto;
     }
 }

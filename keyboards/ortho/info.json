@@ -1,9 +1,20 @@
 {
-    "keyboard_name": "Tavolozza",
-    "keyboard_folder": "tavolozza",
+    "keyboard_name": "Ortho",
+    "keyboard_folder": "ortho",
     "maintainer": "i5ar",
     "width": 12,
     "height": 4,
+    "housing": {
+        "ORTHO": {
+            "shape": [
+                {
+                    "w": 12,
+                    "h": 4
+                }
+            ],
+            "color": "#eee8d5"
+        }
+    },
     "layouts": {
         "LAYOUT": {
             "layout": [

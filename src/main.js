@@ -329,7 +329,8 @@ class Root extends React.Component {
         // NOTE: Make the key `null` if the previous value was the same (toggle).
         keydev: s.keydev === index ? null : index
       }));
-    } else if (evt.target.name === "add") {
+    } else if (evt.target.name.startsWith("add")) {
+      const {name} = evt.target;
       this.setState(s => {
         const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
         const w = _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].w || 1 : 1;
@@ -343,6 +344,9 @@ class Root extends React.Component {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
                   {
+                    w: name === "add-iso" ? 1.25 : 1,
+                    h: name === "add-iso" ? 2 : 1,
+                    p: name === "add-iso" ? [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1] : null,
                     x: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].x + w : 0,
                     y: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].y : 0,
                     r: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].r : 0,
