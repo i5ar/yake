@@ -32,6 +32,12 @@ class Root extends React.Component {
       hasProfile: true,
       hasCase: true,
       keydev: null,
+
+      // TODO: Add features.
+      color: ["#fff", "#000"],  // legend color, keycap color
+      profile: [0, 0, 0],  // profile, row, homing
+      switch: [0, 0, 0],  // mount, brand, type
+      step: 0
     };
 
     this.protip;
@@ -59,7 +65,7 @@ class Root extends React.Component {
       theme: "solarized",
       text: `
       <h3>Protip</h3>
-      <p>${protip}</p>`,
+      <p>${protip}</p>`
     });
     if (document.cookie.includes("protip")) {
       const match = "protip=";
@@ -83,7 +89,7 @@ class Root extends React.Component {
       keyboards,
       info: s.hasApi ? info.keyboards[keyboard] : info,
       keyboard,
-      layout: s.hasApi ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+      layout: s.hasApi ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0]
     }));
   }
 
@@ -96,7 +102,7 @@ class Root extends React.Component {
           info: s.hasApi ? info.keyboards[keyboard] : info,
           keyboard,
           layout: s.hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
-          isCustom: false,
+          isCustom: false
         }));
         if (this.selectElement) this.selectElement.focus();
         if (this.formElement) this.formElement.reset();
@@ -110,12 +116,12 @@ class Root extends React.Component {
           info,
           keyboard: info.keyboard_name.toLowerCase(),
           layout: k(info.layouts)[0],
-          isCustom: true,
+          isCustom: true
         });
       };
     } else {
       this.setState({
-        [name]: value,
+        [name]: value
       });
     }
   }
@@ -310,13 +316,13 @@ class Root extends React.Component {
             keyboards,
             info: hasApi ? info.keyboards[keyboard] : info,
             keyboard,
-            layout: hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+            layout: hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0]
           });
         });
       });
     } else {
       this.setState({
-        [name]: value,
+        [name]: value
       });
     }
   }
@@ -385,7 +391,7 @@ class Root extends React.Component {
     try {
       const code = JSON.parse(editor.session.getValue());
       this.setState({
-        info: code,
+        info: code
       });
     } catch (err) {
       console.error(err);
@@ -546,7 +552,7 @@ class Root extends React.Component {
       isCustom,
       hasProfile,
       hasCase,
-      keydev,
+      keydev
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
@@ -558,7 +564,7 @@ class Root extends React.Component {
           hasCase,
           onClickCallback: this.handleClickCallback,
           deviceHtml: this.deviceElement,
-          onChangeCallback: this.handleChangeCallback,
+          onChangeCallback: this.handleChangeCallback
         }),
         e(
           "main", {
@@ -577,8 +583,8 @@ class Root extends React.Component {
                   display: "flex",
                   flexWrap: "wrap",
                   padding: "0.5em 0",
-                  justifyContent: "center",
-                },
+                  justifyContent: "center"
+                }
               },
               e(ReactRouterDOM.withRouter(Dropdown), {
                 selectRef: elm => this.selectElement = elm,
@@ -589,18 +595,18 @@ class Root extends React.Component {
                 hasApi,
                 isInitial,
                 isCustom,
-                onHashCallback: this.handleHashCallback,
+                onHashCallback: this.handleHashCallback
               }),
               e(Dropdown, {
                 name: "layout",
                 value: layout,
                 options: info && info.layouts && k(info.layouts).length ? k(
                   info.layouts) : null,
-                onChangeCallback: this.handleChangeCallback,
+                onChangeCallback: this.handleChangeCallback
               }),
               e(Form, {
                 formRef: elm => this.formElement = elm,
-                onChangeCallback: this.handleChangeCallback,
+                onChangeCallback: this.handleChangeCallback
               })
             ),
             e(ReactRouterDOM.Route, {
@@ -614,7 +620,7 @@ class Root extends React.Component {
                 keydev,
                 hasCase,
                 handleClickCallback_: this.handleClickCallback_,
-                handleKeyDownCallback: this.handleKeyDownCallback,
+                handleKeyDownCallback: this.handleKeyDownCallback
               })
             }),
           ),
@@ -623,12 +629,12 @@ class Root extends React.Component {
             layout,
             keydev,
             handleClickCallback_: this.handleClickCallback_,
-            handleChangeCallback_: this.handleChangeCallback_,
+            handleChangeCallback_: this.handleChangeCallback_
           }),
           e(Editor, {
             info,
             keydev,
-            handleAceCallback: this.handleAceCallback,
+            handleAceCallback: this.handleAceCallback
           }),
           e(Footer)
         )
