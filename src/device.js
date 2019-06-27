@@ -31,7 +31,7 @@ export default class Device extends React.Component {
       keydev,
       layout,
       hasProfile,
-      hasCase,
+      hasCase
     } = this.props;
 
     const defs = e(
@@ -82,6 +82,8 @@ export default class Device extends React.Component {
             h: info.layouts[layout].layout[i].h,
             ks: info.layouts[layout].layout[i].ks,
             p: info.layouts[layout].layout[i].p,
+            c: info.layouts[layout].layout[i].c,
+            t: info.layouts[layout].layout[i].t,
             r: info.layouts[layout].layout[i].r,
             rx: info.layouts[layout].layout[i].rx,
             ry: info.layouts[layout].layout[i].ry,
@@ -92,13 +94,13 @@ export default class Device extends React.Component {
             keydev,
             hasProfile,
             handleClickCallback_: this.props.handleClickCallback_,
-            handleKeyDownCallback: this.props.handleKeyDownCallback,
+            handleKeyDownCallback: this.props.handleKeyDownCallback
           })
         );
 
         // NOTE: Show origin rx, ry.
         const {rx, ry} = info.layouts[layout].layout[i];
-        const fill = "var(--blue)";
+        const fill = "var(--base0)";
         if (i === keydev) {
           origin = e(
             "g", {
@@ -134,14 +136,15 @@ export default class Device extends React.Component {
       const shape = k(info.housing)[0];
       for (let i = 0; i < info.housing[shape].shape.length; i++) {
         const radius = 5;
+        const color = info.housing[shape].color || "var(--base01)";
         if (info.housing[shape].shape[i].p) {
           const p = info.housing[shape].shape[i].p.map(point => point * u);
           shapes.push(
             e("polygon", {
               points: p.join(","),
-              fill: info.housing[shape].color || "var(--base2)",
+              fill: color,
               strokeWidth: radius * 2,
-              stroke: info.housing[shape].color || "var(--base2)",
+              stroke: color,
               strokeLinejoin: "round"
             })
           );
@@ -149,13 +152,13 @@ export default class Device extends React.Component {
         if (info.housing[shape].shape[i].w && info.housing[shape].shape[i].h) {
           shapes.push(
             e("rect", {
-              x: 5,
-              y: 5,
+              x: info.housing[shape].shape[i].x * u + 5 || 5,
+              y: info.housing[shape].shape[i].y * u + 5 || 5,
               width: info.housing[shape].shape[i].w * u,
               height: info.housing[shape].shape[i].h * u,
-              fill: info.housing[shape].color || "var(--base2)",
+              fill: color,
               strokeWidth: radius * 2,
-              stroke: info.housing[shape].color || "var(--base2)",
+              stroke: color,
               strokeLinejoin: "round"
             })
           );
@@ -175,7 +178,7 @@ export default class Device extends React.Component {
     return e(
       "div", {
         className: "device",
-        ref: this.props.deviceRef,
+        ref: this.props.deviceRef
       },
       e(
         "svg", {

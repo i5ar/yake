@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 const e = React.createElement;
+const {floor} = Math;
 
 export default class Controller extends React.Component {
   constructor() {
@@ -44,7 +45,7 @@ export default class Controller extends React.Component {
     return e(
       "div",
       {
-        className: active ? "controller active" : "controller",
+        className: active ? "controller active" : "controller"
       },
 
       e("div", null,
@@ -52,20 +53,20 @@ export default class Controller extends React.Component {
           type: "button",
           className: "pure-button success",
           name: "add",
-          onClick: this.handleClick,
+          onClick: this.handleClick
         }, "Add 1u keycap"),
         e("button", {
           type: "button",
           className: "pure-button success",
           name: "add-iso",
-          onClick: this.handleClick,
+          onClick: this.handleClick
         }, "Add ISO keycap"),
 
         e("button", {
           type: "button",
           className: "pure-button error",
           name: "remove",
-          onClick: this.handleClick,
+          onClick: this.handleClick
         }, "Remove keycap"),
       ),
 
@@ -75,7 +76,7 @@ export default class Controller extends React.Component {
         // e(
         //   "form", {
         //     className: "pure-form pure-form-aligned",
-        //     onChange: this.handleChange,
+        //     onChange: this.handleChange
         //   },
         //   e(
         //     "fieldset", {
@@ -84,12 +85,12 @@ export default class Controller extends React.Component {
         //     e(
         //       "div", null,
         //       e("label", {
-        //         "data-tippy-content": "layout.length",
+        //         "data-tippy-content": "layout.length"
         //       }, "Keycaps: "),
         //       e("input", {
         //         type: "number",
         //         name: "keycaps",
-        //         value: info.layouts ? info.layouts[layout].layout.length : 0,
+        //         value: info.layouts ? info.layouts[layout].layout.length : 0
         //       })
         //     )
         //   )
@@ -99,7 +100,7 @@ export default class Controller extends React.Component {
           "form",
           {
             className: "pure-form pure-form-aligned",
-            onChange: this.handleChange,
+            onChange: this.handleChange
           },
           e(
             "fieldset", {
@@ -108,7 +109,7 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "w",
+                "data-tippy-content": "w"
               }, "Width: "),
               e("input", {
                 type: "number",
@@ -122,7 +123,7 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "h",
+                "data-tippy-content": "h"
               }, "Height: "),
               e("input", {
                 type: "number",
@@ -136,25 +137,25 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "x",
+                "data-tippy-content": "x"
               }, "Abscissa: "),
               e("input", {
                 type: "number",
                 step: 0.25,
                 name: "x",
-                value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : "",
+                value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : ""
               })
             ),
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "y",
+                "data-tippy-content": "y"
               }, "Ordinate: "),
               e("input", {
                 type: "number",
                 step: 0.25,
                 name: "y",
-                value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : "",
+                value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : ""
               })
             )
           )
@@ -162,7 +163,7 @@ export default class Controller extends React.Component {
         e(
           "form", {
             className: "pure-form pure-form-aligned",
-            onChange: this.handleChange,
+            onChange: this.handleChange
           },
           e(
             "fieldset", {
@@ -171,7 +172,7 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "r",
+                "data-tippy-content": "r"
               }, "Rotation: "),
               e("input", {
                 type: "number",
@@ -179,31 +180,31 @@ export default class Controller extends React.Component {
                 name: "r",
                 min: -180,
                 max: 180,
-                value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
+                value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : ""
               })
             ),
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "rx",
+                "data-tippy-content": "rx"
               }, "Abscissa rotat.: "),
               e("input", {
                 type: "number",
                 step: 0.25,
                 name: "rx",
-                value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : "",
+                value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : ""
               })
             ),
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "ry",
+                "data-tippy-content": "ry"
               }, "Ordinate rotat.: "),
               e("input", {
                 type: "number",
                 step: 0.25,
                 name: "ry",
-                value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : "",
+                value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : ""
               })
             )
           )
@@ -211,7 +212,7 @@ export default class Controller extends React.Component {
         e(
           "form", {
             className: "pure-form pure-form-aligned",
-            onChange: this.handleChange,
+            onChange: this.handleChange
           },
           e(
             "fieldset", {
@@ -220,24 +221,24 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "label",
+                "data-tippy-content": "label"
               }, "Label: "),
               e("input", {
                 type: "text",
                 name: "label",
-                maxlength: this.keycap && this.keycap.w !== undefined ? 6 * (this.keycap.w - 0.25) : 4,
-                value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : "",
+                maxlength: this.keycap && this.keycap.w !== undefined ? floor(6 * (this.keycap.w - 0.25)) : 4,
+                value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : ""
               })
             ),
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "p",
+                "data-tippy-content": "p"
               }, "Points: "),
               e("input", {
                 type: "text",
                 name: "p",
-                value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : "",
+                value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
               })
             )
           )

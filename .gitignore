@@ -7,6 +7,9 @@ dist/
 activate.bat
 *.log
 *.exe
+keyboards/10
+keyboards/23
+keyboards/46
 
 # Dependencies
 webfonts/

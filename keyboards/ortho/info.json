@@ -12,7 +12,7 @@
                     "h": 4
                 }
             ],
-            "color": "#eee8d5"
+            "color": "#fdf6e3"
         }
     },
     "layouts": {
@@ -240,7 +240,7 @@
                     "h": 1,
                     "x": 0,
                     "y": 3,
-                    "label": "Shift"
+                    "label": "⇧"
                 },
                 {
                     "w": 1,
@@ -252,37 +252,41 @@
                     "w": 1,
                     "x": 2,
                     "y": 3,
-                    "label": "Fn"
+                    "label": "Alt"
                 },
                 {
                     "w": 1,
                     "x": 3,
                     "y": 3,
-                    "label": "Alt"
+                    "c": "#d33682",
+                    "t": "#eee8d5",
+                    "label": "Fn"
                 },
                 {
                     "w": 2,
                     "x": 4,
                     "y": 3,
-                    "label": "Space"
+                    "label": " "
                 },
                 {
                     "w": 2,
                     "x": 6,
                     "y": 3,
-                    "label": "Space"
+                    "label": " "
                 },
                 {
                     "w": 1,
                     "x": 8,
                     "y": 3,
-                    "label": "Alt"
+                    "c": "#2aa198",
+                    "t": "#eee8d5",
+                    "label": "Fn"
                 },
                 {
                     "w": 1,
                     "x": 9,
                     "y": 3,
-                    "label": "Fn"
+                    "label": "Alt"
                 },
                 {
                     "w": 1,
@@ -294,7 +298,7 @@
                     "w": 1,
                     "x": 11,
                     "y": 3,
-                    "label": "Shift"
+                    "label": "⇧"
                 }
             ]
         }

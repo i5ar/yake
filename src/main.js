@@ -31,13 +31,10 @@ class Root extends React.Component {
       isCustom: false,
       hasProfile: true,
       hasCase: true,
-      keydev: null,
+      keydev: null
 
       // TODO: Add features.
-      color: ["#fff", "#000"],  // legend color, keycap color
-      profile: [0, 0, 0],  // profile, row, homing
-      switch: [0, 0, 0],  // mount, brand, type
-      step: 0
+      // keycap color "c" and legend color "t"
     };
 
     this.protip;

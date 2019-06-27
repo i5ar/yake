@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import Rectangle from "./rectangle.js";
 import Path from "./path.js";
+import shadeColor from "./common/shade.js";
 
 const e = React.createElement;
 const f = React.Fragment;
+const {floor} = Math;
 
 export default class Keycap extends React.Component {
   constructor(props) {
@@ -27,10 +29,9 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {w, h, p, label, hasProfile} = this.props;
+    const {c, t, w, h, p, label, hasProfile} = this.props;
     const u = 54;
     const radius = 5;
-    const fill = ["#ffc93e", "#e5a100", "#073642"];
 
     let {r, rx, ry, x, y} = this.props;
     r = r || 0;
@@ -39,10 +40,13 @@ export default class Keycap extends React.Component {
     x = u * x || 0;
     y = u * y || 0;
 
-    const widthOuter = u * w - 2;
-    const heightOuter = u * h - 2;
     const widthInner = u * w - 14;
+    const widthOuter = u * w - 2;
     const heightInner = u * h - 14;
+    const heightOuter = u * h - 2;
+    const colorInner = c || "#fdf6e3";
+    const colorOuter = shadeColor(colorInner, -16);
+    const colorText = t || "#d33682";
 
     const opts = {
       tabIndex: -1,
@@ -52,14 +56,21 @@ export default class Keycap extends React.Component {
       className: "keycap",
       transform: `
                 rotate(${r} ${rx} ${ry})
-                translate(${x}, ${y})`.replace(/\s+/g, " ").trim(),
+                translate(${x}, ${y})`.replace(/\s+/g, " ").trim()
     };
 
-    const text = e("text", {
-      x: 13,  // 13
-      y: 37,
-      fill: fill[2],
-    }, label);
+    // TODO: Multiline.
+    const text = w !== undefined ?
+      e("text", {
+        x: 13,
+        y: 37,
+        fill: colorText
+      }, label && label.substring(0, floor(6 * (w - 0.25)))) :
+      e("text", {
+        x: 13,
+        y: 37,
+        fill: colorText
+      }, label && label.substring(0, 4));
 
     if (!this.props.p) {
       return e(
@@ -71,8 +82,8 @@ export default class Keycap extends React.Component {
           width: widthOuter || 52,
           height: heightOuter || 52,
           rx: radius,
-          fill: fill[1],
-          stroke: this.props.keydev === this.props.index ? "var(--blue)" : null,
+          fill: colorOuter,
+          stroke: this.props.keydev === this.props.index ? "var(--green)" : null
         }),
         e(Rectangle, {
           className: "inner border",
@@ -81,7 +92,7 @@ export default class Keycap extends React.Component {
           width: widthInner || 40,
           height: heightInner || 40,
           rx: radius,
-          fill: fill[0],
+          fill: colorInner
         }),
         hasProfile && e(Rectangle, {
           x: 7,
@@ -137,13 +148,13 @@ export default class Keycap extends React.Component {
       e(Path, {
         className: "outer border",
         d: dOuter,
-        fill: fill[1],
-        stroke: this.props.keydev === this.props.index ? "var(--blue)" : null,
+        fill: colorOuter,
+        stroke: this.props.keydev === this.props.index ? "var(--green)" : null
       }),
       e(Path, {
         className: "inner border",
         d: dInner,
-        fill: fill[0],
+        fill: colorInner
       }),
       hasProfile && e(Path, {
         d: dInner,
