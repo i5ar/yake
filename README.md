@@ -38,10 +38,11 @@ Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 
 ## TODO
 
-- [ ] Fix `rx`, `ry` in view box;
+- [x] Fix `rx`, `ry` in view box;
+- [ ] Add new layout form next to upload form;
 - [ ] Lock controller to the bottom;
-- [ ] Add label position to the navbar;
-- [ ] Add polygonal case;
+- [ ] Fix label position;
+- [x] Add polygonal case;
 - [ ] Add spinner;
 - [ ] Add accordion?
 - [x] Make the data structure (`info.json`) editable;

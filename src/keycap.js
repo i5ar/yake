@@ -17,6 +17,11 @@ export default class Keycap extends React.Component {
     this.gRef = React.createRef();
   }
 
+  get tspans() {
+    if (this.props.label) return this.props.label.split("\n");
+    return [];
+  }
+
   handleClick(evt) {
     this.props.handleClickCallback_({...evt, name: "keydev", index: this.props.index});
   }
@@ -29,7 +34,7 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {c, t, w, h, p, label, hasProfile} = this.props;
+    const {c, t, w, h, p, hasProfile} = this.props;
     const u = 54;
     const radius = 5;
 
@@ -59,18 +64,21 @@ export default class Keycap extends React.Component {
                 translate(${x}, ${y})`.replace(/\s+/g, " ").trim()
     };
 
-    // TODO: Multiline.
-    const text = w !== undefined ?
-      e("text", {
-        x: 13,
-        y: 37,
+    // TODO: Resolve multiline accordingly with KLE.
+    const textLength = w !== undefined ? floor(6 * (w - 0.25)) : 4;
+    const text = e(
+      "text", {
+        // x: 13,
+        // y: 37,
         fill: colorText
-      }, label && label.substring(0, floor(6 * (w - 0.25)))) :
-      e("text", {
-        x: 13,
-        y: 37,
-        fill: colorText
-      }, label && label.substring(0, 4));
+      },
+      this.tspans.map((l, i) => e(
+        "tspan", {
+          x: 13,
+          y: 37,
+          dy: i * -18
+        }, l && l.substring(0, textLength)))
+    );
 
     if (!this.props.p) {
       return e(
