@@ -13,7 +13,7 @@ export default class Nav extends React.Component {
       type: "info",
       text: `
       YAKE (Yet Another Keyboard Editor) is a simple keyboard designer based on QMK.
-      `,
+      `
     });
 
     this.policy = new Noty({
@@ -22,7 +22,7 @@ export default class Nav extends React.Component {
       type: "info",
       text: `
       This application set cookies to improve usability, that's all.
-      `,
+      `
     });
   }
 
@@ -62,7 +62,7 @@ export default class Nav extends React.Component {
     return e(
       "nav",
       {
-        className: "navigation",
+        className: "navigation"
       },
       e(
         "div", null,
@@ -71,7 +71,7 @@ export default class Nav extends React.Component {
           {
             style: {
               padding: "8px 1em",
-              margin: "8px 0 0 0",
+              margin: "8px 0 0 0"
             }
           }, "YAKE"
         ),
@@ -87,17 +87,17 @@ export default class Nav extends React.Component {
           opts.map((el, i) => e("li", {
             className: hasApi === !!+i && "selected",
             style: {
-              borderTop: "1px solid #002b36",
-            },
+              borderTop: "1px solid #002b36"
+            }
           }, e("a", {
             style: {
               display: "block",
-              padding: "1em",
+              padding: "1em"
             },
             href: "#",
             id: "api",
             "data-api": i,
-            onClick: this.handleClick,
+            onClick: this.handleClick
           }, el))),
         )
       ),
@@ -106,21 +106,25 @@ export default class Nav extends React.Component {
         e(
           "form", null,
           e(
-            "label", null,
-            e("input", {
-              name: "hasProfile",
-              type: "checkbox",
-              checked: this.props.hasProfile,
-              onChange: this.handleChange,
-            }), "Profile"),
-          e(
-            "label", null,
-            e("input", {
-              name: "hasCase",
-              type: "checkbox",
-              checked: this.props.hasCase,
-              onChange: this.handleChange,
-            }), "Case"),
+            "fieldset", null,
+            e("legend", null, "Display"),
+            e(
+              "label", null,
+              e("input", {
+                name: "hasProfile",
+                type: "checkbox",
+                checked: this.props.hasProfile,
+                onChange: this.handleChange
+              }), "Profile"),
+            e(
+              "label", null,
+              e("input", {
+                name: "hasCase",
+                type: "checkbox",
+                checked: this.props.hasCase,
+                onChange: this.handleChange
+              }), "Case")
+          )
         ),
         e(
           "div", {
@@ -129,23 +133,23 @@ export default class Nav extends React.Component {
           e("button", {
             id: "download",
             className: "pure-button",
-            onClick: this.handleClick,
+            onClick: this.handleClick
           }, "Download SVG")
         ),
         e(
           "div", {
-            className: "more",
+            className: "more"
           },
           e("a", {
             href: "#",
             id: "about",
-            onClick: this.handleClick,
+            onClick: this.handleClick
           }, "About"),
           e("span", null, " · "),
           e("a", {
             href: "#",
             id: "policy",
-            onClick: this.handleClick,
+            onClick: this.handleClick
           }, "Policy"),
         )
       )

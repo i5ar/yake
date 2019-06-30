@@ -3,6 +3,7 @@ import Keycap from "./keycap.js";
 import {
   getSize
 } from "./common/size.js";
+import {config} from "./common/config.js";
 
 
 const e = React.createElement;
@@ -43,28 +44,28 @@ export default class Device extends React.Component {
         e(
           "stop", {
             offset: "0%",
-            stopColor: "black",
+            stopColor: "var(--base03)",
             stopOpacity: "0"
           }
         ),
         e(
           "stop", {
             offset: "40%",
-            stopColor: "black",
+            stopColor: "var(--base03)",
             stopOpacity: "0.1"
           }
         ),
         e(
           "stop", {
             offset: "60%",
-            stopColor: "black",
+            stopColor: "var(--base03)",
             stopOpacity: "0.1"
           }
         ),
         e(
           "stop", {
             offset: "100%",
-            stopColor: "black",
+            stopColor: "var(--base03)",
             stopOpacity: "0"
           }
         )
@@ -136,7 +137,7 @@ export default class Device extends React.Component {
       const shape = k(info.housing)[0];
       for (let i = 0; i < info.housing[shape].shape.length; i++) {
         const radius = 5;
-        const color = info.housing[shape].color || "var(--base01)";
+        const color = info.housing[shape].color || config.housing.color;
         if (info.housing[shape].shape[i].p) {
           const p = info.housing[shape].shape[i].p.map(point => point * u);
           shapes.push(
@@ -193,8 +194,7 @@ export default class Device extends React.Component {
         e(
           "g", {
             transform: "translate(5, 5)"
-          },
-          e("g", null, keycaps)
+          }, keycaps
         )
       )
     );

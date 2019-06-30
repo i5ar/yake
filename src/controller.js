@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import {config} from "./common/config.js";
+
 const e = React.createElement;
 const {floor} = Math;
 
@@ -21,8 +23,20 @@ export default class Controller extends React.Component {
     return "";
   }
 
+  get c() {
+    if (this.keycap && this.keycap.c !== undefined) return this.keycap.c;
+    if (this.keycap && this.keycap.c === undefined) return config.layouts.c;
+    return "";
+  }
+
+  get t() {
+    if (this.keycap && this.keycap.t !== undefined) return this.keycap.t;
+    if (this.keycap && this.keycap.t === undefined) return config.layouts.t;
+    return "";
+  }
+
   componentDidMount() {
-    tippy("label", {
+    tippy(".controller label", {
       placement: "top-end",
       animateFill: false,
       theme: "solarized"
@@ -50,33 +64,6 @@ export default class Controller extends React.Component {
           margin: "1em"
         }
       },
-
-      e(
-        "div", {
-          style: {
-            textAlign: "center"
-          }
-        },
-        e("button", {
-          type: "button",
-          className: "pure-button success",
-          name: "add",
-          onClick: this.handleClick
-        }, "Add 1u keycap"),
-        e("button", {
-          type: "button",
-          className: "pure-button success",
-          name: "add-iso",
-          onClick: this.handleClick
-        }, "Add ISO keycap"),
-
-        e("button", {
-          type: "button",
-          className: "pure-button error",
-          name: "remove",
-          onClick: this.handleClick
-        }, "Remove keycap"),
-      ),
 
       e(
         "div", null,
@@ -166,6 +153,17 @@ export default class Controller extends React.Component {
                 value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : ""
               })
             )
+            // e(
+            //   "div", null,
+            //   e("label", {
+            //     "data-tippy-content": "p"
+            //   }, "Points: "),
+            //   e("input", {
+            //     type: "text",
+            //     name: "p",
+            //     value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
+            //   })
+            // )
           )
         ),
         e(
@@ -241,18 +239,54 @@ export default class Controller extends React.Component {
             e(
               "div", null,
               e("label", {
-                "data-tippy-content": "p"
-              }, "Points: "),
+                "data-tippy-content": "c"
+              }, "Ground color: "),
               e("input", {
                 type: "text",
-                name: "p",
-                value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
+                name: "c",
+                value: this.c
+              })
+            ),
+            e(
+              "div", null,
+              e("label", {
+                "data-tippy-content": "t"
+              }, "Label color: "),
+              e("input", {
+                type: "text",
+                name: "t",
+                value: this.t
               })
             )
           )
         )
-      )
+      ),
 
+      e(
+        "div", {
+          style: {
+            textAlign: "center"
+          }
+        },
+        e("button", {
+          type: "button",
+          className: "pure-button success",
+          name: "add",
+          onClick: this.handleClick
+        }, "Add 1u keycap"),
+        e("button", {
+          type: "button",
+          className: "pure-button success",
+          name: "add-iso",
+          onClick: this.handleClick
+        }, "Add ISO keycap"),
+        e("button", {
+          type: "button",
+          className: "pure-button error",
+          name: "remove",
+          onClick: this.handleClick
+        }, "Remove keycap"),
+      )
     );
   }
 }

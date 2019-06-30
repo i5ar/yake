@@ -2,6 +2,7 @@
 import Rectangle from "./rectangle.js";
 import Path from "./path.js";
 import shadeColor from "./common/shade.js";
+import {config} from "./common/config.js";
 
 const e = React.createElement;
 const f = React.Fragment;
@@ -49,9 +50,9 @@ export default class Keycap extends React.Component {
     const widthOuter = u * w - 2;
     const heightInner = u * h - 14;
     const heightOuter = u * h - 2;
-    const colorInner = c || "#fdf6e3";
+    const colorInner = c || config.layouts.c;
     const colorOuter = shadeColor(colorInner, -16);
-    const colorText = t || "#d33682";
+    const colorText = t || config.layouts.t;
 
     const opts = {
       tabIndex: -1,

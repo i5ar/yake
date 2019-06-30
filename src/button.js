@@ -7,7 +7,7 @@ export default class Button extends React.Component {
   constructor() {
     super();
     this.state = {
-      active: false
+      active: true
     };
 
     this.handleClick = this.handleClick.bind(this);
