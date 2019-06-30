@@ -39,6 +39,7 @@ Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 ## TODO
 
 - [x] Fix `rx`, `ry` in view box;
+- [ ] Full size text editor;
 - [ ] Add new layout form next to upload form;
 - [ ] Lock controller to the bottom;
 - [ ] Fix label position;

@@ -606,6 +606,15 @@ class Root extends React.Component {
                 onChangeCallback: this.handleChangeCallback
               })
             ),
+            e("div", null,
+              e(Button, {
+                info,
+                layout,
+                keydev,
+                handleClickCallback_: this.handleClickCallback_,
+                handleChangeCallback_: this.handleChangeCallback_
+              }),
+            ),
             e(ReactRouterDOM.Route, {
               path: `/${keyboard}`,
               children: match => e(Device, {
@@ -621,13 +630,6 @@ class Root extends React.Component {
               })
             }),
           ),
-          e(Button, {
-            info,
-            layout,
-            keydev,
-            handleClickCallback_: this.handleClickCallback_,
-            handleChangeCallback_: this.handleChangeCallback_
-          }),
           e(Editor, {
             info,
             keydev,

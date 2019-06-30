@@ -43,12 +43,20 @@ export default class Controller extends React.Component {
     this.keycap = info.layouts ? info.layouts[layout].layout[keydev] : {};
 
     return e(
-      "div",
-      {
-        className: active ? "controller active" : "controller"
+      "div", {
+        className: "controller",
+        style: {
+          display: active ? "inherit" : "none",
+          margin: "1em"
+        }
       },
 
-      e("div", null,
+      e(
+        "div", {
+          style: {
+            textAlign: "center"
+          }
+        },
         e("button", {
           type: "button",
           className: "pure-button success",
