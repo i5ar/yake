@@ -32,9 +32,9 @@ export default class Button extends React.Component {
             backgroundColor: "var(--orange)"
           },
           type: "button",
-          className: "pure-button",
+          className: this.state.active ? "pure-button pure-button-active" : "pure-button",
           onClick: this.handleClick
-        }, this.state.active ? "Close" : "Open",
+        }, "Layouts",
       ),
       e(Controller, {
         active: this.state.active,
