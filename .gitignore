@@ -1,13 +1,22 @@
-__pycache__/
-venv*/
-drivers/
-dist/
 node_modules/
+__pycache__/
+drivers/
+.cache/
+venv*/
+dist/
 activate.bat
 *.log
 *.exe
-.cache/
-.vscode/
+keyboards/10
+keyboards/23
+keyboards/46
 
 # Dependencies
-*.min.js
+webfonts/
+*.min.*
+*-min.*
+*-json.js
+ace.js
+theme-solarized_light.js
+fontawesome.css
+regular.css

@@ -12,6 +12,7 @@ export default class Rectangle extends React.Component {
         height: this.props.height,
         rx: this.props.rx,
         fill: this.props.fill,
+        stroke: this.props.stroke,
       });
   }
 }

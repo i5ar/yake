@@ -20,6 +20,7 @@ export default class Form extends React.Component {
     const {formRef} = this.props;
     return e(
       "form", {
+        className: "form",
         ref: formRef,
       }, e("input", {
         className: "pure-button",

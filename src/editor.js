@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import debounce from "./common/debounce.js";
-
 const e = React.createElement;
 
 export default class Editor extends React.Component {
@@ -9,43 +7,50 @@ export default class Editor extends React.Component {
     this.textInput = null;
     this.editor;
 
-    this.updateAce = debounce((x, y) => {
-      const code = this.editor.getSession().getValue();
-      this.props.handleChangeCodeCallback(code, x, y);
-    }, 800);
+    this.updateInfo = this.updateInfo.bind(this);
+  }
+
+  updateInfo() {
+    // NOTE: Run only with user change.
+    if (this.editor.curOp && this.editor.curOp.command.name) {
+      this.props.handleAceCallback(this.editor);
+    }
   }
 
   componentDidMount() {
     this.editor = ace.edit("editor");
+    this.editor.setTheme("ace/theme/solarized_light");
+    this.editor.setFontSize(18);
+    this.editor.session.setMode("ace/mode/json");
+    this.editor.session.on("change", this.updateInfo);
   }
 
   componentDidUpdate() {
-    const {info} = this.props;
-    const {row, column} = this.editor.getCursorPosition();
-    this.editor.getSession().setMode("ace/mode/json");
-    this.editor.getSession().on("change", (x, y) => this.updateAce(x, y));
-    this.editor.setTheme("ace/theme/solarized_light");
-    this.editor.setFontSize(18);
-    // NOTE: Update text and move cursor to the start.
-    this.editor.setValue(JSON.stringify(info, null, 4), -1);
-    // NOTE: Move cursor to the previous position.
-    this.editor.gotoLine(row + 1, column);
+    const value = this.editor.session.getValue();
+    const prevInfo = value ? JSON.parse(value, null, 4) : "";
+    const cursor = this.editor.getCursorPosition();
+    if (this.props.info !== prevInfo) {
+      // NOTE: Update text and move cursor to the start.
+      this.editor.setValue(JSON.stringify(this.props.info, null, 4), -1);
+      this.editor.selection.moveTo(cursor.row, cursor.column);
+    }
   }
 
   render() {
-    return e("div", {
-      style: {
-        overflowY: "auto",
-        minHeight: "16em",
-        height: "100%",
-      }
-    },
-    e("div", {
-      id: "editor",
-      style: {
-        height: "100%",
+    return e(
+      "div", {
+        style: {
+          flexGrow: 1,
+        }
       },
-      ref: el => this.textInput = el,
-    }));
+      e("div", {
+        id: "editor",
+        style: {
+          minHeight: "16em",
+          height: "100%",
+        },
+        ref: el => this.textInput = el,
+      })
+    );
   }
 }

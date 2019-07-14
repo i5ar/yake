@@ -1,0 +1,81 @@
+.controller {
+    background-color: var(--base03);
+    font-family: var(--monospace);
+    color: var(--base1);
+}
+
+.controller > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Form */
+
+.controller div form {
+    margin: 1em;
+}
+
+.controller input[type=text],
+.controller input[type=number] {
+    border-radius: 0;
+    width: 6em;
+    color: var(--base02);
+}
+
+.controller div:first-child input[type=text],
+.controller div:first-child input[type=number] {
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.controller div:last-child input[type=text],
+.controller div:last-child input[type=number] {
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.controller div:only-child input[type=text],
+.controller div:only-child input[type=number] {
+    border-radius: var(--radius);
+}
+
+/* Buttons */
+
+.controller div:nth-child(2) button {
+    border-radius: 0;
+    width: 100%;
+}
+
+.controller div button:first-child {
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.controller div button:last-child {
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.controller div button:only-child {
+    border-radius: var(--radius);
+}
+
+.controller div button.error {
+    background-color: var(--red);
+}
+
+.controller div button.success {
+    background-color: var(--green);
+}
+
+@media only screen and (min-width: 768px) {
+    .controller div:nth-child(2) button {
+        width: auto;
+    }
+    .controller div button:first-child {
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+    .controller div button:last-child {
+        border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .controller div button:only-child {
+        border-radius: var(--radius);
+    }
+}

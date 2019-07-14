@@ -1,9 +1,20 @@
 {
-    "keyboard_name": "Tavolozza",
-    "keyboard_folder": "",
+    "keyboard_name": "Ortho",
+    "keyboard_folder": "ortho",
     "maintainer": "i5ar",
     "width": 12,
     "height": 4,
+    "housing": {
+        "ORTHO": {
+            "shape": [
+                {
+                    "w": 12,
+                    "h": 4
+                }
+            ],
+            "color": "#fdf6e3"
+        }
+    },
     "layouts": {
         "LAYOUT": {
             "layout": [
@@ -229,7 +240,7 @@
                     "h": 1,
                     "x": 0,
                     "y": 3,
-                    "label": "Shift"
+                    "label": "⇧"
                 },
                 {
                     "w": 1,
@@ -241,13 +252,15 @@
                     "w": 1,
                     "x": 2,
                     "y": 3,
-                    "label": "Fn"
+                    "label": "Alt"
                 },
                 {
                     "w": 1,
                     "x": 3,
                     "y": 3,
-                    "label": "Alt"
+                    "c": "#2aa198",
+                    "t": "#eee8d5",
+                    "label": "Fn"
                 },
                 {
                     "w": 2,
@@ -259,19 +272,21 @@
                     "w": 2,
                     "x": 6,
                     "y": 3,
-                    "label": "Space"
+                    "label": "Enter"
                 },
                 {
                     "w": 1,
                     "x": 8,
                     "y": 3,
-                    "label": "Alt"
+                    "c": "#d33682",
+                    "t": "#eee8d5",
+                    "label": "Fn"
                 },
                 {
                     "w": 1,
                     "x": 9,
                     "y": 3,
-                    "label": "Fn"
+                    "label": "Alt"
                 },
                 {
                     "w": 1,
@@ -283,7 +298,7 @@
                     "w": 1,
                     "x": 11,
                     "y": 3,
-                    "label": "Shift"
+                    "label": "⇧"
                 }
             ]
         }

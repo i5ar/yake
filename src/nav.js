@@ -6,6 +6,24 @@ export default class Nav extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+    this.about = new Noty({
+      layout: "bottom",
+      theme: "solarized",
+      type: "info",
+      text: `
+      YAKE (Yet Another Keyboard Editor) is a simple keyboard designer based on QMK.
+      `
+    });
+
+    this.policy = new Noty({
+      layout: "bottom",
+      theme: "solarized",
+      type: "info",
+      text: `
+      This application set cookies to improve usability, that's all.
+      `
+    });
   }
 
   handleClick(evt) {
@@ -22,6 +40,12 @@ export default class Nav extends React.Component {
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
+    } else if (evt.target.id === "about") {
+      evt.preventDefault();
+      this.about.show();
+    } else if (evt.target.id === "policy") {
+      evt.preventDefault();
+      this.policy.show();
     }
   }
 
@@ -32,32 +56,22 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    const {api} = this.props;
-    const opts = ["My keyboards", "QMK"];
+    const {hasApi} = this.props;
+    const opts = ["YAKE", "QMK"];
 
     return e(
       "nav",
       {
-        style: {
-          backgroundColor: "#073642",
-          color: "#eee8d5",
-          display: "flex",
-          flexDirection: "column",
-          fontFamily: "monospace"
-        }
+        className: "navigation"
       },
       e(
-        "div", {
-          style: {
-            flex: 1
-          }
-        },
+        "div", null,
         e(
           "h1",
           {
             style: {
               padding: "8px 1em",
-              margin: "8px 8px 0 0",
+              margin: "8px 0 0 0"
             }
           }, "YAKE"
         ),
@@ -71,74 +85,72 @@ export default class Nav extends React.Component {
             }
           },
           opts.map((el, i) => e("li", {
-            className: api === !!+i && "selected",
+            className: hasApi === !!+i && "selected",
             style: {
-              borderTop: "1px solid #002b36",
-            },
+              borderTop: "1px solid #002b36"
+            }
           }, e("a", {
             style: {
               display: "block",
-              padding: "1em",
+              padding: "1em"
             },
             href: "#",
             id: "api",
             "data-api": i,
-            onClick: evt => this.handleClick(evt),
+            onClick: this.handleClick
           }, el))),
         )
       ),
       e(
-        "div", {
-          style: {
-            margin: "1em"
-          }
-        },
+        "div", null,
         e(
-          "form", {
-            style: {
-              color: "#eee8d5",
-            },
-          },
+          "form", null,
           e(
-            "label", {
-              style: {
-                display: "block"
-              },
-            },
-            e("input", {
-              style: {
-                margin: "0 1em 0 0"
-              },
-              name: "profile",
-              type: "checkbox",
-              checked: this.props.profile,
-              onChange: this.handleChange,
-            }), "Profile"),
-          e(
-            "label", {
-              style: {
-                display: "block",
-              },
-            },
-            e("input", {
-              style: {
-                margin: "0 1em 0 0"
-              },
-              name: "case_",
-              type: "checkbox",
-              checked: this.props.case_,
-              onChange: this.handleChange,
-            }), "Case"),
+            "fieldset", null,
+            e("legend", null, "Display"),
+            e(
+              "label", null,
+              e("input", {
+                name: "hasProfile",
+                type: "checkbox",
+                checked: this.props.hasProfile,
+                onChange: this.handleChange
+              }), "Profile"),
+            e(
+              "label", null,
+              e("input", {
+                name: "hasCase",
+                type: "checkbox",
+                checked: this.props.hasCase,
+                onChange: this.handleChange
+              }), "Case")
+          )
         ),
-        e("div", {},
+        e(
+          "div", {
+            className: "download"
+          },
           e("button", {
             id: "download",
-            style: {
-              color: "#073642",
-              width: "100%",
-            },
-            onClick: evt => this.handleClick(evt),
-          }, "Download")
+            className: "pure-button",
+            onClick: this.handleClick
+          }, "Download SVG")
+        ),
+        e(
+          "div", {
+            className: "more"
+          },
+          e("a", {
+            href: "#",
+            id: "about",
+            onClick: this.handleClick
+          }, "About"),
+          e("span", null, " · "),
+          e("a", {
+            href: "#",
+            id: "policy",
+            onClick: this.handleClick
+          }, "Policy"),
         )
       )
     );

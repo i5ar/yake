@@ -1,0 +1,44 @@
+.tippy-tooltip.solarized-theme {
+    background-color: #073642;
+    padding: 0.25rem 0.4375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #eee8d5;
+}
+.tippy-tooltip.solarized-theme[x-placement^="top"] .tippy-arrow {
+    border-top: 8px solid #073642;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+}
+.tippy-tooltip.solarized-theme[x-placement^="bottom"] .tippy-arrow {
+    border-bottom: 8px solid #073642;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+}
+.tippy-tooltip.solarized-theme[x-placement^="left"] .tippy-arrow {
+    border-left: 8px solid #073642;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.tippy-tooltip.solarized-theme[x-placement^="right"] .tippy-arrow {
+    border-right: 8px solid #073642;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.tippy-tooltip.solarized-theme .tippy-backdrop {
+    background-color: #073642;
+}
+.tippy-tooltip.solarized-theme .tippy-roundarrow {
+    fill: #073642;
+}
+.tippy-tooltip.solarized-theme[data-animatefill] {
+    background-color: transparent;
+}
+.tippy-tooltip.solarized-theme[data-size="small"] {
+    font-size: 0.75rem;
+    padding: 0.1875rem 0.375rem;
+}
+.tippy-tooltip.solarized-theme[data-size="large"] {
+    font-size: 1rem;
+    padding: 0.375rem 0.75rem;
+}

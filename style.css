@@ -1,6 +1,8 @@
 @import "./src/dropdown.css";
+@import "./src/nav.css";
 @import "./src/form.css";
 @import "./src/device.css";
+@import "./src/controller.css";
 @import "./src/keycap.css";
 
 :root {
@@ -10,10 +12,21 @@
     --base03: #002b36;
     /* NOTE: Black text. */
     --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
     /* NOTE: White text. */
     --base2: #eee8d5;
+    --base3: #fdf6e3;
     --orange: #cb4b16;
+    --red: #dc322f;
     --green: #859900;
+    --cyan: #2aa198;
+    --blue: #268bd2;
+    --violet: #6c71c4;
+    --magenta: #d33682;
+    --radius: 2px;
 }
 
 html, body {
@@ -28,13 +41,13 @@ body {
 
 #root {
     display: flex;
-    height: inherit;
     flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
     #root {
         flex-direction: row;
+        height: inherit;
     }
 }
 
@@ -89,7 +102,7 @@ body {
     }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }

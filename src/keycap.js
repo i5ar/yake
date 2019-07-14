@@ -1,16 +1,43 @@
 /* eslint-disable react/prop-types */
 import Rectangle from "./rectangle.js";
 import Path from "./path.js";
+import shadeColor from "./common/shade.js";
+import {config} from "./common/config.js";
 
 const e = React.createElement;
 const f = React.Fragment;
+const {floor} = Math;
 
 export default class Keycap extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.gRef = React.createRef();
+  }
+
+  get tspans() {
+    if (this.props.label) return this.props.label.split("\n");
+    return [];
+  }
+
+  handleClick(evt) {
+    this.props.handleClickCallback_({...evt, name: "keydev", index: this.props.index});
+  }
+
+  handleKeyDown(evt) {
+    // NOTE: Disable browser specific shortcuts.
+    evt.preventDefault();
+
+    this.props.handleKeyDownCallback(evt);
+  }
+
   render() {
-    const {w, h, p, label, profile} = this.props;
+    const {c, t, w, h, p, hasProfile} = this.props;
     const u = 54;
     const radius = 5;
-    const fill = ["#ffc93e", "#e5a100", "#073642"];
 
     let {r, rx, ry, x, y} = this.props;
     r = r || 0;
@@ -19,23 +46,40 @@ export default class Keycap extends React.Component {
     x = u * x || 0;
     y = u * y || 0;
 
-    const widthOuter = u * w - 2;
-    const heightOuter = u * h - 2;
     const widthInner = u * w - 14;
+    const widthOuter = u * w - 2;
     const heightInner = u * h - 14;
+    const heightOuter = u * h - 2;
+    const colorInner = c || config.layouts.c;
+    const colorOuter = shadeColor(colorInner, -16);
+    const colorText = t || config.layouts.t;
 
     const opts = {
+      tabIndex: -1,
+      ref: this.gRef,
+      onClick: this.handleClick,
+      onKeyDown: this.handleKeyDown,
       className: "keycap",
       transform: `
                 rotate(${r} ${rx} ${ry})
-                translate(${x}, ${y})`.replace(/\s+/g, " ").trim(),
+                translate(${x}, ${y})`.replace(/\s+/g, " ").trim()
     };
 
-    const text = e("text", {
-      x: 13,  // 13
-      y: 37,
-      fill: fill[2],
-    }, label);
+    // TODO: Resolve multiline accordingly with KLE.
+    const textLength = w !== undefined ? floor(6 * (w - 0.25)) : 4;
+    const text = e(
+      "text", {
+        // x: 13,
+        // y: 37,
+        fill: colorText
+      },
+      this.tspans.map((l, i) => e(
+        "tspan", {
+          x: 13,
+          y: 37,
+          dy: i * -18
+        }, l && l.substring(0, textLength)))
+    );
 
     if (!this.props.p) {
       return e(
@@ -47,7 +91,8 @@ export default class Keycap extends React.Component {
           width: widthOuter || 52,
           height: heightOuter || 52,
           rx: radius,
-          fill: fill[1],
+          fill: colorOuter,
+          stroke: this.props.keydev === this.props.index ? "var(--green)" : null
         }),
         e(Rectangle, {
           className: "inner border",
@@ -56,9 +101,9 @@ export default class Keycap extends React.Component {
           width: widthInner || 40,
           height: heightInner || 40,
           rx: radius,
-          fill: fill[0],
+          fill: colorInner
         }),
-        profile && e(Rectangle, {
+        hasProfile && e(Rectangle, {
           x: 7,
           y: 4,
           width: widthInner || 40,
@@ -112,14 +157,15 @@ export default class Keycap extends React.Component {
       e(Path, {
         className: "outer border",
         d: dOuter,
-        fill: fill[1],
+        fill: colorOuter,
+        stroke: this.props.keydev === this.props.index ? "var(--green)" : null
       }),
       e(Path, {
         className: "inner border",
         d: dInner,
-        fill: fill[0],
+        fill: colorInner
       }),
-      profile && e(Path, {
+      hasProfile && e(Path, {
         d: dInner,
         fill: "url(#GRADIENT)"
       }),
