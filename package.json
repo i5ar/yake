@@ -1,5 +1,5 @@
 {
-  "name": "YAKE",
+  "name": "yake",
   "version": "1.0.0",
   "description": "Yet another keyboard explorer (designed the way I want).",
   "main": "src/main.js",
@@ -14,7 +14,6 @@
   },
   "author": "",
   "license": "GNU GPL",
-  "homepage": "",
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.15.3",
