@@ -40,16 +40,16 @@ export default class Editor extends React.Component {
     return e(
       "div", {
         style: {
-          flexGrow: 1,
+          flexGrow: 1
         }
       },
       e("div", {
         id: "editor",
         style: {
           minHeight: "16em",
-          height: "100%",
+          height: "100%"
         },
-        ref: el => this.textInput = el,
+        ref: el => this.textInput = el
       })
     );
   }
