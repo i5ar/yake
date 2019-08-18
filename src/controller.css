@@ -16,10 +16,12 @@
     margin: 1em;
 }
 
+.controller input[type=color],
 .controller input[type=text],
 .controller input[type=number] {
     border-radius: 0;
     width: 6em;
+    min-height: 2.4em;  /* NOTE: Fix [type=color] */
     color: var(--base02);
 }
 

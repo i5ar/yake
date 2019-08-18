@@ -22,6 +22,7 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isDevel: false,
       hasApi: false,
       keyboards: [],
       info: {},
@@ -570,6 +571,7 @@ class Root extends React.Component {
 
   render() {
     const {
+      isDevel,
       hasApi,
       keyboards,
       info,
@@ -586,6 +588,7 @@ class Root extends React.Component {
       e(
         f, null,
         e(Nav, {
+          isDevel,
           hasApi,
           hasProfile,
           hasCase,

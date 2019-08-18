@@ -6,6 +6,11 @@
     justify-content: space-between;
 }
 
+.navigation h1 {
+    padding: 8px 16px;
+    margin: 8px 0 0 0;
+}
+
 .navigation .download {
     margin: 1em;
 }
@@ -31,4 +36,9 @@
 
 .navigation .more {
     margin: 1em;
+}
+
+.navigation .description {
+    font-family: var(--monospace);
+    padding: 0 16px;
 }

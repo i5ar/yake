@@ -242,9 +242,9 @@ export default class Controller extends React.Component {
                 "data-tippy-content": "c"
               }, "Ground color: "),
               e("input", {
-                type: "text",
+                type: "color",
                 name: "c",
-                value: this.c
+                value: this.c || "#002b36"
               })
             ),
             e(
@@ -253,9 +253,9 @@ export default class Controller extends React.Component {
                 "data-tippy-content": "t"
               }, "Label color: "),
               e("input", {
-                type: "text",
+                type: "color",
                 name: "t",
-                value: this.t
+                value: this.t || "#002b36"
               })
             )
           )

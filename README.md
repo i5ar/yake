@@ -1,7 +1,5 @@
 # Yet Another Keyboard Editor
 
-YAKE (Yet Another Keyboard **Explorer**) has just become YAKE (Yet Another Keyboard **Editor**).
-
 A keyboard layout designer based on QMK ([`info.json`](https://beta.docs.qmk.fm/reference/reference_info_json)).
 
 ## Features
@@ -21,9 +19,6 @@ A keyboard layout designer based on QMK ([`info.json`](https://beta.docs.qmk.fm/
 Feel free to pull and push.
 
 > Make sure it doesn't work on IE!
-
-Please, avoid using server-side JavaScript implementations like Node.js and Deno:
-YAKE should be easy and fast to install (it should work out of the box).
 
 ### Installation
 
@@ -47,6 +42,7 @@ Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 - [ ] Add spinner;
 - [x] Make the data structure (`info.json`) editable;
 - [ ] Support KLE?
+- [ ] Move from [npm](https://www.npmjs.com/) to [crates](https://crates.io/).
 
 ## Disclaimer
 
