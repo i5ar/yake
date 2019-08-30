@@ -7,37 +7,78 @@ export default class Button extends React.Component {
   constructor() {
     super();
     this.state = {
-      active: true
+      layouts: true,
+      housing: false
     };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    this.setState(s => ({
-      active: !s.active
-    }));
+  /**
+   * The name (evt.target.name) can be either "layouts", "case" or more.
+   * @param {string} evt
+   */
+  handleClick(evt) {
+    const {name} = evt.target;
+    this.setState(s => {
+      const _keys = Object.keys(s);
+      const index = _keys.indexOf(name);
+      if (index !== -1) _keys.splice(index, 1);
+      return _keys.map(
+        key => ({
+          [key]: false
+        })).reduce(
+        (acc, cur) => ({
+          ...acc,
+          [Object.keys(cur)]: cur[Object.keys(cur)]
+        }),
+        {
+          [name]: !s[name]
+        }
+      );
+    });
   }
 
   render() {
     const {info, layout, keydev} = this.props;
+    const style = {
+      backgroundColor: "var(--orange)"
+    };
 
     return e(
-      "div", null,
+      "div", {
+        className: "button",
+        style: {
+          margin: "0.5em"
+        }
+      },
       e(
-        "button", {
+        "div", {
           style: {
             margin: "auto",
             display: "block",
-            backgroundColor: "var(--orange)"
-          },
+            textAlign: "center"
+          }
+        },
+        e(
+          "button", {
+            style,
+            type: "button",
+            name: "layouts",
+            className: this.state.layouts ? "pure-button pure-button-active" : "pure-button",
+            onClick: this.handleClick
+          }, "Layouts",
+        ),
+        e("button", {
+          style,
           type: "button",
-          className: this.state.active ? "pure-button pure-button-active" : "pure-button",
+          name: "housing",
+          className: this.state.housing ? "pure-button pure-button-active" : "pure-button",
           onClick: this.handleClick
-        }, "Layouts",
+        }, "Housing"),
       ),
       e(Controller, {
-        active: this.state.active,
+        state: this.state,
         info,
         layout,
         keydev,

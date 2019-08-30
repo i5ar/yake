@@ -2,16 +2,20 @@
     background-color: var(--base03);
     font-family: var(--monospace);
     color: var(--base1);
+    margin: 1em;
 }
 
-.controller > div:nth-child(1) {
+.controller > div > div:first-child {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
-/* Form */
+.controller > div > div:last-child {
+    text-align: center;
+}
 
+/* Form */
 .controller div form {
     margin: 1em;
 }
@@ -20,29 +24,35 @@
 .controller input[type=text],
 .controller input[type=number] {
     border-radius: 0;
-    width: 6em;
-    min-height: 2.4em;  /* NOTE: Fix [type=color] */
     color: var(--base02);
 }
 
-.controller div:first-child input[type=text],
-.controller div:first-child input[type=number] {
+.controller fieldset div input[type=text],
+.controller fieldset div input[type=number] {
+    width: auto;
+}
+
+.controller fieldset div:first-child input[type=color],
+.controller fieldset div:first-child input[type=text],
+.controller fieldset div:first-child input[type=number] {
     border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.controller div:last-child input[type=text],
-.controller div:last-child input[type=number] {
+.controller fieldset div:last-child input[type=color],
+.controller fieldset div:last-child input[type=text],
+.controller fieldset div:last-child input[type=number] {
     border-radius: 0 0 var(--radius) var(--radius);
 }
 
-.controller div:only-child input[type=text],
-.controller div:only-child input[type=number] {
+.controller fieldset div:only-child input[type=color],
+.controller fieldset div:only-child input[type=text],
+.controller fieldset div:only-child input[type=number] {
     border-radius: var(--radius);
 }
 
 /* Buttons */
 
-.controller div:nth-child(2) button {
+.controller div button {
     border-radius: 0;
     width: 100%;
 }
@@ -68,7 +78,8 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .controller div:nth-child(2) button {
+    /* Buttons */
+    .controller div button {
         width: auto;
     }
     .controller div button:first-child {

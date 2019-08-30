@@ -608,7 +608,8 @@ class Root extends React.Component {
           e(
             "div", null,
             e(
-              "div", {
+              "div",
+              {
                 style: {
                   display: "flex",
                   flexWrap: "wrap",
@@ -639,7 +640,12 @@ class Root extends React.Component {
                 onChangeCallback: this.handleChangeCallback
               })
             ),
-            e("div", null,
+            e("div",
+              {
+                style: {
+                  padding: "0.5em 0",
+                }
+              },
               e(Button, {
                 info,
                 layout,
