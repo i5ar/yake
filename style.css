@@ -28,6 +28,7 @@
     --violet: #6c71c4;
     --magenta: #d33682;
     --radius: 2px;
+    --duration: 800ms;
 }
 
 html, body {

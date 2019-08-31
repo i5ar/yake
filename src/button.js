@@ -49,7 +49,7 @@ export default class Button extends React.Component {
       "div", {
         className: "button",
         style: {
-          margin: "0.5em"
+          margin: "0.5em 0"
         }
       },
       e(

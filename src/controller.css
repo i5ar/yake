@@ -2,7 +2,6 @@
     background-color: var(--base03);
     font-family: var(--monospace);
     color: var(--base1);
-    margin: 1em;
 }
 
 .controller > div > div:first-child {
@@ -91,4 +90,27 @@
     .controller div button:only-child {
         border-radius: var(--radius);
     }
+}
+
+/* Animation */
+.controller {
+    overflow-x: hidden;
+}
+#layouts {
+    transition: transform var(--duration) ease-in;
+}
+#layouts.slide-in {
+    transform: translateX(0%);
+}
+#layouts.slide-out {
+    transform: translateX(-100%);
+}
+#housing {
+    transition: transform var(--duration) ease-in;
+}
+#housing.slide-in {
+    transform: translateX(0%);
+}
+#housing.slide-out {
+    transform: translateX(100%);
 }
