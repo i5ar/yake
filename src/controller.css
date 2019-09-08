@@ -92,12 +92,13 @@
     }
 }
 
-/* Animation */
+/* Animation
 .controller {
     overflow-x: hidden;
 }
 #layouts {
     transition: transform var(--duration) ease-in;
+    float: left;
 }
 #layouts.slide-in {
     transform: translateX(0%);
@@ -114,3 +115,4 @@
 #housing.slide-out {
     transform: translateX(100%);
 }
+*/

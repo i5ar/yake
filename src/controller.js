@@ -78,7 +78,10 @@ export default class Controller extends React.Component {
       e(
         "div", {
           id: "layouts",
-          className: state.layouts ? "slide-in" : "slide-out"
+          // className: state.layouts ? "slide-in" : "slide-out",
+          style: {
+            display: state.layouts ? "inherit" : "none"
+          }
         }, e(
           "div", null,
 
@@ -307,7 +310,10 @@ export default class Controller extends React.Component {
       e(
         "div", {
           id: "housing",
-          className: state.housing ? "slide-in" : "slide-out"
+          // className: state.housing ? "slide-in" : "slide-out",
+          style: {
+            display: state.housing ? "inherit" : "none"
+          }
         }, e(
           "div", null,
 

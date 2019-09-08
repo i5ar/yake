@@ -36,6 +36,8 @@ Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 - [x] Fix `rx`, `ry` in view box;
 - [ ] Full size text editor;
 - [ ] Add new layout form next to upload form;
+- [ ] Add bump to home key;
+- [ ] Add slider to the housing controller;
 - [ ] Add case controller;
 - [ ] Fix label position parsing the string;
 - [x] Add polygonal case;
