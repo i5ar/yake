@@ -261,7 +261,11 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "c",
-                  value: this.c || "#002b36"
+                  value: this.c,
+                  style: {
+                    backgroundColor: this.c,
+                    borderColor: this.c
+                  }
                 })
               ),
               e(
@@ -272,7 +276,11 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "t",
-                  value: this.t || "#002b36"
+                  value: this.t,
+                  style: {
+                    backgroundColor: this.t,
+                    borderColor: this.t
+                  }
                 })
               )
             )
