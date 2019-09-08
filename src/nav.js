@@ -67,7 +67,7 @@ export default class Nav extends React.Component {
       },
       e(
         "div", null,
-        e("h1", null, "YAKE"),
+        e("h1", null, "Yake"),
         isDevel ? e(
           "ul",
           {
@@ -96,9 +96,7 @@ export default class Nav extends React.Component {
           "p",
           {
             className: "description"
-          }, e(
-            "span", null, "Yet Another Keyboard Editor"
-          )
+          }, "Yet Another Keyboard Editor"
         )
       ),
       e(

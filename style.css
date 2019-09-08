@@ -7,6 +7,7 @@
 @import "./src/keycap.css";
 
 :root {
+    --cursive: "Arizonia", cursive;
     --monospace: "Roboto Mono", monospace;
     --sans-serif: "Roboto", sans-serif;
     /* NOTE: Black background. */
