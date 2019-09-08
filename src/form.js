@@ -21,14 +21,14 @@ export default class Form extends React.Component {
     return e(
       "form", {
         className: "form",
-        ref: formRef,
+        ref: formRef
       }, e("input", {
         className: "pure-button",
         type: "file",
         name: "info",
         accept: ".json",
         onChange: this.handleChange,
-        onClick: this.handleClick,
+        onClick: this.handleClick
       })
     );
   }

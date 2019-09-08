@@ -22,5 +22,5 @@ function fetchKeyboard(api, keyboard) {
 
 export {
   fetchKeyboards,
-  fetchKeyboard,
+  fetchKeyboard
 };

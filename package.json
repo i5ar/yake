@@ -17,11 +17,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.15.3",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "^1.6.0",
-    "mocha": "^6.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "mocha": "^6.2.0",
     "ncp": "^2.0.0",
     "parcel-bundler": "^1.12.3",
     "stylelint-config-recommended": "^2.1.0"
@@ -32,6 +32,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
-    "tippy.js": "^4.3.4"
+    "tippy.js": "^4.3.5"
   }
 }

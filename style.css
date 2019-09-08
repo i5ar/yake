@@ -2,10 +2,12 @@
 @import "./src/nav.css";
 @import "./src/form.css";
 @import "./src/device.css";
+@import "./src/button.css";
 @import "./src/controller.css";
 @import "./src/keycap.css";
 
 :root {
+    --cursive: "Arizonia", cursive;
     --monospace: "Roboto Mono", monospace;
     --sans-serif: "Roboto", sans-serif;
     /* NOTE: Black background. */
@@ -27,6 +29,7 @@
     --violet: #6c71c4;
     --magenta: #d33682;
     --radius: 2px;
+    --duration: 800ms;
 }
 
 html, body {

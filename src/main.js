@@ -22,6 +22,7 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isDevel: false,
       hasApi: false,
       keyboards: [],
       info: {},
@@ -570,6 +571,7 @@ class Root extends React.Component {
 
   render() {
     const {
+      isDevel,
       hasApi,
       keyboards,
       info,
@@ -586,6 +588,7 @@ class Root extends React.Component {
       e(
         f, null,
         e(Nav, {
+          isDevel,
           hasApi,
           hasProfile,
           hasCase,
@@ -605,7 +608,8 @@ class Root extends React.Component {
           e(
             "div", null,
             e(
-              "div", {
+              "div",
+              {
                 style: {
                   display: "flex",
                   flexWrap: "wrap",
@@ -636,7 +640,12 @@ class Root extends React.Component {
                 onChangeCallback: this.handleChangeCallback
               })
             ),
-            e("div", null,
+            e("div",
+              {
+                style: {
+                  padding: "0.5em 0",
+                }
+              },
               e(Button, {
                 info,
                 layout,

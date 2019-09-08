@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 const e = React.createElement;
+const f = React.Fragment;
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -56,8 +57,8 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    const {hasApi} = this.props;
-    const opts = ["YAKE", "QMK"];
+    const {isDevel, hasApi} = this.props;
+    const opts = isDevel ? ["YAKE", "QMK"] : [];
 
     return e(
       "nav",
@@ -66,16 +67,8 @@ export default class Nav extends React.Component {
       },
       e(
         "div", null,
-        e(
-          "h1",
-          {
-            style: {
-              padding: "8px 1em",
-              margin: "8px 0 0 0"
-            }
-          }, "YAKE"
-        ),
-        e(
+        e("h1", null, "Yake"),
+        isDevel ? e(
           "ul",
           {
             style: {
@@ -99,6 +92,11 @@ export default class Nav extends React.Component {
             "data-api": i,
             onClick: this.handleClick
           }, el))),
+        ) : e(
+          "p",
+          {
+            className: "description"
+          }, "Yet Another Keyboard Editor"
         )
       ),
       e(
