@@ -1,12 +1,20 @@
 .controller {
-    background-color: var(--base03);
+    margin: 1em 0;
+    padding: 1em 0;
     font-family: var(--monospace);
     color: var(--base1);
+    background: repeating-linear-gradient(
+        45deg,
+        var(--base03),
+        var(--base03) 10px,
+        var(--base02) 10px,
+        var(--base02) 20px
+    );
 }
 
 .controller > div > div:first-child {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
@@ -15,9 +23,6 @@
 }
 
 /* Form */
-.controller div form {
-    margin: 1em;
-}
 
 .controller input[type=color],
 .controller input[type=text],
@@ -69,7 +74,7 @@
 }
 
 .controller div button.error {
-    background-color: var(--red);
+    background-color: var(--orange);
 }
 
 .controller div button.success {
