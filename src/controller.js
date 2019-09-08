@@ -285,25 +285,72 @@ export default class Controller extends React.Component {
           },
           e("button", {
             type: "button",
+            className: "pure-button error",
+            "data-tippy-content": "Remove keycap",
+            name: "remove",
+            onClick: this.handleClick
+          }, e(
+            "i", {
+              className: "far fa-times-circle",
+              style: {pointerEvents: "none"}
+            }
+          )),
+          e("button", {
+            type: "button",
             className: "pure-button success",
             "data-tippy-content": "Add 1u keycap",
             name: "add",
             onClick: this.handleClick
-          }, "Add 1u keycap"),
+          }, e(
+            "i", {
+              className: "far fa-square",
+              style: {pointerEvents: "none"}
+            }
+          )),
+          // TODO: Add homing keycap.
+          e("button", {
+            type: "button",
+            className: "pure-button success",
+            "data-tippy-content": "TODO: Add homing keycap",
+            name: "add-homing",
+            onClick: this.handleClick
+          }, e(
+            "i", {
+              className: "far fa-minus-square",
+              style: {pointerEvents: "none"}
+            }
+          )),
           e("button", {
             type: "button",
             className: "pure-button success",
             "data-tippy-content": "Add ISO keycap",
             name: "add-iso",
             onClick: this.handleClick
-          }, "Add ISO keycap"),
+          }, e(
+            "i", {
+              className: "far fa-folder",
+              style: {
+                pointerEvents: "none",
+                transform: "scaleY(-1) rotate(270deg)"
+              }
+            }
+          )),
+          // TODO: Add big-ass keycap
           e("button", {
             type: "button",
-            className: "pure-button error",
-            "data-tippy-content": "Remove keycap",
-            name: "remove",
+            className: "pure-button success",
+            "data-tippy-content": "TODO: Add big-ass keycap",
+            name: "add-ass",
             onClick: this.handleClick
-          }, "Remove keycap"),
+          }, e(
+            "i", {
+              className: "far fa-folder",
+              style: {
+                pointerEvents: "none",
+                transform: "rotate(270deg)"
+              }
+            }
+          ))
         )
       ),
 

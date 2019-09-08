@@ -67,7 +67,7 @@ export default class Nav extends React.Component {
       },
       e(
         "div", null,
-        e("h1", null, "Yake"),
+        e("h1", null, "YAKE"),
         isDevel ? e(
           "ul",
           {
