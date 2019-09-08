@@ -613,7 +613,7 @@ class Root extends React.Component {
                 style: {
                   display: "flex",
                   flexWrap: "wrap",
-                  padding: "0.5em 0",
+                  padding: "0.5em 0 0 0",
                   justifyContent: "center"
                 }
               },
@@ -643,7 +643,7 @@ class Root extends React.Component {
             e("div",
               {
                 style: {
-                  padding: "0.5em 0",
+                  padding: "0 0 0.5em 0"
                 }
               },
               e(Button, {
