@@ -67,7 +67,14 @@ export default class Nav extends React.Component {
       },
       e(
         "div", null,
-        e("h1", null, "YAKE"),
+        e("h1", null,
+          e("a", {href: "/"},
+            e("span", null, "Y"),
+            e("span", null, "A"),
+            e("span", null, "K"),
+            e("span", null, "E")
+          )
+        ),
         isDevel ? e(
           "ul",
           {
