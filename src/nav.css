@@ -15,13 +15,22 @@
 }
 
 .navigation h1 span {
-    color: var(--base0);
+    color: var(--base2);
+}
+
+.navigation h1 a {
+    text-decoration: none;
 }
 
 .navigation h1 span:last-child {
-    color: var(--base2);
+    color: var(--orange);
     position: absolute;
-    transform: rotate(-90deg);
+    transition: transform 0.2s ease-in-out;
+    transform: translateX(6px) scaleX(1.4);
+}
+
+.navigation h1:hover span:last-child {
+    transform: rotate(270deg) translateX(6px) scaleX(1.4);
 }
 
 .navigation .download {
