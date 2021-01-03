@@ -85,7 +85,8 @@ export default class Nav extends React.Component {
             }
           },
           opts.map((el, i) => e("li", {
-            className: hasApi === !!+i && "selected",
+            key: i,
+            className: hasApi === !!+i ? "selected" : null,
             style: {
               borderTop: "1px solid #002b36"
             }

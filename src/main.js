@@ -22,8 +22,8 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDevel: false,
-      hasApi: false,
+      isDevel: true,
+      hasApi: true,
       keyboards: [],
       info: {},
       keyboard: "",

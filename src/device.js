@@ -77,6 +77,7 @@ export default class Device extends React.Component {
         // NOTE: Add keycaps.
         keycaps.push(
           e(Keycap, {
+            key: i,
             x: info.layouts[layout].layout[i].x,
             y: info.layouts[layout].layout[i].y,
             w: info.layouts[layout].layout[i].w,
@@ -142,6 +143,7 @@ export default class Device extends React.Component {
           const p = info.housing[shape].shape[i].p.map(point => point * u);
           shapes.push(
             e("polygon", {
+              key: i,
               points: p.join(","),
               fill: color,
               strokeWidth: radius * 2,

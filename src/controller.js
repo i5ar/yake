@@ -102,7 +102,7 @@ export default class Controller extends React.Component {
           //       e("input", {
           //         type: "number",
           //         name: "keycaps",
-          //         value: info.layouts ? info.layouts[layout].layout.length : 0
+          //         defaultValue: info.layouts ? info.layouts[layout].layout.length : 0
           //       })
           //     )
           //   )
@@ -129,7 +129,7 @@ export default class Controller extends React.Component {
                   name: "w",
                   min: 1,
                   // max: 15,
-                  value: this.width
+                  defaultValue: this.width
                 })
               ),
               e(
@@ -143,7 +143,7 @@ export default class Controller extends React.Component {
                   name: "h",
                   min: 1,
                   // max: 2,
-                  value: this.height
+                  defaultValue: this.height
                 })
               ),
               e(
@@ -155,7 +155,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "x",
-                  value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : ""
+                  defaultValue: this.keycap && this.keycap.x !== undefined ? this.keycap.x : ""
                 })
               ),
               e(
@@ -167,7 +167,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "y",
-                  value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : ""
+                  defaultValue: this.keycap && this.keycap.y !== undefined ? this.keycap.y : ""
                 })
               )
               // e(
@@ -178,7 +178,7 @@ export default class Controller extends React.Component {
               //   e("input", {
               //     type: "text",
               //     name: "p",
-              //     value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
+              //     defaultValue: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
               //   })
               // )
             )
@@ -203,7 +203,7 @@ export default class Controller extends React.Component {
                   name: "r",
                   min: -180,
                   // max: 180,
-                  value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : ""
+                  defaultValue: this.keycap && this.keycap.r !== undefined ? this.keycap.r : ""
                 })
               ),
               e(
@@ -215,7 +215,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "rx",
-                  value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : ""
+                  defaultValue: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : ""
                 })
               ),
               e(
@@ -227,7 +227,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "ry",
-                  value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : ""
+                  defaultValue: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : ""
                 })
               )
             )
@@ -249,8 +249,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "label",
-                  maxlength: this.keycap && this.keycap.w !== undefined ? floor(6 * (this.keycap.w - 0.25)) : 4,
-                  value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : ""
+                  maxLength: this.keycap && this.keycap.w !== undefined ? floor(6 * (this.keycap.w - 0.25)) : 4,
+                  defaultValue: this.keycap && this.keycap.label !== undefined ? this.keycap.label : ""
                 })
               ),
               e(
@@ -261,7 +261,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "c",
-                  value: this.c,
+                  defaultValue: this.c,
                   style: {
                     backgroundColor: this.c,
                     borderColor: this.c
@@ -276,7 +276,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "t",
-                  value: this.t,
+                  defaultValue: this.t,
                   style: {
                     backgroundColor: this.t,
                     borderColor: this.t
@@ -390,7 +390,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-w",
-                  value: ""
+                  defaultValue: ""
                 })
               ),
               e(
@@ -401,7 +401,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-h",
-                  value: ""
+                  defaultValue: ""
                 })
               ),
               e(
@@ -412,7 +412,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-x",
-                  value: ""
+                  defaultValue: ""
                 })
               ),
               e(
@@ -423,7 +423,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-y",
-                  value: ""
+                  defaultValue: ""
                 })
               )
             )
@@ -446,7 +446,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-p",
-                  value: ""
+                  defaultValue: ""
                 })
               )
             )

@@ -75,6 +75,7 @@ export default class Keycap extends React.Component {
       },
       this.tspans.map((l, i) => e(
         "tspan", {
+          key: i,
           x: 13,
           y: 37,
           dy: i * -18
