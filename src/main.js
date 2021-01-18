@@ -23,7 +23,7 @@ class Root extends React.Component {
     super(props);
     this.state = {
       isDevel: true,
-      hasApi: true,
+      hasApi: false,
       keyboards: [],
       info: {},
       keyboard: "",

@@ -155,6 +155,7 @@ export default class Device extends React.Component {
         if (info.housing[shape].shape[i].w && info.housing[shape].shape[i].h) {
           shapes.push(
             e("rect", {
+              key: i,
               x: info.housing[shape].shape[i].x * u + 5 || 5,
               y: info.housing[shape].shape[i].y * u + 5 || 5,
               width: info.housing[shape].shape[i].w * u,
