@@ -38,12 +38,11 @@ export default class Keycap extends React.Component {
     const u = 54;
     const radius = 5;
 
-    let {r, rx, ry, x, y} = this.props;
-    r = r || 0;
-    rx = u * rx || 0;
-    ry = u * ry || 0;
-    x = u * x || 0;
-    y = u * y || 0;
+    const r = this.props.r || 0;
+    const rx = u * this.props.rx || 0;
+    const ry = u * this.props.ry || 0;
+    const x = u * this.props.x || 0;
+    const y = u * this.props.y || 0;
 
     const widthInner = u * w - 14;
     const widthOuter = u * w - 2;
