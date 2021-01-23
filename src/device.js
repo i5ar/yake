@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.js";
+import Cross from "./cross.mjs";
 import {
   getSize
 } from "./common/size.js";
@@ -123,33 +124,14 @@ export default class Device extends React.Component {
           null,
           shapes
         ) : null,
-        // NOTE: Add origin rx/ry.
+        // NOTE: Add origin cross.
         info?.layouts?.[layout].layout.map(
-          (elm, i) => i === keydev ? e(
-            "g", {
+          (layout, i) => i === keydev ? e(
+            Cross, {
               key: i,
-              transform: `translate(${elm.rx * u || 0}, ${elm.ry * u || 0})`
-            },
-            e("circle", {
-              cx: 5,
-              cy: 5,
-              r: 5,
-              fill: "var(--base0)"
-            }),
-            e("rect", {
-              width: 2,
-              height: 18,
-              x: 4,
-              y: -4,
-              fill: "var(--base0)"
-            }),
-            e("rect", {
-              width: 18,
-              height: 2,
-              x: -4,
-              y: 4,
-              fill: "var(--base0)"
-            })
+              rx: layout.rx * u || 0,
+              ry: layout.ry * u || 0
+            }
           ) : null
         ),
         e(
@@ -158,21 +140,21 @@ export default class Device extends React.Component {
           },
           // NOTE: Add keycaps.
           info?.layouts?.[layout].layout.map(
-            (element, i) => e(Keycap, {
+            (layout, i) => e(Keycap, {
               key: i,
               index: i,
-              x: element.x,
-              y: element.y,
-              w: element.w,
-              h: element.h,
-              ks: element.ks,
-              p: element.p,
-              c: element.c,
-              t: element.t,
-              r: element.r,
-              rx: element.rx,
-              ry: element.ry,
-              label: element.label,
+              x: layout.x,
+              y: layout.y,
+              w: layout.w,
+              h: layout.h,
+              ks: layout.ks,
+              p: layout.p,
+              c: layout.c,
+              t: layout.t,
+              r: layout.r,
+              rx: layout.rx,
+              ry: layout.ry,
+              label: layout.label,
               code: "KC_NO",
               keys: [],
               keydev,
