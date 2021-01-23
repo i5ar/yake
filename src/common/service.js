@@ -1,8 +1,7 @@
-let basename = window.location.pathname.replace(/^\/([^/]*).*$/, "$1");
-basename = basename ? `/${basename}` : "";
+const url = "https://api.qmk.fm/v1/keyboards";
 
 function fetchKeyboards(api) {
-  return fetch(api ? "https://api.qmk.fm/v1/keyboards" : `${basename}/keyboards.json`)
+  return fetch(api ? url : "/keyboards.json")
     .then(response => response.json())
     .catch(err => {
       console.log(err);
@@ -10,9 +9,7 @@ function fetchKeyboards(api) {
 }
 
 function fetchKeyboard(api, keyboard) {
-  const path = api ?
-    `https://api.qmk.fm/v1/keyboards/${keyboard}` :
-    `${basename}/keyboards/${keyboard}/info.json`;
+  const path = api ? `${url}/${keyboard}` : `/keyboards/${keyboard}/info.json`;
   return fetch(path)
     .then(response => response.json())
     .catch(err => {

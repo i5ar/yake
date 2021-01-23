@@ -13,10 +13,4 @@ keyboards/46
 
 # Dependencies
 webfonts/
-*.min.*
-*-min.*
-*-json.js
-ace.js
-theme-solarized_light.js
-fontawesome.css
-regular.css
+libs/
