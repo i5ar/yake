@@ -22,9 +22,6 @@ export default class Device extends React.Component {
 
   render() {
     const u = 54;
-    let origin;
-    const keycaps = [];
-    const shapes = [];
     const {
       info,
       keydev,
@@ -71,41 +68,32 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    if (info && info.housing) {
-      const shape = Object.keys(info.housing)[0];
-      for (let i = 0; i < info.housing[shape].shape.length; i++) {
-        const radius = 5;
-        const color = info.housing[shape].color || config.housing.color;
-        if (info.housing[shape].shape[i].p) {
-          const p = info.housing[shape].shape[i].p.map(point => point * u);
-          shapes.push(
-            e("polygon", {
-              key: i,
-              points: p.join(","),
-              fill: color,
-              strokeWidth: radius * 2,
-              stroke: color,
-              strokeLinejoin: "round"
-            })
-          );
-        }
-        if (info.housing[shape].shape[i].w && info.housing[shape].shape[i].h) {
-          shapes.push(
-            e("rect", {
-              key: i,
-              x: info.housing[shape].shape[i].x * u + 5 || 5,
-              y: info.housing[shape].shape[i].y * u + 5 || 5,
-              width: info.housing[shape].shape[i].w * u,
-              height: info.housing[shape].shape[i].h * u,
-              fill: color,
-              strokeWidth: radius * 2,
-              stroke: color,
-              strokeLinejoin: "round"
-            })
-          );
-        }
+    const radius = 5;
+    const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
+    const color = shape_ ? info.housing[shape_]?.color || config.housing.color : null;
+    const shapes = shape_ ? info.housing[shape_]?.shape.map(
+      (shape, i) => {
+        if (shape.p) return e("polygon", {
+          key: i,
+          points: shape.p.map(point => point * u).join(","),
+          fill: color,
+          strokeWidth: radius * 2,
+          stroke: color,
+          strokeLinejoin: "round"
+        });
+        if (shape.w && shape.h) return e("rect", {
+          key: i,
+          x: shape.x * u + 5 || 5,
+          y: shape.y * u + 5 || 5,
+          width: shape.w * u,
+          height: shape.h * u,
+          fill: color,
+          strokeWidth: radius * 2,
+          stroke: color,
+          strokeLinejoin: "round"
+        });
       }
-    }
+    ) : null;
 
     let [width, height] = Object.keys(info).length !== 0 ? [info.width, info.height] : [0, 0];
 
@@ -130,7 +118,11 @@ export default class Device extends React.Component {
           onClick: this.handleClick
         },
         defs,
-        hasCase ? e("g", null, shapes) : null,
+        hasCase ? e(
+          "g",
+          null,
+          shapes
+        ) : null,
         // NOTE: Add origin rx/ry.
         info?.layouts?.[layout].layout.map(
           (elm, i) => i === keydev ? e(
