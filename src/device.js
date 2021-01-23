@@ -70,67 +70,6 @@ export default class Device extends React.Component {
       )
     );
 
-    if (info && info.layouts && info.layouts[layout]) {
-      for (let i = 0; i < info.layouts[layout].layout.length; i++) {
-        // NOTE: Add keycaps.
-        keycaps.push(
-          e(Keycap, {
-            key: i,
-            x: info.layouts[layout].layout[i].x,
-            y: info.layouts[layout].layout[i].y,
-            w: info.layouts[layout].layout[i].w,
-            h: info.layouts[layout].layout[i].h,
-            ks: info.layouts[layout].layout[i].ks,
-            p: info.layouts[layout].layout[i].p,
-            c: info.layouts[layout].layout[i].c,
-            t: info.layouts[layout].layout[i].t,
-            r: info.layouts[layout].layout[i].r,
-            rx: info.layouts[layout].layout[i].rx,
-            ry: info.layouts[layout].layout[i].ry,
-            label: info.layouts[layout].layout[i].label,
-            code: "KC_NO",
-            keys: [],
-            index: i,
-            keydev,
-            hasProfile,
-            handleClickCallback_: this.props.handleClickCallback_,
-            handleKeyDownCallback: this.props.handleKeyDownCallback
-          })
-        );
-
-        // NOTE: Show origin rx, ry.
-        const {rx, ry} = info.layouts[layout].layout[i];
-        const fill = "var(--base0)";
-        if (i === keydev) {
-          origin = e(
-            "g", {
-              transform: `translate(${rx * u || 0}, ${ry * u || 0})`
-            },
-            e("circle", {
-              cx: 5,
-              cy: 5,
-              r: 5,
-              fill
-            }),
-            e("rect", {
-              width: 2,
-              height: 18,
-              x: 4,
-              y: -4,
-              fill
-            }),
-            e("rect", {
-              width: 18,
-              height: 2,
-              x: -4,
-              y: 4,
-              fill
-            })
-          );
-        }
-      }
-    }
-
     // NOTE: Case.
     if (info && info.housing) {
       const shape = Object.keys(info.housing)[0];
@@ -192,11 +131,64 @@ export default class Device extends React.Component {
         },
         defs,
         hasCase ? e("g", null, shapes) : null,
-        origin,
+        // NOTE: Add origin rx/ry.
+        info?.layouts?.[layout].layout.map(
+          (elm, i) => i === keydev ? e(
+            "g", {
+              key: i,
+              transform: `translate(${elm.rx * u || 0}, ${elm.ry * u || 0})`
+            },
+            e("circle", {
+              cx: 5,
+              cy: 5,
+              r: 5,
+              fill: "var(--base0)"
+            }),
+            e("rect", {
+              width: 2,
+              height: 18,
+              x: 4,
+              y: -4,
+              fill: "var(--base0)"
+            }),
+            e("rect", {
+              width: 18,
+              height: 2,
+              x: -4,
+              y: 4,
+              fill: "var(--base0)"
+            })
+          ) : null
+        ),
         e(
           "g", {
             transform: "translate(5, 5)"
-          }, keycaps
+          },
+          // NOTE: Add keycaps.
+          info?.layouts?.[layout].layout.map(
+            (element, i) => e(Keycap, {
+              key: i,
+              index: i,
+              x: element.x,
+              y: element.y,
+              w: element.w,
+              h: element.h,
+              ks: element.ks,
+              p: element.p,
+              c: element.c,
+              t: element.t,
+              r: element.r,
+              rx: element.rx,
+              ry: element.ry,
+              label: element.label,
+              code: "KC_NO",
+              keys: [],
+              keydev,
+              hasProfile,
+              handleClickCallback_: this.props.handleClickCallback_,
+              handleKeyDownCallback: this.props.handleKeyDownCallback
+            })
+          )
         )
       )
     );
