@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
+
 import Rectangle from "./rectangle.js";
 import Path from "./path.js";
 import shadeColor from "./common/shade.js";
-import {config} from "./common/config.js";
-
-const e = React.createElement;
-const f = React.Fragment;
-const {floor} = Math;
+import {
+  config
+} from "./common/config.js";
 
 export default class Keycap extends React.Component {
   constructor(props) {
@@ -66,7 +65,7 @@ export default class Keycap extends React.Component {
     };
 
     // TODO: Resolve multiline accordingly with KLE.
-    const textLength = w !== undefined ? floor(6 * (w - 0.25)) : 4;
+    const textLength = w !== undefined ? Math.floor(6 * (w - 0.25)) : 4;
     const text = e(
       "text", {
         // x: 13,

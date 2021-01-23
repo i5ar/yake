@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>Test</title>
-    <!-- Framework -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.0.2/mocha.css" />
+  <meta charset="UTF-8" />
+  <title>Test</title>
+  <!-- Framework -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.0.2/mocha.css" />
 </head>
+
 <body>
-    <!-- Framework -->
-    <div id="mocha"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.0.2/mocha.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
-    
-    <script class="mocha-init">
-        mocha.setup('bdd');
-        mocha.checkLeaks();
-    </script>
+  <!-- Framework -->
+  <div id="mocha"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.0.2/mocha.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
 
-    <!-- Dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.0/react-router-dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom-test-utils.development.js"></script>
+  <script class="mocha-init">
+    mocha.setup('bdd');
+    mocha.checkLeaks();
+  </script>
 
-    <!-- Modules -->
-    <script src="test.form.js" type="module"></script>
-    <script src="common/test.search.js" type="module"></script>
+  <!-- Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.0/react-router-dom.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom-test-utils.development.js"></script>
 
-    <!-- Framework -->
-    <script class="mocha-exec" type="module">
-        mocha.run();
-    </script>
+  <!-- Modules -->
+  <script src="test.form.js" type="module"></script>
+  <script src="common/test.search.js" type="module"></script>
+  <script>
+    const e = React.createElement;
+    const f = React.Fragment;
+  </script>
+
+  <!-- Framework -->
+  <script class="mocha-exec" type="module">
+    mocha.run();
+  </script>
 </body>
+
 </html>

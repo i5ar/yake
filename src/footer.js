@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-const e = React.createElement;
 
 export default class Footer extends React.Component {
   render() {

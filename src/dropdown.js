@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
+
 import {
   fetchKeyboards,
   fetchKeyboard
 } from "./common/service.js";
-
-const e = React.createElement;
 
 export default class Dropdown extends React.Component {
   constructor(props) {

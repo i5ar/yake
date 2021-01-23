@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-const e = React.createElement;
-const f = React.Fragment;
 
 export default class Nav extends React.Component {
   constructor(props) {

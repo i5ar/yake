@@ -1,8 +1,7 @@
 /* global chai */
+
 import Form from "../src/form.js";
 
-
-const e = React.createElement;
 const {it, describe, beforeEach, afterEach} = Mocha;
 
 describe("form", function () {

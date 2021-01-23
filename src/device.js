@@ -3,11 +3,9 @@ import Keycap from "./keycap.js";
 import {
   getSize
 } from "./common/size.js";
-import {config} from "./common/config.js";
-
-
-const e = React.createElement;
-const k = Object.keys;
+import {
+  config
+} from "./common/config.js";
 
 export default class Device extends React.Component {
   constructor() {
@@ -135,7 +133,7 @@ export default class Device extends React.Component {
 
     // NOTE: Case.
     if (info && info.housing) {
-      const shape = k(info.housing)[0];
+      const shape = Object.keys(info.housing)[0];
       for (let i = 0; i < info.housing[shape].shape.length; i++) {
         const radius = 5;
         const color = info.housing[shape].color || config.housing.color;
@@ -170,7 +168,7 @@ export default class Device extends React.Component {
       }
     }
 
-    let [width, height] = k(info).length !== 0 ? [info.width, info.height] : [0, 0];
+    let [width, height] = Object.keys(info).length !== 0 ? [info.width, info.height] : [0, 0];
 
     // NOTE: Guess size when `width` and `height` are not present in `info.json`.
     const size = getSize(info, layout);

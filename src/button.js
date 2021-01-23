@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import Controller from "./controller.js";
 
-const e = React.createElement;
+import Controller from "./controller.js";
 
 export default class Button extends React.Component {
   constructor() {

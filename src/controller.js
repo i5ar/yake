@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import {config} from "./common/config.js";
 
-const e = React.createElement;
-const {floor} = Math;
+import {
+  config
+} from "./common/config.js";
 
 export default class Controller extends React.Component {
   constructor() {
@@ -249,7 +249,7 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "label",
-                  maxLength: this.keycap && this.keycap.w !== undefined ? floor(6 * (this.keycap.w - 0.25)) : 4,
+                  maxLength: this.keycap && this.keycap.w !== undefined ? Math.floor(6 * (this.keycap.w - 0.25)) : 4,
                   defaultValue: this.keycap && this.keycap.label !== undefined ? this.keycap.label : ""
                 })
               ),

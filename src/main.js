@@ -14,10 +14,6 @@ import {
 } from "./data/protips.js";
 import debounce from "./common/debounce.js";
 
-const e = React.createElement;
-const f = React.Fragment;
-const k = Object.keys;
-
 class Root extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +83,9 @@ class Root extends React.Component {
       keyboards,
       info: s.hasApi ? info.keyboards[keyboard] : info,
       keyboard,
-      layout: s.hasApi ? s.layout || k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0]
+      layout: s.hasApi ? s.layout || Object.keys(
+        info.keyboards[keyboard].layouts)[0] : Object.keys(
+          info.layouts)[0]
     }));
   }
 
@@ -99,7 +97,9 @@ class Root extends React.Component {
         this.setState(s => ({
           info: s.hasApi ? info.keyboards[keyboard] : info,
           keyboard,
-          layout: s.hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0],
+          layout: s.hasApi ? Object.keys(
+            info.keyboards[keyboard].layouts)[0] : Object.keys(
+              info.layouts)[0],
           isCustom: false
         }));
         if (this.selectElement) this.selectElement.focus();
@@ -113,7 +113,7 @@ class Root extends React.Component {
         this.setState({
           info,
           keyboard: info.keyboard_name.toLowerCase(),
-          layout: k(info.layouts)[0],
+          layout: Object.keys(info.layouts)[0],
           isCustom: true
         });
       };
@@ -344,7 +344,9 @@ class Root extends React.Component {
             keyboards,
             info: hasApi ? info.keyboards[keyboard] : info,
             keyboard,
-            layout: hasApi ? k(info.keyboards[keyboard].layouts)[0] : k(info.layouts)[0]
+            layout: hasApi ? Object.keys(
+              info.keyboards[keyboard].layouts)[0] : Object.keys(
+                info.layouts)[0]
           });
         });
       });
@@ -631,8 +633,9 @@ class Root extends React.Component {
               e(Dropdown, {
                 name: "layout",
                 value: layout,
-                options: info && info.layouts && k(info.layouts).length ? k(
-                  info.layouts) : null,
+                options: info && info.layouts && Object.keys(
+                  info.layouts).length ? Object.keys(
+                    info.layouts) : null,
                 onChangeCallback: this.handleChangeCallback
               }),
               e(Form, {
