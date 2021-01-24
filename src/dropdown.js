@@ -41,7 +41,8 @@ export default class Dropdown extends React.Component {
       (value, i) => e("option", {
         key: i,
         value
-      }, value)) : e("option");
+      }, value)
+    ) : e("option");
     if (isCustom) option.push(e("option", {value}, value));
 
     const span = e("span", null,

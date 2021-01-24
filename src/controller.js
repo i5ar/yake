@@ -11,34 +11,20 @@ export default class Controller extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  get housingP() {
-    if (this.keycap && this.keycap.w !== undefined) return this.keycap.w;
-    if (this.keycap && this.keycap.w === undefined) return "1";
-    return "";
-  }
-
   get width() {
-    if (this.keycap && this.keycap.w !== undefined) return this.keycap.w;
-    if (this.keycap && this.keycap.w === undefined) return "1";
-    return "";
+    return this.keycap ? this.keycap.w || "1" : "";
   }
 
   get height() {
-    if (this.keycap && this.keycap.h !== undefined) return this.keycap.h;
-    if (this.keycap && this.keycap.h === undefined) return "1";
-    return "";
+    return this.keycap ? this.keycap.h || "1" : "";
   }
 
   get c() {
-    if (this.keycap && this.keycap.c !== undefined) return this.keycap.c;
-    if (this.keycap && this.keycap.c === undefined) return config.layouts.c;
-    return "";
+    return this.keycap ? this.keycap.c || config.layouts.c : "";
   }
 
   get t() {
-    if (this.keycap && this.keycap.t !== undefined) return this.keycap.t;
-    if (this.keycap && this.keycap.t === undefined) return config.layouts.t;
-    return "";
+    return this.keycap ? this.keycap.t || config.layouts.t : "";
   }
 
   componentDidUpdate() {
@@ -112,7 +98,6 @@ export default class Controller extends React.Component {
             "form",
             {
               className: "pure-form pure-form-aligned",
-              onChange: this.handleChange
             },
             e(
               "fieldset", {
@@ -129,7 +114,8 @@ export default class Controller extends React.Component {
                   name: "w",
                   min: 1,
                   // max: 15,
-                  defaultValue: this.width
+                  value: this.width,
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -143,7 +129,8 @@ export default class Controller extends React.Component {
                   name: "h",
                   min: 1,
                   // max: 2,
-                  defaultValue: this.height
+                  value: this.height,
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -155,7 +142,8 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "x",
-                  defaultValue: this.keycap && this.keycap.x !== undefined ? this.keycap.x : ""
+                  value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -167,7 +155,8 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "y",
-                  defaultValue: this.keycap && this.keycap.y !== undefined ? this.keycap.y : ""
+                  value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : "",
+                  onChange: this.handleChange
                 })
               )
               // e(
@@ -178,7 +167,8 @@ export default class Controller extends React.Component {
               //   e("input", {
               //     type: "text",
               //     name: "p",
-              //     defaultValue: this.keycap && this.keycap.p !== undefined ? this.keycap.p : ""
+              //     value: this.keycap && this.keycap.p !== undefined ? this.keycap.p : "",
+              //     onChange: this.handleChange
               //   })
               // )
             )
@@ -186,7 +176,6 @@ export default class Controller extends React.Component {
           e(
             "form", {
               className: "pure-form pure-form-aligned",
-              onChange: this.handleChange
             },
             e(
               "fieldset", {
@@ -203,7 +192,8 @@ export default class Controller extends React.Component {
                   name: "r",
                   min: -180,
                   // max: 180,
-                  defaultValue: this.keycap && this.keycap.r !== undefined ? this.keycap.r : ""
+                  value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -215,7 +205,8 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "rx",
-                  defaultValue: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : ""
+                  value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -227,7 +218,8 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "ry",
-                  defaultValue: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : ""
+                  value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : "",
+                  onChange: this.handleChange
                 })
               )
             )
@@ -235,7 +227,7 @@ export default class Controller extends React.Component {
           e(
             "form", {
               className: "pure-form pure-form-aligned",
-              onChange: this.handleChange
+              // onChange: this.handleChange
             },
             e(
               "fieldset", {
@@ -250,7 +242,8 @@ export default class Controller extends React.Component {
                   type: "text",
                   name: "label",
                   maxLength: this.keycap && this.keycap.w !== undefined ? Math.floor(6 * (this.keycap.w - 0.25)) : 4,
-                  defaultValue: this.keycap && this.keycap.label !== undefined ? this.keycap.label : ""
+                  value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -261,7 +254,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "c",
-                  defaultValue: this.c,
+                  value: this.c,
+                  onChange: this.handleChange,
                   style: {
                     backgroundColor: this.c,
                     borderColor: this.c
@@ -276,7 +270,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",  // color
                   name: "t",
-                  defaultValue: this.t,
+                  value: this.t,
+                  onChange: this.handleChange,
                   style: {
                     backgroundColor: this.t,
                     borderColor: this.t
@@ -376,7 +371,6 @@ export default class Controller extends React.Component {
             "form",
             {
               className: "pure-form pure-form-aligned",
-              onChange: this.handleChange
             },
             e(
               "fieldset", {
@@ -390,7 +384,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-w",
-                  defaultValue: ""
+                  value: "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -401,7 +396,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-h",
-                  defaultValue: ""
+                  value: "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -412,7 +408,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-x",
-                  defaultValue: ""
+                  value: "",
+                  onChange: this.handleChange
                 })
               ),
               e(
@@ -423,7 +420,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-y",
-                  defaultValue: ""
+                  value: "",
+                  onChange: this.handleChange
                 })
               )
             )
@@ -432,7 +430,6 @@ export default class Controller extends React.Component {
           e(
             "form", {
               className: "pure-form pure-form-aligned",
-              onChange: this.handleChange
             },
             e(
               "fieldset", {
@@ -446,7 +443,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-p",
-                  defaultValue: ""
+                  value: "",
+                  onChange: this.handleChange
                 })
               )
             )
