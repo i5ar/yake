@@ -31,7 +31,7 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {c, t, w, h, p, hasProfile, defaultValues} = this.props;
+    const {c, t, w, h, p, isPrint, hasProfile, defaultValues} = this.props;
     const u = 54;
     const radius = 5;
 

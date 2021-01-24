@@ -24,6 +24,7 @@ export default class Device extends React.Component {
       info,
       keydev,
       layout,
+      isPrint,
       hasProfile,
       hasCase,
       defaultValues
@@ -161,6 +162,7 @@ export default class Device extends React.Component {
                 code: "KC_NO",
                 keys: [],
                 keydev,
+                isPrint,
                 hasProfile,
                 defaultValues,
                 handleClickCallback_: this.props.handleClickCallback_,

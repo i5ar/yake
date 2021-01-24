@@ -115,6 +115,14 @@ export default class Nav extends React.Component {
             e(
               "label", null,
               e("input", {
+                name: "isPrint",
+                type: "checkbox",
+                checked: this.props.isPrint,
+                onChange: this.handleChange
+              }), "Print"),
+            e(
+              "label", null,
+              e("input", {
                 name: "hasProfile",
                 type: "checkbox",
                 checked: this.props.hasProfile,
