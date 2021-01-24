@@ -119,49 +119,55 @@ export default class Device extends React.Component {
           onClick: this.handleClick
         },
         defs,
-        hasCase ? e(
-          "g",
-          null,
-          shapes
-        ) : null,
-        // NOTE: Add origin cross.
-        info?.layouts?.[layout].layout.map(
-          (layout, i) => i === keydev ? e(
-            Cross, {
-              key: i,
-              rx: layout.rx * u || 0,
-              ry: layout.ry * u || 0
-            }
-          ) : null
-        ),
         e(
-          "g", {
-            transform: "translate(5, 5)"
+          "g",
+          {
+            id: "viewport"
           },
-          // NOTE: Add keycaps.
+          hasCase ? e(
+            "g",
+            null,
+            shapes
+          ) : null,
+          // NOTE: Add origin cross.
           info?.layouts?.[layout].layout.map(
-            (layout, i) => e(Keycap, {
-              key: i,
-              index: i,
-              x: layout.x,
-              y: layout.y,
-              w: layout.w,
-              h: layout.h,
-              ks: layout.ks,
-              p: layout.p,
-              c: layout.c,
-              t: layout.t,
-              r: layout.r,
-              rx: layout.rx,
-              ry: layout.ry,
-              label: layout.label,
-              code: "KC_NO",
-              keys: [],
-              keydev,
-              hasProfile,
-              handleClickCallback_: this.props.handleClickCallback_,
-              handleKeyDownCallback: this.props.handleKeyDownCallback
-            })
+            (layout, i) => i === keydev ? e(
+              Cross, {
+                key: i,
+                rx: layout.rx * u || 0,
+                ry: layout.ry * u || 0
+              }
+            ) : null
+          ),
+          e(
+            "g", {
+              transform: "translate(5, 5)"
+            },
+            // NOTE: Add keycaps.
+            info?.layouts?.[layout].layout.map(
+              (layout, i) => e(Keycap, {
+                key: i,
+                index: i,
+                x: layout.x,
+                y: layout.y,
+                w: layout.w,
+                h: layout.h,
+                ks: layout.ks,
+                p: layout.p,
+                c: layout.c,
+                t: layout.t,
+                r: layout.r,
+                rx: layout.rx,
+                ry: layout.ry,
+                label: layout.label,
+                code: "KC_NO",
+                keys: [],
+                keydev,
+                hasProfile,
+                handleClickCallback_: this.props.handleClickCallback_,
+                handleKeyDownCallback: this.props.handleKeyDownCallback
+              })
+            )
           )
         )
       )
