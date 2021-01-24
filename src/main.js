@@ -28,7 +28,23 @@ class Root extends React.Component {
       isCustom: false,
       hasProfile: true,
       hasCase: true,
-      keydev: null
+      keydev: null,
+      defaultValues: {
+        u: 54,
+        layouts: {
+          label: "",
+          w: 1,
+          h: 1,
+          r: 0,
+          rx: 0,
+          ry: 0,
+          c: "#fdf6e3",
+          t: "#d33682"
+        },
+        housing: {
+          color: "#93a1a1"
+        }
+      }
 
       // TODO: Add features.
       // keycap color "c" and legend color "t"
@@ -369,7 +385,8 @@ class Root extends React.Component {
       const {name} = evt.target;
       this.setState(s => {
         const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
-        const w = _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].w || 1 : 1;
+        const kd = s.info.layouts[s.layout].layout[_keydev];
+        const w = _keydev >= 0 ? kd.w || 1 : 1;
         return {
           keydev: s.info.layouts[s.layout].layout.length,
           info: {
@@ -383,11 +400,11 @@ class Root extends React.Component {
                     w: name === "add-iso" ? 1.25 : 1,
                     h: name === "add-iso" ? 2 : 1,
                     p: name === "add-iso" ? [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1] : null,
-                    x: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].x + w : 0,
-                    y: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].y : 0,
-                    r: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].r : 0,
-                    rx: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].rx : 0,
-                    ry: _keydev >= 0 ? s.info.layouts[s.layout].layout[_keydev].ry : 0,
+                    x: _keydev >= 0 ? kd.x + w : 0,
+                    y: _keydev >= 0 ? kd.y : 0,
+                    r: _keydev >= 0 ? kd.r : 0,
+                    rx: _keydev >= 0 ? kd.rx : 0,
+                    ry: _keydev >= 0 ? kd.ry : 0,
                     label: ""
                   }
                 ]
@@ -583,7 +600,8 @@ class Root extends React.Component {
       isCustom,
       hasProfile,
       hasCase,
-      keydev
+      keydev,
+      defaultValues
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
@@ -653,6 +671,7 @@ class Root extends React.Component {
                 info,
                 layout,
                 keydev,
+                defaultValues,
                 handleClickCallback_: this.handleClickCallback_,
                 handleChangeCallback_: this.handleChangeCallback_
               }),
@@ -667,6 +686,7 @@ class Root extends React.Component {
                 hasProfile,
                 keydev,
                 hasCase,
+                defaultValues,
                 handleClickCallback_: this.handleClickCallback_,
                 handleKeyDownCallback: this.handleKeyDownCallback
               })

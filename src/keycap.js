@@ -3,9 +3,6 @@
 import Rectangle from "./rectangle.js";
 import Path from "./path.js";
 import shadeColor from "./common/shade.js";
-import {
-  config
-} from "./common/config.js";
 
 export default class Keycap extends React.Component {
   constructor(props) {
@@ -34,7 +31,7 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {c, t, w, h, p, hasProfile} = this.props;
+    const {c, t, w, h, p, hasProfile, defaultValues} = this.props;
     const u = 54;
     const radius = 5;
 
@@ -48,9 +45,9 @@ export default class Keycap extends React.Component {
     const widthOuter = u * w - 2;
     const heightInner = u * h - 14;
     const heightOuter = u * h - 2;
-    const colorInner = c || config.layouts.c;
+    const colorInner = c || defaultValues.layouts.c;
     const colorOuter = shadeColor(colorInner, -16);
-    const colorText = t || config.layouts.t;
+    const colorText = t || defaultValues.layouts.t;
 
     const opts = {
       tabIndex: -1,

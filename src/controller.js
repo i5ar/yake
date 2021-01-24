@@ -1,9 +1,5 @@
 /* eslint-disable react/prop-types */
 
-import {
-  config
-} from "./common/config.js";
-
 export default class Controller extends React.Component {
   constructor() {
     super();
@@ -12,19 +8,19 @@ export default class Controller extends React.Component {
   }
 
   get width() {
-    return this.keycap ? this.keycap.w || "1" : "";
+    return this.keycap ? this.keycap.w || "1" : this.defaultValues.layouts.w;
   }
 
   get height() {
-    return this.keycap ? this.keycap.h || "1" : "";
+    return this.keycap ? this.keycap.h || "1" : this.defaultValues.layouts.h;
   }
 
   get c() {
-    return this.keycap ? this.keycap.c || config.layouts.c : "";
+    return this.keycap ? this.keycap.c || "" : this.defaultValues.layouts.c;
   }
 
   get t() {
-    return this.keycap ? this.keycap.t || config.layouts.t : "";
+    return this.keycap ? this.keycap.t || "" : this.defaultValues.layouts.t;
   }
 
   componentDidUpdate() {
@@ -49,9 +45,10 @@ export default class Controller extends React.Component {
   }
 
   render() {
-    const {info, layout, state, keydev} = this.props;
+    const {info, layout, state, keydev, defaultValues} = this.props;
 
     this.keycap = info.layouts ? info.layouts[layout].layout[keydev] : {};
+    this.defaultValues = defaultValues;
 
     return e(
       "div", {
@@ -142,7 +139,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "x",
-                  value: this.keycap && this.keycap.x !== undefined ? this.keycap.x : "",
+                  value: this.keycap?.x !== undefined ? this.keycap.x : "",
                   onChange: this.handleChange
                 })
               ),
@@ -155,7 +152,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "y",
-                  value: this.keycap && this.keycap.y !== undefined ? this.keycap.y : "",
+                  value: this.keycap?.y !== undefined ? this.keycap.y : "",
                   onChange: this.handleChange
                 })
               )
@@ -192,7 +189,7 @@ export default class Controller extends React.Component {
                   name: "r",
                   min: -180,
                   // max: 180,
-                  value: this.keycap && this.keycap.r !== undefined ? this.keycap.r : "",
+                  value: this.keycap?.r !== undefined ? this.keycap.r : "",
                   onChange: this.handleChange
                 })
               ),
@@ -205,7 +202,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "rx",
-                  value: this.keycap && this.keycap.rx !== undefined ? this.keycap.rx : "",
+                  value: this.keycap?.rx !== undefined ? this.keycap.rx : "",
                   onChange: this.handleChange
                 })
               ),
@@ -218,7 +215,7 @@ export default class Controller extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "ry",
-                  value: this.keycap && this.keycap.ry !== undefined ? this.keycap.ry : "",
+                  value: this.keycap?.ry !== undefined ? this.keycap.ry : "",
                   onChange: this.handleChange
                 })
               )
@@ -241,8 +238,8 @@ export default class Controller extends React.Component {
                 e("input", {
                   type: "text",
                   name: "label",
-                  maxLength: this.keycap && this.keycap.w !== undefined ? Math.floor(6 * (this.keycap.w - 0.25)) : 4,
-                  value: this.keycap && this.keycap.label !== undefined ? this.keycap.label : "",
+                  maxLength: this.keycap?.w !== undefined ? Math.floor(6 * (this.keycap.w - 0.25)) : 4,
+                  value: this.keycap?.label !== undefined ? this.keycap.label : "",
                   onChange: this.handleChange
                 })
               ),

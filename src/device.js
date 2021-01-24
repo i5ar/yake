@@ -4,9 +4,6 @@ import Cross from "./cross.mjs";
 import {
   getSize
 } from "./common/size.js";
-import {
-  config
-} from "./common/config.js";
 
 export default class Device extends React.Component {
   constructor() {
@@ -28,7 +25,8 @@ export default class Device extends React.Component {
       keydev,
       layout,
       hasProfile,
-      hasCase
+      hasCase,
+      defaultValues
     } = this.props;
 
     const defs = e(
@@ -71,7 +69,7 @@ export default class Device extends React.Component {
     // NOTE: Case.
     const radius = 5;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
-    const color = shape_ ? info.housing[shape_]?.color || config.housing.color : null;
+    const color = shape_ ? info.housing[shape_]?.color || defaultValues.housing.color : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
         if (shape.p) return e("polygon", {
@@ -164,6 +162,7 @@ export default class Device extends React.Component {
                 keys: [],
                 keydev,
                 hasProfile,
+                defaultValues,
                 handleClickCallback_: this.props.handleClickCallback_,
                 handleKeyDownCallback: this.props.handleKeyDownCallback
               })
