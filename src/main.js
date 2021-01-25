@@ -448,6 +448,7 @@ class Root extends React.Component {
 
   handleKeyDownCallback(evt) {
     const {keydev} = this.state;
+    console.log(evt);
     if (evt.key === "ArrowRight") {
       this.setState(s => ({
         info: {
@@ -456,7 +457,13 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, x: parseFloat(l.x) + 0.25};
+                if (i === keydev) return evt.ctrlKey ? {
+                  ...l,
+                  rx: parseFloat(l.rx || 0) + 0.25
+                } : {
+                  ...l,
+                  x: parseFloat(l.x) + 0.25
+                };
                 return l;
               })
             }
@@ -471,7 +478,13 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, x: parseFloat(l.x) - 0.25};
+                if (i === keydev) return evt.ctrlKey ? {
+                  ...l,
+                  rx: parseFloat(l.rx || 0) - 0.25
+                } : {
+                  ...l,
+                  x: parseFloat(l.x) - 0.25
+                }
                 return l;
               })
             }
@@ -486,7 +499,13 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, y: parseFloat(l.y) - 0.25};
+                if (i === keydev) return evt.ctrlKey ? {
+                  ...l,
+                  ry: parseFloat(l.ry || 0) - 0.25
+                } : {
+                  ...l,
+                  y: parseFloat(l.y) - 0.25
+                }
                 return l;
               })
             }
@@ -501,7 +520,13 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, y: parseFloat(l.y) + 0.25};
+                if (i === keydev) return evt.ctrlKey ? {
+                  ...l,
+                  ry: parseFloat(l.ry || 0) + 0.25
+                } : {
+                  ...l,
+                  y: parseFloat(l.y) + 0.25
+                }
                 return l;
               })
             }
@@ -570,6 +595,27 @@ class Root extends React.Component {
       }));
     } else if (evt.key === "End") {
       // TODO: Get keyboard size.
+    } else if (evt.key === "Shift") {
+      this.setState(s => ({
+        info: {
+          ...s.info,
+          layouts: {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                if (i === keydev) return evt.code === "ShiftLeft" ? {
+                  ...l,
+                  r: parseFloat(l.r) -5
+                } : {
+                  ...l,
+                  r: parseFloat(l.r) + 5
+                }
+                return l;
+              })
+            }
+          }
+        }
+      }));
     } else if (evt.key.length === 1 && evt.key !== " " && evt.location === 0) {
       const _key = evt.key;
       this.setState(s => ({
