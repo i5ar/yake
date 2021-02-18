@@ -1,18 +1,18 @@
-import Dropdown from "./dropdown.js";
-import Device from "./device.js";
-import Form from "./form.js";
-import Nav from "./nav.js";
-import Footer from "./footer.js";
-import Editor from "./editor.js";
-import Button from "./button.js";
+import Dropdown from "./components/dropdown.mjs";
+import Device from "./components/device.mjs";
+import Form from "./components/form.mjs";
+import Nav from "./components/nav.mjs";
+import Footer from "./components/footer.mjs";
+import Editor from "./components/editor.mjs";
+import Header from "./components/header.mjs";
 import {
   fetchKeyboard,
   fetchKeyboards
-} from "./common/service.js";
+} from "./common/service.mjs";
 import {
   protips
-} from "./data/protips.js";
-import debounce from "./common/debounce.js";
+} from "./common/protips.mjs";
+import debounce from "./common/debounce.mjs";
 
 class Root extends React.Component {
   constructor(props) {
@@ -685,7 +685,7 @@ class Root extends React.Component {
                   justifyContent: "center"
                 }
               },
-              e(ReactRouterDOM.withRouter(Dropdown), {
+              e(r(Dropdown), {
                 selectRef: elm => this.selectElement = elm,
                 name: "keyboard",
                 value: keyboard,
@@ -715,7 +715,7 @@ class Root extends React.Component {
                   padding: "0 0 0.5em 0"
                 }
               },
-              e(Button, {
+              e(Header, {
                 info,
                 layout,
                 selectedKey,
@@ -724,7 +724,7 @@ class Root extends React.Component {
                 handleChangeCallback_: this.handleChangeCallback_
               }),
             ),
-            e(ReactRouterDOM.Route, {
+            e(Route, {
               path: `/${keyboard}`,
               children: match => e(Device, {
                 ...match,

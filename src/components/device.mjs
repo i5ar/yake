@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import Keycap from "./keycap.js";
+import Keycap from "./keycap.mjs";
 import Cross from "./cross.mjs";
-import Polygon from "./polygon.js";
+import Polygon from "./polygon.mjs";
 import {
   getSize
-} from "./common/size.js";
+} from "../common/size.mjs";
 
 export default class Device extends React.Component {
   constructor() {

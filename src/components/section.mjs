@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-export default class Controller extends React.Component {
+export default class Section extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -24,12 +24,12 @@ export default class Controller extends React.Component {
   }
 
   componentDidUpdate() {
-    // tippy(".controller label", {
+    // tippy(".section label", {
     //   placement: "top-end",
     //   animateFill: false,
     //   theme: "solarized"
     // });
-    tippy(".controller div#generate button", {
+    tippy(".section div#generate button", {
       placement: "top-end",
       animateFill: false,
       theme: "solarized"
@@ -45,25 +45,25 @@ export default class Controller extends React.Component {
   }
 
   render() {
-    const {info, layout, state, selectedKey, defaultValues} = this.props;
+    const {info, layout, selectedKey, defaultValues, isLayouts, isHousing} = this.props;
 
     this.keycap = info.layouts ? info.layouts[layout].layout[selectedKey] : {};
     this.defaultValues = defaultValues;
 
     return e(
-      "div", {
-        className: "controller",
+      "section", {
+        className: "section",
         style: {
-          display: state.layouts || state.housing ? "inherit" : "none"
+          display: isLayouts || isHousing ? "inherit" : "none"
         }
       },
 
       e(
         "div", {
           id: "layouts",
-          // className: state.layouts ? "slide-in" : "slide-out",
+          // className: isLayouts ? "slide-in" : "slide-out",
           style: {
-            display: state.layouts ? "inherit" : "none"
+            display: isLayouts ? "inherit" : "none"
           }
         }, e(
           "div", null,
@@ -357,9 +357,9 @@ export default class Controller extends React.Component {
       e(
         "div", {
           id: "housing",
-          // className: state.housing ? "slide-in" : "slide-out",
+          // className: isHousing ? "slide-in" : "slide-out",
           style: {
-            display: state.housing ? "inherit" : "none"
+            display: isHousing ? "inherit" : "none"
           }
         }, e(
           "div", null,

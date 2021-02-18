@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import Controller from "./controller.js";
+import Section from "./section.mjs";
 
 export default class Button extends React.Component {
   constructor() {
     super();
     this.state = {
-      layouts: true,
-      housing: false
+      isLayouts: true,
+      isHousing: false
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -39,14 +39,14 @@ export default class Button extends React.Component {
   }
 
   render() {
+    const {isLayouts, isHousing} = this.state;
     const {info, layout, selectedKey, defaultValues} = this.props;
     const style = {
       backgroundColor: "var(--orange)"
     };
 
     return e(
-      "div", {
-        className: "button",
+      "header", {
         style: {
           margin: "0.5em 0"
         }
@@ -63,21 +63,22 @@ export default class Button extends React.Component {
           "button", {
             style,
             type: "button",
-            name: "layouts",
-            className: this.state.layouts ? "pure-button pure-button-active" : "pure-button",
+            name: "isLayouts",
+            className: isLayouts ? "pure-button pure-button-active" : "pure-button",
             onClick: this.handleClick
           }, "Layouts",
         ),
         e("button", {
           style,
           type: "button",
-          name: "housing",
-          className: this.state.housing ? "pure-button pure-button-active" : "pure-button",
+          name: "isHousing",
+          className: isHousing ? "pure-button pure-button-active" : "pure-button",
           onClick: this.handleClick
         }, "Housing"),
       ),
-      e(Controller, {
-        state: this.state,
+      e(Section, {
+        isLayouts,
+        isHousing,
         info,
         layout,
         selectedKey,

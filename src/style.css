@@ -1,10 +1,10 @@
-@import "./src/dropdown.css";
-@import "./src/nav.css";
-@import "./src/form.css";
-@import "./src/device.css";
-@import "./src/button.css";
-@import "./src/controller.css";
-@import "./src/keycap.css";
+@import "./components/dropdown.css";
+@import "./components/nav.css";
+@import "./components/form.css";
+@import "./components/device.css";
+@import "./components/header.css";
+@import "./components/section.css";
+@import "./components/keycap.css";
 
 :root {
     --cursive: "Righteous", cursive;

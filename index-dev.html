@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="libs/regular.css">
   <link rel="stylesheet" href="libs/fontawesome.css">
   <link rel="stylesheet" href="libs/noty.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="src/style.css" />
   <link rel="stylesheet" href="src/common/noty/solarized.css" />
   <link rel="stylesheet" href="src/common/tippy/solarized.css" />
 </head>
@@ -35,10 +35,12 @@
   <script src="libs/noty.min.js"></script>
   <script src="libs/popper.min.js"></script>
   <script src="libs/index.all.min.js"></script>
-  <script src="src/main.js" type="module"></script>
+  <script src="src/main.mjs" type="module"></script>
   <script>
     const e = React.createElement;
     const Fragment = React.Fragment;
+    const r = ReactRouterDOM.withRouter;
+    const Route = ReactRouterDOM.Route;
     const HashRouter = ReactRouterDOM.HashRouter;
   </script>
 </body>

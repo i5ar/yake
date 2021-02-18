@@ -16,7 +16,7 @@ export default class Polygon extends React.Component {
           opts,
           e("polygon", {
             points: `${width} ${height / 2 - 12} ${width} ${height / 2 + 12} ${width + 18} ${height / 2}`,
-            fill: "lime",
+            fill: "#268bd2",
           })
         );
     }

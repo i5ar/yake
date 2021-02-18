@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import Rectangle from "./rectangle.js";
-import Polygon from "./polygon.js";
-import Path from "./path.js";
-import shadeColor from "./common/shade.js";
+import Rectangle from "./rectangle.mjs";
+import Path from "./path.mjs";
+import shadeColor from "../common/shade.mjs";
 
 export default class Keycap extends React.Component {
   constructor(props) {
@@ -101,15 +100,7 @@ export default class Keycap extends React.Component {
           fill: "url(#GRADIENT)"
         }),
         text
-      )
-      // e("g", {transform: opts.transform},
-      //   e(Polygon, {
-      //     active: this.props.selectedKey === this.props.index,
-      //     shape: "arrow-right",
-      //     width: widthOuter || 52,
-      //     height: heightOuter || 52,
-      //   }))
-      );
+      ));
     }
 
     const A = [p[0] * u, p[1] * u];

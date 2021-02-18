@@ -3,7 +3,7 @@
 import {
   fetchKeyboards,
   fetchKeyboard
-} from "./common/service.js";
+} from "../common/service.mjs";
 
 export default class Dropdown extends React.Component {
   constructor(props) {
