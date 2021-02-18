@@ -32,15 +32,7 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {c, t, w, h, p, isPrint, hasProfile, defaultValues} = this.props;
-    const u = 54;
-    const radius = 5;
-
-    const r = this.props.r || 0;
-    const rx = u * this.props.rx || 0;
-    const ry = u * this.props.ry || 0;
-    const x = u * this.props.x || 0;
-    const y = u * this.props.y || 0;
+    const {u, radius, r, rx, ry, x, y, c, t, w, h, p, isPrint, hasProfile, defaultValues} = this.props;
 
     const widthInner = u * w - 14;
     const widthOuter = u * w - 2;
@@ -85,8 +77,8 @@ export default class Keycap extends React.Component {
           className: "outer border",
           x: 1,
           y: 1,
-          width: widthOuter || 52,
-          height: heightOuter || 52,
+          width: widthOuter || u - 2,
+          height: heightOuter || u -2,
           rx: radius,
           fill: colorOuter,
           stroke: this.props.selectedKey === this.props.index ? "var(--green)" : null
@@ -95,27 +87,28 @@ export default class Keycap extends React.Component {
           className: "inner border",
           x: 7,
           y: 4,
-          width: widthInner || 40,
-          height: heightInner || 40,
+          width: widthInner || u - 14,
+          height: heightInner || u - 14,
           rx: radius,
           fill: colorInner
         }),
         hasProfile && e(Rectangle, {
           x: 7,
           y: 4,
-          width: widthInner || 40,
-          height: heightInner || 40,
+          width: widthInner || u - 14,
+          height: heightInner || u - 14,
           rx: radius,
           fill: "url(#GRADIENT)"
         }),
         text
-      ),
-      e("g", {transform: opts.transform},
-        e(Polygon, {
-          shape: "arrow-right",
-          width: widthOuter || 52,
-          height: heightOuter || 52,
-        }))
+      )
+      // e("g", {transform: opts.transform},
+      //   e(Polygon, {
+      //     active: this.props.selectedKey === this.props.index,
+      //     shape: "arrow-right",
+      //     width: widthOuter || 52,
+      //     height: heightOuter || 52,
+      //   }))
       );
     }
 

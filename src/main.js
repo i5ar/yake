@@ -651,7 +651,7 @@ class Root extends React.Component {
       defaultValues
     } = this.state;
 
-    return e(ReactRouterDOM.HashRouter, null,
+    return e(HashRouter, null,
       e(
         Fragment, null,
         e(Nav, {

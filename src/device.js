@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.js";
 import Cross from "./cross.mjs";
+import Polygon from "./polygon.js";
 import {
   getSize
 } from "./common/size.js";
@@ -8,6 +9,10 @@ import {
 export default class Device extends React.Component {
   constructor() {
     super();
+    this.state = {
+      u: 54,
+      radius: 5
+    }
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -15,11 +20,10 @@ export default class Device extends React.Component {
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    console.log(x / 54, y / 54);
+    console.log(x / this.state.u, y / this.state.u);
   }
 
   render() {
-    const u = 54;
     const {
       info,
       selectedKey,
@@ -68,7 +72,7 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    const radius = 5;
+    const {u, radius} = this.state;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
     const color = shape_ ? info.housing[shape_]?.color || defaultValues.housing.color : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
@@ -147,17 +151,19 @@ export default class Device extends React.Component {
               (layout, i) => e(Keycap, {
                 key: i,
                 index: i,
-                x: layout.x,
-                y: layout.y,
+                u,
+                radius,
+                x: u * layout.x || 0,
+                y: u * layout.y || 0,
                 w: layout.w,
                 h: layout.h,
                 ks: layout.ks,
                 p: layout.p,
                 c: layout.c,
                 t: layout.t,
-                r: layout.r,
-                rx: layout.rx,
-                ry: layout.ry,
+                r: layout.r || 0,
+                rx: u * layout.rx || 0,
+                ry: u * layout.ry || 0,
                 label: layout.label,
                 code: "KC_NO",
                 keys: [],
@@ -169,6 +175,22 @@ export default class Device extends React.Component {
                 handleKeyDownCallback: this.props.handleKeyDownCallback
               })
             )
+          ),
+          // NOTE: Add arrows.
+          info?.layouts?.[layout].layout.map(
+            (layout, i) => i === selectedKey ? e(
+              Polygon, {
+                key: i,
+                width: u * layout.w - 2 || u - 2,
+                height: u * layout.h - 2 || u - 2,
+                x: u * layout.x || 0,
+                y: u * layout.y || 0,
+                rx: u * layout.rx || 0,
+                ry: u * layout.ry || 0,
+                r: layout.r || 0,
+                shape: "arrow-right",
+                }
+            ) : null
           )
         )
       )

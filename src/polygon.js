@@ -2,18 +2,23 @@
 
 export default class Polygon extends React.Component {
   render() {
-    switch (this.props.shape) {
+
+    const {x, y, width, height, r, rx, ry, shape} = this.props;
+    const opts = {
+      transform: `
+        rotate(${r} ${rx} ${ry})
+        translate(${x+5}, ${y+5})`.replace(/\s+/g, " ").trim()
+    };
+    switch (shape) {
       case "arrow-right":
         return e(
-        "polygon", {
-          points: `
-          ${this.props.width + 4}
-          ${this.props.height / 2 - 12}
-          ${this.props.width + 4}
-          ${this.props.height / 2 + 12}
-          ${this.props.width + 18}
-          ${this.props.height / 2}`,
-          fill: "lime"
-      });
-  }}
+          "g",
+          opts,
+          e("polygon", {
+            points: `${width} ${height / 2 - 12} ${width} ${height / 2 + 12} ${width + 18} ${height / 2}`,
+            fill: "lime",
+          })
+        );
+    }
+  }
 }
