@@ -22,7 +22,7 @@ export default class Device extends React.Component {
     const u = 54;
     const {
       info,
-      keydev,
+      selectedKey,
       layout,
       isPrint,
       hasProfile,
@@ -130,7 +130,7 @@ export default class Device extends React.Component {
           ) : null,
           // NOTE: Add origin cross.
           info?.layouts?.[layout].layout.map(
-            (layout, i) => i === keydev ? e(
+            (layout, i) => i === selectedKey ? e(
               Cross, {
                 key: i,
                 rx: layout.rx * u || 0,
@@ -161,7 +161,7 @@ export default class Device extends React.Component {
                 label: layout.label,
                 code: "KC_NO",
                 keys: [],
-                keydev,
+                selectedKey,
                 isPrint,
                 hasProfile,
                 defaultValues,

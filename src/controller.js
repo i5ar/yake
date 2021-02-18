@@ -45,9 +45,9 @@ export default class Controller extends React.Component {
   }
 
   render() {
-    const {info, layout, state, keydev, defaultValues} = this.props;
+    const {info, layout, state, selectedKey, defaultValues} = this.props;
 
-    this.keycap = info.layouts ? info.layouts[layout].layout[keydev] : {};
+    this.keycap = info.layouts ? info.layouts[layout].layout[selectedKey] : {};
     this.defaultValues = defaultValues;
 
     return e(
@@ -307,50 +307,50 @@ export default class Controller extends React.Component {
               style: {pointerEvents: "none"}
             }
           )),
-          // TODO: Add homing keycap.
-          e("button", {
-            type: "button",
-            className: "pure-button success",
-            "data-tippy-content": "TODO: Add homing keycap",
-            name: "add-homing",
-            onClick: this.handleClick
-          }, e(
-            "i", {
-              className: "far fa-minus-square",
-              style: {pointerEvents: "none"}
-            }
-          )),
-          e("button", {
-            type: "button",
-            className: "pure-button success",
-            "data-tippy-content": "Add ISO keycap",
-            name: "add-iso",
-            onClick: this.handleClick
-          }, e(
-            "i", {
-              className: "far fa-folder",
-              style: {
-                pointerEvents: "none",
-                transform: "scaleY(-1) rotate(270deg)"
-              }
-            }
-          )),
-          // TODO: Add big-ass keycap
-          e("button", {
-            type: "button",
-            className: "pure-button success",
-            "data-tippy-content": "TODO: Add big-ass keycap",
-            name: "add-ass",
-            onClick: this.handleClick
-          }, e(
-            "i", {
-              className: "far fa-folder",
-              style: {
-                pointerEvents: "none",
-                transform: "rotate(270deg)"
-              }
-            }
-          ))
+          // TODO: Add keycaps.
+          // e("button", {
+          //   type: "button",
+          //   className: "pure-button success",
+          //   "data-tippy-content": "TODO: Add homing keycap",
+          //   name: "add-homing",
+          //   onClick: this.handleClick
+          // }, e(
+          //   "i", {
+          //     className: "far fa-minus-square",
+          //     style: {pointerEvents: "none"}
+          //   }
+          // )),
+          // e("button", {
+          //   type: "button",
+          //   className: "pure-button success",
+          //   "data-tippy-content": "Add ISO keycap",
+          //   name: "add-iso",
+          //   onClick: this.handleClick
+          // }, e(
+          //   "i", {
+          //     className: "far fa-folder",
+          //     style: {
+          //       pointerEvents: "none",
+          //       transform: "scaleY(-1) rotate(270deg)"
+          //     }
+          //   }
+          // )),
+          // // TODO: Add big-ass keycap
+          // e("button", {
+          //   type: "button",
+          //   className: "pure-button success",
+          //   "data-tippy-content": "TODO: Add big-ass keycap",
+          //   name: "add-bigass",
+          //   onClick: this.handleClick
+          // }, e(
+          //   "i", {
+          //     className: "far fa-folder",
+          //     style: {
+          //       pointerEvents: "none",
+          //       transform: "rotate(270deg)"
+          //     }
+          //   }
+          // ))
         )
       ),
 

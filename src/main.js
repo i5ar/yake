@@ -29,7 +29,7 @@ class Root extends React.Component {
       isPrint: false,
       hasProfile: true,
       hasCase: true,
-      keydev: null,
+      selectedKey: null,
       defaultValues: {
         u: 54,
         layouts: {
@@ -189,7 +189,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, x: parseFloat(value)};
+                if (i === s.selectedKey) return {...l, x: parseFloat(value)};
                 return l;
               })
             }
@@ -204,7 +204,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, y: parseFloat(value)};
+                if (i === s.selectedKey) return {...l, y: parseFloat(value)};
                 return l;
               })
             }
@@ -219,7 +219,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, w: parseFloat(value)};
+                if (i === s.selectedKey) return {...l, w: parseFloat(value)};
                 return l;
               })
             }
@@ -234,7 +234,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, h: parseInt(value, 10)};
+                if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
                 return l;
               })
             }
@@ -249,7 +249,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, r: parseInt(value, 10)};
+                if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
                 return l;
               })
             }
@@ -264,7 +264,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, rx: parseFloat(value)};
+                if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
                 return l;
               })
             }
@@ -279,7 +279,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, ry: parseFloat(value)};
+                if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
                 return l;
               })
             }
@@ -294,7 +294,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, label: value};
+                if (i === s.selectedKey) return {...l, label: value};
                 return l;
               })
             }
@@ -309,7 +309,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, p: value.split(",")};
+                if (i === s.selectedKey) return {...l, p: value.split(",")};
                 return l;
               })
             }
@@ -324,7 +324,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, c: value};
+                if (i === s.selectedKey) return {...l, c: value};
                 return l;
               })
             }
@@ -339,7 +339,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.keydev) return {...l, t: value};
+                if (i === s.selectedKey) return {...l, t: value};
                 return l;
               })
             }
@@ -375,21 +375,20 @@ class Root extends React.Component {
   }
 
   handleClickCallback_(evt) {
-    if (evt.name === "keydev") {
+    if (evt.name === "selectedKey") {
       const index = parseInt(evt.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
       this.setState(s => ({
         // NOTE: Make the key `null` if the previous value was the same (toggle).
-        keydev: s.keydev === index ? null : index
+        selectedKey: s.selectedKey === index ? null : index
       }));
-    } else if (evt.target.name.startsWith("add")) {
-      const {name} = evt.target;
+    } else if (evt.target.name === "add") {
       this.setState(s => {
-        const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
-        const kd = s.info.layouts[s.layout].layout[_keydev];
-        const w = _keydev >= 0 ? kd.w || 1 : 1;
+        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layout].layout.length - 1;
+        const kd = s.info.layouts[s.layout].layout[_selectedKey];
+        const w = _selectedKey >= 0 ? kd.w || 1 : 1;
         return {
-          keydev: s.info.layouts[s.layout].layout.length,
+          selectedKey: s.info.layouts[s.layout].layout.length,
           info: {
             ...s.info,
             layouts: {
@@ -398,14 +397,14 @@ class Root extends React.Component {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
                   {
-                    w: name === "add-iso" ? 1.25 : 1,
-                    h: name === "add-iso" ? 2 : 1,
-                    p: name === "add-iso" ? [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1] : null,
-                    x: _keydev >= 0 ? kd.x + w : 0,
-                    y: _keydev >= 0 ? kd.y : 0,
-                    r: _keydev >= 0 ? kd.r : 0,
-                    rx: _keydev >= 0 ? kd.rx : 0,
-                    ry: _keydev >= 0 ? kd.ry : 0,
+                    w: 1,  // "add-iso" 1.25
+                    h: 1,  // "add-iso" 2
+                    p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+                    x: _selectedKey >= 0 ? kd.x + w : 0,
+                    y: _selectedKey >= 0 ? kd.y : 0,
+                    r: _selectedKey >= 0 ? kd.r : 0,
+                    rx: _selectedKey >= 0 ? kd.rx : 0,
+                    ry: _selectedKey >= 0 ? kd.ry : 0,
                     label: ""
                   }
                 ]
@@ -416,17 +415,17 @@ class Root extends React.Component {
       });
     } else if (evt.target.name === "remove") {
       this.setState(s => ({
-        keydev: null,
+        selectedKey: null,
         info: {
           ...s.info,
           layouts: {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.filter((l, i) => {
-                if (s.keydev === null) {
+                if (s.selectedKey === null) {
                   return i < s.info.layouts[s.layout].layout.length - 1;
                 }
-                return i !== s.keydev;
+                return i !== s.selectedKey;
               })
             }
           }
@@ -447,7 +446,7 @@ class Root extends React.Component {
   }
 
   handleKeyDownCallback(evt) {
-    const {keydev} = this.state;
+    const {selectedKey} = this.state;
     console.log(evt);
     if (evt.key === "ArrowRight") {
       this.setState(s => ({
@@ -457,7 +456,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return evt.ctrlKey ? {
+                if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   rx: parseFloat(l.rx || 0) + 0.25
                 } : {
@@ -478,7 +477,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return evt.ctrlKey ? {
+                if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   rx: parseFloat(l.rx || 0) - 0.25
                 } : {
@@ -499,7 +498,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return evt.ctrlKey ? {
+                if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   ry: parseFloat(l.ry || 0) - 0.25
                 } : {
@@ -520,7 +519,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return evt.ctrlKey ? {
+                if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   ry: parseFloat(l.ry || 0) + 0.25
                 } : {
@@ -535,17 +534,17 @@ class Root extends React.Component {
       }));
     } else if (evt.key === "Delete") {
       this.setState(s => ({
-        keydev: null,
+        selectedKey: null,
         info: {
           ...s.info,
           layouts: {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.filter((l, i) => {
-                if (s.keydev === null) {
+                if (s.selectedKey === null) {
                   return i < s.info.layouts[s.layout].layout.length - 1;
                 }
-                return i !== s.keydev;
+                return i !== s.selectedKey;
               })
             }
           }
@@ -553,10 +552,10 @@ class Root extends React.Component {
       }));
     } else if (evt.key === "Insert") {
       this.setState(s => {
-        const _keydev = s.keydev !== null ? s.keydev : s.info.layouts[s.layout].layout.length - 1;
-        const w = s.info.layouts[s.layout].layout[_keydev].w || 1;
+        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layout].layout.length - 1;
+        const w = s.info.layouts[s.layout].layout[_selectedKey].w || 1;
         return {
-          keydev: s.info.layouts[s.layout].layout.length,
+          selectedKey: s.info.layouts[s.layout].layout.length,
           info: {
             ...s.info,
             layouts: {
@@ -565,11 +564,11 @@ class Root extends React.Component {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
                   {
-                    x: s.info.layouts[s.layout].layout[_keydev].x + w,
-                    y: s.info.layouts[s.layout].layout[_keydev].y,
-                    r: s.info.layouts[s.layout].layout[_keydev].r,
-                    rx: s.info.layouts[s.layout].layout[_keydev].rx,
-                    ry: s.info.layouts[s.layout].layout[_keydev].ry,
+                    x: s.info.layouts[s.layout].layout[_selectedKey].x + w,
+                    y: s.info.layouts[s.layout].layout[_selectedKey].y,
+                    r: s.info.layouts[s.layout].layout[_selectedKey].r,
+                    rx: s.info.layouts[s.layout].layout[_selectedKey].rx,
+                    ry: s.info.layouts[s.layout].layout[_selectedKey].ry,
                     label: ""
                   }
                 ]
@@ -586,7 +585,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, x: 0, y: 0};
+                if (i === selectedKey) return {...l, x: 0, y: 0};
                 return l;
               })
             }
@@ -603,7 +602,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return evt.code === "ShiftLeft" ? {
+                if (i === selectedKey) return evt.code === "ShiftLeft" ? {
                   ...l,
                   r: parseFloat(l.r) -5
                 } : {
@@ -625,7 +624,7 @@ class Root extends React.Component {
             ...s.info.layouts,
             [s.layout]: {
               layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === keydev) return {...l, label: _key};
+                if (i === selectedKey) return {...l, label: _key};
                 return l;
               })
             }
@@ -648,13 +647,13 @@ class Root extends React.Component {
       isPrint,
       hasProfile,
       hasCase,
-      keydev,
+      selectedKey,
       defaultValues
     } = this.state;
 
     return e(ReactRouterDOM.HashRouter, null,
       e(
-        f, null,
+        Fragment, null,
         e(Nav, {
           isDevel,
           hasApi,
@@ -719,7 +718,7 @@ class Root extends React.Component {
               e(Button, {
                 info,
                 layout,
-                keydev,
+                selectedKey,
                 defaultValues,
                 handleClickCallback_: this.handleClickCallback_,
                 handleChangeCallback_: this.handleChangeCallback_
@@ -735,7 +734,7 @@ class Root extends React.Component {
                 isPrint,
                 hasProfile,
                 hasCase,
-                keydev,
+                selectedKey,
                 defaultValues,
                 handleClickCallback_: this.handleClickCallback_,
                 handleKeyDownCallback: this.handleKeyDownCallback
@@ -744,7 +743,7 @@ class Root extends React.Component {
           ),
           e(Editor, {
             info,
-            keydev,
+            selectedKey,
             handleAceCallback: this.handleAceCallback
           }),
           e(Footer)

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import Rectangle from "./rectangle.js";
+import Polygon from "./polygon.js";
 import Path from "./path.js";
 import shadeColor from "./common/shade.js";
 
@@ -20,7 +21,7 @@ export default class Keycap extends React.Component {
   }
 
   handleClick(evt) {
-    this.props.handleClickCallback_({...evt, name: "keydev", index: this.props.index});
+    this.props.handleClickCallback_({...evt, name: "selectedKey", index: this.props.index});
   }
 
   handleKeyDown(evt) {
@@ -78,7 +79,7 @@ export default class Keycap extends React.Component {
     );
 
     if (!this.props.p) {
-      return e(
+      return e(Fragment, {}, e(
         "g", opts,
         e(Rectangle, {
           className: "outer border",
@@ -88,7 +89,7 @@ export default class Keycap extends React.Component {
           height: heightOuter || 52,
           rx: radius,
           fill: colorOuter,
-          stroke: this.props.keydev === this.props.index ? "var(--green)" : null
+          stroke: this.props.selectedKey === this.props.index ? "var(--green)" : null
         }),
         e(Rectangle, {
           className: "inner border",
@@ -108,6 +109,13 @@ export default class Keycap extends React.Component {
           fill: "url(#GRADIENT)"
         }),
         text
+      ),
+      e("g", {transform: opts.transform},
+        e(Polygon, {
+          shape: "arrow-right",
+          width: widthOuter || 52,
+          height: heightOuter || 52,
+        }))
       );
     }
 
@@ -154,7 +162,7 @@ export default class Keycap extends React.Component {
         className: "outer border",
         d: dOuter,
         fill: colorOuter,
-        stroke: this.props.keydev === this.props.index ? "var(--green)" : null
+        stroke: this.props.selectedKey === this.props.index ? "var(--green)" : null
       }),
       e(Path, {
         className: "inner border",
