@@ -58,7 +58,6 @@ class Root extends React.Component {
     this.formElement = null;
 
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
-    this.handleChangeCallback_ = this.handleChangeCallback_.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
     this.handleClickCallback_ = this.handleClickCallback_.bind(this);
@@ -106,43 +105,8 @@ class Root extends React.Component {
     }));
   }
 
-  handleChangeCallback(name, value) {
-    if (name === "keyboard") {
-      const {hasApi} = this.state;
-      const keyboard = value;
-      fetchKeyboard(hasApi, keyboard).then(info => {
-        this.setState(s => ({
-          info: s.hasApi ? info.keyboards[keyboard] : info,
-          keyboard,
-          layout: s.hasApi ? Object.keys(
-            info.keyboards[keyboard].layouts)[0] : Object.keys(
-              info.layouts)[0],
-          isCustom: false
-        }));
-        if (this.selectElement) this.selectElement.focus();
-        if (this.formElement) this.formElement.reset();
-      });
-    } else if (name === "info") {
-      const reader = new FileReader();
-      reader.readAsText(value);
-      reader.onload = evt => {
-        const info = JSON.parse(evt.target.result);
-        this.setState({
-          info,
-          keyboard: info.keyboard_name.toLowerCase(),
-          layout: Object.keys(info.layouts)[0],
-          isCustom: true
-        });
-      };
-    } else {
-      this.setState({
-        [name]: value
-      });
-    }
-  }
-
-  handleChangeCallback_(evt) {
-    const {name, value} = evt.target;
+  handleChangeCallback(evt) {
+    const {name, value, type} = evt.target;
 
     // if (name === "keycaps") {
     //   this.setState(s => {
@@ -181,171 +145,212 @@ class Root extends React.Component {
     //   });
     // }
 
-    if (name === "x") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, x: parseFloat(value)};
-                return l;
-              })
+    if (type === "checkbox") {
+      const {checked} = evt.target;
+      this.setState({
+        [name]: checked
+      });
+    } else if (type === "file") {
+      const {files} = evt.target;
+      if (name === "info") {
+        const reader = new FileReader();
+        reader.readAsText(files[0]);
+        reader.onload = evt => {
+          const info = JSON.parse(evt.target.result);
+          this.setState({
+            info,
+            keyboard: info.keyboard_name.toLowerCase(),
+            layout: Object.keys(info.layouts)[0],
+            isCustom: true
+          });
+        };
+      }
+    } else {
+      if (name === "keyboard") {
+        const {hasApi} = this.state;
+        const keyboard = value;
+        fetchKeyboard(hasApi, keyboard).then(info => {
+          this.setState(s => ({
+            info: s.hasApi ? info.keyboards[keyboard] : info,
+            keyboard,
+            layout: s.hasApi ? Object.keys(
+              info.keyboards[keyboard].layouts)[0] : Object.keys(
+                info.layouts)[0],
+            isCustom: false
+          }));
+          if (this.selectElement) this.selectElement.focus();
+          if (this.formElement) this.formElement.reset();
+        });
+      } else if (name === "x") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, x: parseFloat(value)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "y") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, y: parseFloat(value)};
-                return l;
-              })
+        }));
+      } else if (name === "y") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, y: parseFloat(value)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "w") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, w: parseFloat(value)};
-                return l;
-              })
+        }));
+      } else if (name === "w") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, w: parseFloat(value)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "h") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
-                return l;
-              })
+        }));
+      } else if (name === "h") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "r") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
-                return l;
-              })
+        }));
+      } else if (name === "r") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "rx") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
-                return l;
-              })
+        }));
+      } else if (name === "rx") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "ry") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
-                return l;
-              })
+        }));
+      } else if (name === "ry") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "label") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, label: value};
-                return l;
-              })
+        }));
+      } else if (name === "label") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, label: value};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "p") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, p: value.split(",")};
-                return l;
-              })
+        }));
+      } else if (name === "p") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, p: value.split(",")};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "c") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, c: value};
-                return l;
-              })
+        }));
+      } else if (name === "c") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, c: value};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
-    } else if (name === "t") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                if (i === s.selectedKey) return {...l, t: value};
-                return l;
-              })
+        }));
+      } else if (name === "t") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, t: value};
+                  return l;
+                })
+              }
             }
           }
-        }
-      }));
+        }));
+      } else {
+        this.setState({
+          [name]: value
+        });
+      }
     }
   }
 
@@ -662,7 +667,7 @@ class Root extends React.Component {
           hasCase,
           onClickCallback: this.handleClickCallback,
           deviceHtml: this.deviceElement,
-          onChangeCallback: this.handleChangeCallback
+          handleChangeCallback: this.handleChangeCallback
         }),
         e(
           "main", {
@@ -690,7 +695,7 @@ class Root extends React.Component {
                 name: "keyboard",
                 value: keyboard,
                 options: keyboards && keyboards.length ? keyboards : null,
-                onChangeCallback: this.handleChangeCallback,
+                handleChangeCallback: this.handleChangeCallback,
                 hasApi,
                 isInitial,
                 isCustom,
@@ -702,11 +707,11 @@ class Root extends React.Component {
                 options: info && info.layouts && Object.keys(
                   info.layouts).length ? Object.keys(
                     info.layouts) : null,
-                onChangeCallback: this.handleChangeCallback
+                  handleChangeCallback: this.handleChangeCallback
               }),
               e(Form, {
                 formRef: elm => this.formElement = elm,
-                onChangeCallback: this.handleChangeCallback
+                handleChangeCallback: this.handleChangeCallback
               })
             ),
             e("div",
@@ -721,7 +726,7 @@ class Root extends React.Component {
                 selectedKey,
                 defaultValues,
                 handleClickCallback_: this.handleClickCallback_,
-                handleChangeCallback_: this.handleChangeCallback_
+                handleChangeCallback: this.handleChangeCallback
               }),
             ),
             e(Route, {

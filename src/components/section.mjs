@@ -41,7 +41,7 @@ export default class Section extends React.Component {
   }
 
   handleChange(evt) {
-    this.props.handleChangeCallback_(evt);
+    this.props.handleChangeCallback(evt);
   }
 
   render() {

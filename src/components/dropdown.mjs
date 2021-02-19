@@ -32,7 +32,7 @@ export default class Dropdown extends React.Component {
   }
 
   handleChange(evt) {
-    this.props.onChangeCallback(evt.target.name, evt.target.value);
+    this.props.handleChangeCallback(evt);
   }
 
   render() {

@@ -84,7 +84,7 @@ export default class Button extends React.Component {
         selectedKey,
         defaultValues,
         handleClickCallback_: this.props.handleClickCallback_,
-        handleChangeCallback_: this.props.handleChangeCallback_
+        handleChangeCallback: this.props.handleChangeCallback
       })
     );
   }

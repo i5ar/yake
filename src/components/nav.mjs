@@ -49,9 +49,7 @@ export default class Nav extends React.Component {
   }
 
   handleChange(evt) {
-    const {name} = evt.target;
-    const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
-    this.props.onChangeCallback(name, value);
+    this.props.handleChangeCallback(evt);
   }
 
   render() {

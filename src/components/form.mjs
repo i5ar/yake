@@ -8,7 +8,7 @@ export default class Form extends React.Component {
   }
 
   handleChange(evt) {
-    this.props.onChangeCallback(evt.target.name, evt.target.files[0]);
+    this.props.handleChangeCallback(evt);
   }
 
   handleClick(evt) {

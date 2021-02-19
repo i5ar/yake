@@ -37,34 +37,33 @@ export default class ForeignObject extends React.Component {
 
     const foreignObjectSelectOpts = {
       x: u * layout.x + 5 || 0,
-      y: u * layout.y - 15 || 0,
+      y: u * layout.y - 19 || 0,
       width: u * layout.w || u,
-      height: 20,
-      transform: `rotate(${r} ${rx} ${ry})`,
-      style: {
-        fontSize: 12
-      }
+      height: 24,
+      transform: `rotate(${r} ${rx} ${ry})`
     };
     const foreignObjectButtonOpts = {
       width: 24,
       height: 24,
-      transform: `rotate(${r} ${rx} ${ry})`,
+      transform: `rotate(${r} ${rx} ${ry})`
     };
     const buttonOpts = {
       style: {
         width: foreignObjectButtonOpts.width,
         height: foreignObjectButtonOpts.height
       },
-      onClick: this.handleClick
+      onClick: this.handleClick,
+      value: modes[modeIndex]
     }
 
     return e(Fragment, null,
       e("foreignObject", foreignObjectSelectOpts,
         e("form", null,
           e("select", {
-            id: "mode",
+            // id: "mode",
             style: {
-              width: foreignObjectSelectOpts.width
+              width: foreignObjectSelectOpts.width,
+              height: foreignObjectSelectOpts.height
             },
             onChange: this.handleChange
           }, this.state.modes.map((mode, i) => e("option", {
@@ -80,8 +79,7 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "right",
-        value: modes[modeIndex]
+        name: "right"
       }, "+")
       ),
       e("foreignObject", {
@@ -90,8 +88,7 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "left",
-        value: modes[modeIndex]
+        name: "left"
       }, "+")
       ),
       e("foreignObject", {
@@ -100,8 +97,7 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "down",
-        value: modes[modeIndex]
+        name: "down"
       }, "+")
       )
     )
