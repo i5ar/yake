@@ -9,18 +9,15 @@ import {
 export default class Device extends React.Component {
   constructor() {
     super();
-    this.state = {
-      u: 54,
-      radius: 5
-    }
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(evt) {
+    const {u, radius} = this.props.defaultValues;
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    console.log(x / this.state.u, y / this.state.u);
+    console.log(x / u, y / u);
   }
 
   render() {
@@ -30,8 +27,7 @@ export default class Device extends React.Component {
       layout,
       isPrint,
       hasProfile,
-      hasCase,
-      defaultValues
+      hasCase
     } = this.props;
 
     const defs = e(
@@ -72,9 +68,9 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    const {u, radius} = this.state;
+    const {u, radius, housing, layouts} = this.props.defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
-    const color = shape_ ? info.housing[shape_]?.color || defaultValues.housing.color : null;
+    const color = shape_ ? info.housing[shape_]?.color || housing.color : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
         if (shape.p) return e("polygon", {
@@ -153,6 +149,7 @@ export default class Device extends React.Component {
                 index: i,
                 u,
                 radius,
+                layouts,
                 x: u * layout.x || 0,
                 y: u * layout.y || 0,
                 w: layout.w,
@@ -170,7 +167,7 @@ export default class Device extends React.Component {
                 selectedKey,
                 isPrint,
                 hasProfile,
-                defaultValues,
+                // defaultValues,
                 handleClickCallback_: this.props.handleClickCallback_,
                 handleKeyDownCallback: this.props.handleKeyDownCallback
               })

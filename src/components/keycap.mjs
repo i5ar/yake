@@ -31,15 +31,15 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {u, radius, r, rx, ry, x, y, c, t, w, h, p, isPrint, hasProfile, defaultValues} = this.props;
+    const {u, radius, layouts, r, rx, ry, x, y, c, t, w, h, p, isPrint, hasProfile} = this.props;
 
     const widthInner = u * w - 14;
     const widthOuter = u * w - 2;
     const heightInner = u * h - 14;
     const heightOuter = u * h - 2;
-    const colorInner = c || defaultValues.layouts.c;
+    const colorInner = c || layouts.c;
     const colorOuter = shadeColor(colorInner, -16);
-    const colorText = t || defaultValues.layouts.t;
+    const colorText = t || layouts.t;
 
     const opts = {
       tabIndex: -1,

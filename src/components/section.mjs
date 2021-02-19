@@ -8,19 +8,19 @@ export default class Section extends React.Component {
   }
 
   get width() {
-    return this.keycap ? this.keycap.w || "1" : this.defaultValues.layouts.w;
+    return this.keycap ? this.keycap.w || "1" : this.props.defaultValues.layouts.w;
   }
 
   get height() {
-    return this.keycap ? this.keycap.h || "1" : this.defaultValues.layouts.h;
+    return this.keycap ? this.keycap.h || "1" : this.props.defaultValues.layouts.h;
   }
 
   get c() {
-    return this.keycap ? this.keycap.c || "" : this.defaultValues.layouts.c;
+    return this.keycap ? this.keycap.c || "" : this.props.defaultValues.layouts.c;
   }
 
   get t() {
-    return this.keycap ? this.keycap.t || "" : this.defaultValues.layouts.t;
+    return this.keycap ? this.keycap.t || "" : this.props.defaultValues.layouts.t;
   }
 
   componentDidUpdate() {
@@ -45,10 +45,8 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, layout, selectedKey, defaultValues, isLayouts, isHousing} = this.props;
-
+    const {info, layout, selectedKey, isLayouts, isHousing} = this.props;
     this.keycap = info.layouts ? info.layouts[layout].layout[selectedKey] : {};
-    this.defaultValues = defaultValues;
 
     return e(
       "section", {

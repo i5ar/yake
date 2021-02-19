@@ -32,6 +32,7 @@ class Root extends React.Component {
       selectedKey: null,
       defaultValues: {
         u: 54,
+        radius: 5,
         layouts: {
           label: "",
           w: 1,
@@ -380,6 +381,7 @@ class Root extends React.Component {
   }
 
   handleClickCallback_(evt) {
+    console.log(evt);
     if (evt.name === "selectedKey") {
       const index = parseInt(evt.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
