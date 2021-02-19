@@ -76,9 +76,9 @@ export default class Device extends React.Component {
         if (shape.p) return e("polygon", {
           key: i,
           points: shape.p.map(point => point * u).join(","),
-          fill: color,
+          fill: isPrint ? "lightgray" : color,
+          stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
-          stroke: color,
           strokeLinejoin: "round"
         });
         if (shape.w && shape.h) return e("rect", {
@@ -87,9 +87,9 @@ export default class Device extends React.Component {
           y: shape.y * u + 5 || 5,
           width: shape.w * u,
           height: shape.h * u,
-          fill: color,
+          fill: isPrint ? "lightgray" : color,
+          stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
-          stroke: color,
           strokeLinejoin: "round"
         });
       }

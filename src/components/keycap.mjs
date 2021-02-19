@@ -60,7 +60,7 @@ export default class Keycap extends React.Component {
         // x: 13,
         // y: 37,
         "data-index": this.props.index,
-        fill: colorText
+        fill: isPrint ? "black" : colorText
       },
       this.tspans.map((l, i) => e(
         "tspan", {
@@ -81,8 +81,9 @@ export default class Keycap extends React.Component {
           width: widthOuter || u - 2,
           height: heightOuter || u -2,
           rx: radius,
-          fill: colorOuter,
-          stroke: this.props.selectedKey === this.props.index ? "var(--green)" : null
+          fill: isPrint ? "white" : colorOuter,
+          stroke: isPrint ? "black" : this.props.selectedKey === this.props.index ? "var(--green)" : null,
+          strokeWidth: isPrint ? 1 : 4
         }),
         e(Rectangle, {
           className: "inner border",
@@ -91,16 +92,18 @@ export default class Keycap extends React.Component {
           width: widthInner || u - 14,
           height: heightInner || u - 14,
           rx: radius,
-          fill: colorInner
+          fill: isPrint ? "white" : colorInner,
+          stroke: isPrint ? "black" : null,
+          strokeWidth: isPrint ? 1 : null
         }),
-        hasProfile && e(Rectangle, {
+        hasProfile ? e(Rectangle, {
           x: 7,
           y: 4,
           width: widthInner || u - 14,
           height: heightInner || u - 14,
           rx: radius,
-          fill: "url(#GRADIENT)"
-        }),
+          fill: isPrint ? "white" : "url(#GRADIENT)"
+        }) : null,
         text
       ));
     }
@@ -147,18 +150,21 @@ export default class Keycap extends React.Component {
       e(Path, {
         className: "outer border",
         d: dOuter,
-        fill: colorOuter,
-        stroke: this.props.selectedKey === this.props.index ? "var(--green)" : null
+        fill: isPrint ? "white" : colorOuter,
+        stroke: isPrint ? "black" : this.props.selectedKey === this.props.index ? "var(--green)" : null,
+        strokeWidth: isPrint ? 1 : 4
       }),
       e(Path, {
         className: "inner border",
         d: dInner,
-        fill: colorInner
+        fill: isPrint ? "white" : colorInner,
+        stroke: isPrint ? "black" : null,
+        strokeWidth: isPrint ? 1 : null
       }),
-      hasProfile && e(Path, {
+      hasProfile ? e(Path, {
         d: dInner,
-        fill: "url(#GRADIENT)"
-      }),
+        fill: isPrint ? "white" : "url(#GRADIENT)"
+      }) : null,
       text
     );
   }
