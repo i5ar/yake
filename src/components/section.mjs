@@ -37,7 +37,7 @@ export default class Section extends React.Component {
   }
 
   handleClick(evt) {
-    this.props.handleClickCallback_(evt);
+    this.props.handleClickCallback(evt);
   }
 
   handleChange(evt) {

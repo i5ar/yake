@@ -18,8 +18,8 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDevel: true,
-      hasApi: false,
+      isDevel: true,  // when `false` hides the list from the nav.
+      hasApi: false,  // when `true` starts with QMK keyboards.
       keyboards: [],
       info: {},
       keyboard: "",
@@ -61,7 +61,6 @@ class Root extends React.Component {
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
-    this.handleClickCallback_ = this.handleClickCallback_.bind(this);
     this.handleKeyDownCallback = this.handleKeyDownCallback.bind(this);
     this.handleAceCallback = debounce(this.handleAceCallback.bind(this), 1000);
   }
@@ -182,6 +181,8 @@ class Root extends React.Component {
           if (this.selectElement) this.selectElement.focus();
           if (this.formElement) this.formElement.reset();
         });
+      } else if (name === "mode" && parseInt(value, 10) === 4) {  // remove the key
+        console.log("TODO: remove");
       } else if (name === "x") {
         this.setState(s => ({
           info: {
@@ -355,10 +356,11 @@ class Root extends React.Component {
     }
   }
 
-  handleClickCallback(name, value) {
-    if (name === "api") {
+  handleClickCallback(evt) {
+    const {name, dataset, nodeName} = evt.target;
+    if (dataset.api) {
       let {keyboard} = this.state;
-      const hasApi = !!+value;
+      const hasApi = !!+dataset.api;
       fetchKeyboards(hasApi).then(keyboards => {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
         fetchKeyboard(hasApi, keyboard).then(info => {
@@ -373,23 +375,14 @@ class Root extends React.Component {
           });
         });
       });
-    } else {
-      this.setState({
-        [name]: value
-      });
-    }
-  }
-
-  handleClickCallback_(evt) {
-    console.log(evt);
-    if (evt.name === "selectedKey") {
-      const index = parseInt(evt.index, 10);
+    } else if (nodeName === "rect" || nodeName === "tspan" || nodeName == "path") {
+      const index = parseInt(evt.target.parentElement.dataset.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
       this.setState(s => ({
         // NOTE: Make the key `null` if the previous value was the same (toggle).
         selectedKey: s.selectedKey === index ? null : index
       }));
-    } else if (evt.target.name === "add") {
+    } else if (name === "add") {
       this.setState(s => {
         const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layout].layout.length - 1;
         const kd = s.info.layouts[s.layout].layout[_selectedKey];
@@ -420,7 +413,7 @@ class Root extends React.Component {
           }
         };
       });
-    } else if (evt.target.name === "remove") {
+    } else if (name === "remove") {
       this.setState(s => ({
         selectedKey: null,
         info: {
@@ -438,6 +431,18 @@ class Root extends React.Component {
           }
         }
       }));
+    } else if (name === "TODO: add-right") {
+      console.log(name);
+    } else if (name === "TODO: add-left") {
+      console.log(name);
+    } else if (name === "TODO: add-down") {
+      console.log(name);
+    } else if (name === "TODO: translate-right") {
+      console.log(name);
+    } else if (name === "TODO: translate-left") {
+      console.log(name);
+    } else if (name === "TODO: translate-down") {
+      console.log(name);
     }
   }
 
@@ -667,7 +672,7 @@ class Root extends React.Component {
           isPrint,
           hasProfile,
           hasCase,
-          onClickCallback: this.handleClickCallback,
+          handleClickCallback: this.handleClickCallback,
           deviceHtml: this.deviceElement,
           handleChangeCallback: this.handleChangeCallback
         }),
@@ -727,7 +732,7 @@ class Root extends React.Component {
                 layout,
                 selectedKey,
                 defaultValues,
-                handleClickCallback_: this.handleClickCallback_,
+                handleClickCallback: this.handleClickCallback,
                 handleChangeCallback: this.handleChangeCallback
               }),
             ),
@@ -743,7 +748,8 @@ class Root extends React.Component {
                 hasCase,
                 selectedKey,
                 defaultValues,
-                handleClickCallback_: this.handleClickCallback_,
+                handleClickCallback: this.handleClickCallback,
+                handleChangeCallback: this.handleChangeCallback,
                 handleKeyDownCallback: this.handleKeyDownCallback
               })
             }),

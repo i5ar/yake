@@ -20,7 +20,7 @@ export default class Keycap extends React.Component {
   }
 
   handleClick(evt) {
-    this.props.handleClickCallback_({...evt, name: "selectedKey", index: this.props.index});
+    this.props.handleClickCallback(evt);
   }
 
   handleKeyDown(evt) {
@@ -43,6 +43,7 @@ export default class Keycap extends React.Component {
 
     const opts = {
       tabIndex: -1,
+      "data-index": this.props.index,
       ref: this.gRef,
       onClick: this.handleClick,
       onKeyDown: this.handleKeyDown,
@@ -58,6 +59,7 @@ export default class Keycap extends React.Component {
       "text", {
         // x: 13,
         // y: 37,
+        "data-index": this.props.index,
         fill: colorText
       },
       this.tspans.map((l, i) => e(

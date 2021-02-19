@@ -13,11 +13,11 @@ export default class Device extends React.Component {
   }
 
   handleClick(evt) {
-    const {u, radius} = this.props.defaultValues;
+    const {u} = this.props.defaultValues;
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    console.log(x / u, y / u);
+    console.info(x / u, y / u);
   }
 
   render() {
@@ -167,8 +167,7 @@ export default class Device extends React.Component {
                 selectedKey,
                 isPrint,
                 hasProfile,
-                // defaultValues,
-                handleClickCallback_: this.props.handleClickCallback_,
+                handleClickCallback: this.props.handleClickCallback,
                 handleKeyDownCallback: this.props.handleKeyDownCallback
               })
             )
@@ -181,6 +180,8 @@ export default class Device extends React.Component {
                 u,
                 radius,
                 layout: layout,
+                handleClickCallback: this.props.handleClickCallback,
+                handleChangeCallback: this.props.handleChangeCallback
                 }
             ) : null
           )

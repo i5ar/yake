@@ -83,7 +83,7 @@ export default class Button extends React.Component {
         layout,
         selectedKey,
         defaultValues,
-        handleClickCallback_: this.props.handleClickCallback_,
+        handleClickCallback: this.props.handleClickCallback,
         handleChangeCallback: this.props.handleChangeCallback
       })
     );

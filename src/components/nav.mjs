@@ -26,10 +26,11 @@ export default class Nav extends React.Component {
   }
 
   handleClick(evt) {
-    if (evt.target.id === "api") {
+    const {id, dataset} = evt.target;
+    if (dataset.api) {
       evt.preventDefault();
-      this.props.onClickCallback(evt.target.id, evt.target.dataset.api);
-    } else if (evt.target.id === "download") {
+      this.props.handleClickCallback(evt);
+    } else if (id === "download") {
       evt.preventDefault();
       const element = document.createElement("a");
       element.setAttribute(
@@ -39,10 +40,10 @@ export default class Nav extends React.Component {
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
-    } else if (evt.target.id === "about") {
+    } else if (id === "about") {
       evt.preventDefault();
       this.about.show();
-    } else if (evt.target.id === "policy") {
+    } else if (id === "policy") {
       evt.preventDefault();
       this.policy.show();
     }
@@ -92,7 +93,6 @@ export default class Nav extends React.Component {
               padding: "1em"
             },
             href: "#",
-            id: "api",
             "data-api": i,
             onClick: this.handleClick
           }, el))),

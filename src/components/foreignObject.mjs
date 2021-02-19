@@ -8,7 +8,8 @@ export default class ForeignObject extends React.Component {
         "add",
         "translate",
         "rotate",
-        "scale"
+        "scale",
+        "remove"
       ],
       modeIndex: 0
     }
@@ -17,15 +18,18 @@ export default class ForeignObject extends React.Component {
   }
 
   handleChange(evt) {
-    const {value} = evt.target;
-    this.setState({
-      modeIndex: parseInt(value, 10)
-    });
+    const value = parseInt(evt.target.value, 10);
+    if (value === 4) {
+      this.props.handleChangeCallback(evt);
+    } else {
+      this.setState({
+        modeIndex: value
+      });
+    }
   }
 
   handleClick(evt) {
-    const {name, value} = evt.target;
-    console.log(name, value);
+    this.props.handleClickCallback(evt);
   }
 
   render() {
@@ -52,8 +56,7 @@ export default class ForeignObject extends React.Component {
         width: foreignObjectButtonOpts.width,
         height: foreignObjectButtonOpts.height
       },
-      onClick: this.handleClick,
-      value: modes[modeIndex]
+      onClick: this.handleClick
     }
 
     return e(Fragment, null,
@@ -61,6 +64,7 @@ export default class ForeignObject extends React.Component {
         e("form", null,
           e("select", {
             // id: "mode",
+            name: "mode",
             style: {
               width: foreignObjectSelectOpts.width,
               height: foreignObjectSelectOpts.height
@@ -79,27 +83,27 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "right"
+        name: `${modes[modeIndex]}-right`
       }, "+")
       ),
-      e("foreignObject", {
+      modeIndex !== 2 ? e("foreignObject", {
         x: 5 + u * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
         y: u * layout.y + (u * layout.h / 2 - 7.5 || u / 2 - 7.5) || 0 + (u * layout.h / 2 - 7.5 || u / 2 - 7.5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "left"
-      }, "+")
-      ),
-      e("foreignObject", {
+        name: `${modes[modeIndex]}-left`
+      }, [1, 3].includes(modeIndex) ? "-" : "+")
+      ) : null,
+      modeIndex !== 3 ? e("foreignObject", {
         x: 5 + u * layout.x - foreignObjectButtonOpts.width / 2 + (u * layout.w || u) / 2 || 5 - foreignObjectButtonOpts.width / 2 + (u * layout.w || u) / 2,
         y: u * layout.y + (u * layout.h + 5 || u + 5) || 0 + (u * layout.h + 5 || u + 5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: "down"
-      }, "+")
-      )
+        name: `${modes[modeIndex]}-down`
+      }, modeIndex === 2 ? "-" : "+")
+      ) : null
     )
   }
 }
