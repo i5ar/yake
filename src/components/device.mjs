@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.mjs";
 import Cross from "./cross.mjs";
-import Polygon from "./polygon.mjs";
+import ForeignObject from "./foreignObject.mjs";
 import {
   getSize
 } from "../common/size.mjs";
@@ -179,16 +179,11 @@ export default class Device extends React.Component {
           // NOTE: Add arrows.
           info?.layouts?.[layout].layout.map(
             (layout, i) => i === selectedKey ? e(
-              Polygon, {
+              ForeignObject, {
                 key: i,
-                width: u * layout.w - 2 || u - 2,
-                height: u * layout.h - 2 || u - 2,
-                x: u * layout.x || 0,
-                y: u * layout.y || 0,
-                rx: u * layout.rx || 0,
-                ry: u * layout.ry || 0,
-                r: layout.r || 0,
-                shape: "arrow-right",
+                u,
+                radius,
+                layout: layout,
                 }
             ) : null
           )
