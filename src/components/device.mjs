@@ -33,6 +33,7 @@ export default class Device extends React.Component {
 
     const defs = e(
       "defs", null,
+      // NOTE: Gradient.
       e(
         "linearGradient", {
           id: "GRADIENT"
@@ -65,6 +66,29 @@ export default class Device extends React.Component {
             stopOpacity: "0"
           }
         )
+      ),
+      // NOTE: Pattern.
+      e("pattern", {
+        id: "SBIECO",
+        x: 10,
+        y: 10,
+        width: 20,
+        height: 20,
+        patternUnits: "userSpaceOnUse"
+        },
+        e("rect", {
+          width: 20,
+          height: 20,
+          fill: "lightgray"
+        }),
+        e("line", {
+          x1: 0,
+          y1: 0,
+          x2: 20,
+          y2: 20,
+          stroke: "white",
+          strokeWidth: 2
+        })
       )
     );
 
@@ -77,7 +101,7 @@ export default class Device extends React.Component {
         if (shape.p) return e("polygon", {
           key: i,
           points: shape.p.map(point => point * unit).join(","),
-          fill: isPrint ? "lightgray" : color,
+          fill: isPrint ? "url(#SBIECO)" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
           strokeLinejoin: "round"
@@ -88,7 +112,7 @@ export default class Device extends React.Component {
           y: shape.y * unit + 5 || 5,
           width: shape.w * unit,
           height: shape.h * unit,
-          fill: isPrint ? "lightgray" : color,
+          fill: isPrint ? "url(#SBIECO)" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
           strokeLinejoin: "round"
@@ -131,7 +155,7 @@ export default class Device extends React.Component {
           ) : null,
           // NOTE: Add origin cross.
           info?.layouts?.[layout].layout.map(
-            (layout, i) => i === selectedKey ? e(
+            (layout, i) => i === selectedKey && !isPrint ? e(
               Cross, {
                 key: i,
                 rx: layout.rx * unit || 0,
