@@ -41,6 +41,7 @@
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js"></script>
+  <script src="https://unpkg.com/react-intl@5.12.3/react-intl.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/theme-solarized_light.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/worker-json.js"></script>
@@ -51,10 +52,12 @@
   <script src="src/main.mjs" type="module"></script>
   <script>
     const e = React.createElement;
-    const Fragment = React.Fragment;
+    const {Fragment} = React;
     const r = ReactRouterDOM.withRouter;
-    const Route = ReactRouterDOM.Route;
-    const HashRouter = ReactRouterDOM.HashRouter;
+    const {Route, HashRouter} = ReactRouterDOM;
+    const i = ReactIntl.injectIntl;
+    const m = ReactIntl.defineMessages;
+    const {IntlProvider, FormattedMessage} = ReactIntl;
   </script>
 </body>
 

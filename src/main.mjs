@@ -13,6 +13,7 @@ import {
   protips
 } from "./common/protips.mjs";
 import debounce from "./common/debounce.mjs";
+import {messages} from "./lang/messages.mjs";
 
 class Root extends React.Component {
   constructor(props) {
@@ -181,7 +182,7 @@ class Root extends React.Component {
           if (this.selectElement) this.selectElement.focus();
           if (this.formElement) this.formElement.reset();
         });
-      } else if (name === "mode" && parseInt(value, 10) === 4) {  // remove the key
+      } else if (name === "mode" && parseInt(value, 10) === 1) {  // subtract
         console.log("TODO: remove");
       } else if (name === "x") {
         this.setState(s => ({
@@ -662,6 +663,7 @@ class Root extends React.Component {
       selectedKey,
       defaultValues
     } = this.state;
+    const {intl} = this.props;
 
     return e(HashRouter, null,
       e(
@@ -729,6 +731,7 @@ class Root extends React.Component {
               },
               e(Header, {
                 info,
+                intl,
                 layout,
                 selectedKey,
                 defaultValues,
@@ -742,6 +745,7 @@ class Root extends React.Component {
                 ...match,
                 deviceRef: elm => this.deviceElement = elm,
                 info,
+                intl,
                 layout,
                 isPrint,
                 hasProfile,
@@ -766,4 +770,24 @@ class Root extends React.Component {
   }
 }
 
-ReactDOM.render(e(Root), document.querySelector("#root"));
+ReactDOM.render(
+  e(IntlProvider, {
+      messages: messages.it, // translationsForUsersLocale
+      locale: "it", // userLocale
+      defaultLocale: "en"
+    }, e(i(Root))
+  ), document.getElementById("root")
+);
+
+/*
+e("p", null, e(FormattedMessage, {
+  id: "login",
+  defaultMessage: "Login to check the meals"
+}) )
+// or
+const {intl} = this.props;
+value: intl.formatMessage(m({
+  id: "send",
+  defaultMessage: "Close and send",
+}))
+*/

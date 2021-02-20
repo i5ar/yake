@@ -45,7 +45,7 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, layout, selectedKey, isLayouts, isHousing} = this.props;
+    const {info, intl, layout, selectedKey, isLayouts, isHousing} = this.props;
     this.keycap = info.layouts ? info.layouts[layout].layout[selectedKey] : {};
 
     return e(
@@ -102,7 +102,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "w"
-                }, "Width: "),
+                }, e(FormattedMessage, {
+                  id: "width",
+                  defaultMessage: "Width: "
+                })),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -117,7 +120,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "h"
-                }, "Height: "),
+                }, e(FormattedMessage, {
+                  id: "height",
+                  defaultMessage: "Height: "
+                })),
                 e("input", {
                   type: "number",
                   step: 1,
@@ -132,7 +138,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "x"
-                }, "Abscissa: "),
+                }, e(FormattedMessage, {
+                  id: "abscissa",
+                  defaultMessage: "Abscissa: "
+                })),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -145,7 +154,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "y"
-                }, "Ordinate: "),
+                }, e(FormattedMessage, {
+                  id: "ordinate",
+                  defaultMessage: "Ordinate: "
+                })),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -180,7 +192,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "r"
-                }, "Rotation: "),
+                }, e(FormattedMessage, {
+                  id: "rotation",
+                  defaultMessage: "Rotation:"
+                })),
                 e("input", {
                   type: "number",
                   step: 5,
@@ -195,7 +210,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "rx"
-                }, "Abscissa rotat.: "),
+                }, e(FormattedMessage, {
+                  id: "abscissaRotation",
+                  defaultMessage: "Abscissa rotat.:"
+                })),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -208,7 +226,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "ry"
-                }, "Ordinate rotat.: "),
+                }, e(FormattedMessage, {
+                  id: "ordinateRotation",
+                  defaultMessage: "Ordinate rotat.:"
+                })),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -232,7 +253,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "label"
-                }, "Label: "),
+                }, e(FormattedMessage, {
+                  id: "label",
+                  defaultMessage: "Label:"
+                })),
                 e("input", {
                   type: "text",
                   name: "label",
@@ -245,7 +269,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "c"
-                }, "Ground color: "),
+                }, e(FormattedMessage, {
+                  id: "groundColor",
+                  defaultMessage: "Ground color:"
+                })),
                 e("input", {
                   type: "text",  // color
                   name: "c",
@@ -261,7 +288,10 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": "t"
-                }, "Label color: "),
+                }, e(FormattedMessage, {
+                  id: "labelColor",
+                  defaultMessage: "Label color:"
+                })),
                 e("input", {
                   type: "text",  // color
                   name: "t",
@@ -284,7 +314,10 @@ export default class Section extends React.Component {
           e("button", {
             type: "button",
             className: "pure-button error",
-            "data-tippy-content": "Remove keycap",
+            "data-tippy-content": intl.formatMessage(m({
+              id: "subtractKeycap",
+              defaultMessage: "Subtract keycap",
+            })),
             name: "remove",
             onClick: this.handleClick
           }, e(
@@ -296,7 +329,10 @@ export default class Section extends React.Component {
           e("button", {
             type: "button",
             className: "pure-button success",
-            "data-tippy-content": "Add 1u keycap",
+            "data-tippy-content": intl.formatMessage(m({
+              id: "addKeycap",
+              defaultMessage: "Add keycap",
+            })),
             name: "add",
             onClick: this.handleClick
           }, e(

@@ -22,6 +22,7 @@ export default class Device extends React.Component {
 
   render() {
     const {
+      intl,
       info,
       selectedKey,
       layout,
@@ -177,12 +178,13 @@ export default class Device extends React.Component {
             (layout, i) => i === selectedKey ? e(
               ForeignObject, {
                 key: i,
+                intl,
                 u,
                 radius,
-                layout: layout,
+                layout,
                 handleClickCallback: this.props.handleClickCallback,
                 handleChangeCallback: this.props.handleChangeCallback
-                }
+              }
             ) : null
           )
         )

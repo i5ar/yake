@@ -28,6 +28,7 @@
   <script src="libs/react.development.js"></script>
   <script src="libs/react-dom.development.js"></script>
   <script src="libs/react-router-dom.min.js"></script>
+  <script src="libs/react-intl.min.js"></script>
   <script src="libs/ace.js"></script>
   <script src="libs/theme-solarized_light.js"></script>
   <script src="libs/worker-json.js"></script>
@@ -38,10 +39,12 @@
   <script src="src/main.mjs" type="module"></script>
   <script>
     const e = React.createElement;
-    const Fragment = React.Fragment;
+    const {Fragment} = React;
     const r = ReactRouterDOM.withRouter;
-    const Route = ReactRouterDOM.Route;
-    const HashRouter = ReactRouterDOM.HashRouter;
+    const {Route, HashRouter} = ReactRouterDOM;
+    const i = ReactIntl.injectIntl;
+    const m = ReactIntl.defineMessages;
+    const {IntlProvider, FormattedMessage} = ReactIntl;
   </script>
 </body>
 
