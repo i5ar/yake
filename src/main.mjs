@@ -358,7 +358,7 @@ class Root extends React.Component {
   }
 
   handleClickCallback(evt) {
-    const {name, dataset, nodeName} = evt.target;
+    const {name, dataset} = evt.target;
     if (dataset.api) {
       let {keyboard} = this.state;
       const hasApi = !!+dataset.api;
@@ -376,8 +376,8 @@ class Root extends React.Component {
           });
         });
       });
-    } else if (nodeName === "rect" || nodeName === "tspan" || nodeName == "path") {
-      const index = parseInt(evt.target.parentElement.dataset.index, 10);
+    } else if (dataset.index) {
+      const index = parseInt(dataset.index, 10);
       // const hasFocus = evt.target.parentNode === document.activeElement;
       this.setState(s => ({
         // NOTE: Make the key `null` if the previous value was the same (toggle).

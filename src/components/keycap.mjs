@@ -43,7 +43,6 @@ export default class Keycap extends React.Component {
 
     const opts = {
       tabIndex: -1,
-      "data-index": this.props.index,
       ref: this.gRef,
       onClick: this.handleClick,
       onKeyDown: this.handleKeyDown,
@@ -59,11 +58,11 @@ export default class Keycap extends React.Component {
       "text", {
         // x: 13,
         // y: 37,
-        "data-index": this.props.index,
         fill: isPrint ? "black" : colorText
       },
       this.tspans.map((l, i) => e(
         "tspan", {
+          "data-index": this.props.index,
           key: i,
           x: 13,
           y: 37,
@@ -75,6 +74,7 @@ export default class Keycap extends React.Component {
       return e(Fragment, {}, e(
         "g", opts,
         e(Rectangle, {
+          index: this.props.index,
           className: "outer border",
           x: 1,
           y: 1,
@@ -86,6 +86,7 @@ export default class Keycap extends React.Component {
           strokeWidth: isPrint ? 1 : 4
         }),
         e(Rectangle, {
+          index: this.props.index,
           className: "inner border",
           x: 7,
           y: 4,
@@ -97,6 +98,7 @@ export default class Keycap extends React.Component {
           strokeWidth: isPrint ? 1 : null
         }),
         hasProfile ? e(Rectangle, {
+          index: this.props.index,
           x: 7,
           y: 4,
           width: widthInner || unit - 14,
@@ -148,6 +150,7 @@ export default class Keycap extends React.Component {
     return e(
       "g", opts,
       e(Path, {
+        index: this.props.index,
         className: "outer border",
         d: dOuter,
         fill: isPrint ? "white" : colorOuter,
@@ -155,6 +158,7 @@ export default class Keycap extends React.Component {
         strokeWidth: isPrint ? 1 : 4
       }),
       e(Path, {
+        index: this.props.index,
         className: "inner border",
         d: dInner,
         fill: isPrint ? "white" : colorInner,
@@ -162,6 +166,7 @@ export default class Keycap extends React.Component {
         strokeWidth: isPrint ? 1 : null
       }),
       hasProfile ? e(Path, {
+        index: this.props.index,
         d: dInner,
         fill: isPrint ? "white" : "url(#GRADIENT)"
       }) : null,

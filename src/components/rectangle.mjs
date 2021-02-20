@@ -4,6 +4,7 @@ export default class Rectangle extends React.Component {
   render() {
     return e(
       "rect", {
+        "data-index": this.props.index,
         className: this.props.className || null,
         x: this.props.x,
         y: this.props.y,
