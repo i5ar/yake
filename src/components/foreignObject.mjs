@@ -33,16 +33,16 @@ export default class ForeignObject extends React.Component {
   }
 
   render() {
-    const {u, radius, layout, intl} = this.props;
+    const {unit, radius, layout, intl} = this.props;
     const {modes, modeIndex} = this.state;
     const r = layout.r || 0;
-    const rx = u * layout.rx || 0;
-    const ry = u * layout.ry || 0;
+    const rx = unit * layout.rx || 0;
+    const ry = unit * layout.ry || 0;
 
     const foreignObjectSelectOpts = {
-      x: u * layout.x + 5 || 0,
-      y: u * layout.y - 19 || 0,
-      width: u * layout.w || u,
+      x: unit * layout.x + 5 || 0,
+      y: unit * layout.y - 19 || 0,
+      width: unit * layout.w || unit,
       height: 24,
       transform: `rotate(${r} ${rx} ${ry})`
     };
@@ -81,8 +81,8 @@ export default class ForeignObject extends React.Component {
         )
       ),
       e("foreignObject", {
-        x: 5 + u * layout.x + (u * layout.w || u) || 5 + (u * layout.w || u),
-        y: u * layout.y + (u * layout.h / 2 - 7.5 || u / 2 - 7.5) || 0 + (u * layout.h / 2 - 7.5 || u / 2 - 7.5),
+        x: 5 + unit * layout.x + (unit * layout.w || unit) || 5 + (unit * layout.w || unit),
+        y: unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
@@ -90,8 +90,8 @@ export default class ForeignObject extends React.Component {
       }, "+")
       ),
       modeIndex !== 3 ? e("foreignObject", {
-        x: 5 + u * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
-        y: u * layout.y + (u * layout.h / 2 - 7.5 || u / 2 - 7.5) || 0 + (u * layout.h / 2 - 7.5 || u / 2 - 7.5),
+        x: 5 + unit * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
+        y: unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
@@ -99,8 +99,8 @@ export default class ForeignObject extends React.Component {
       }, [2, 4].includes(modeIndex) ? "-" : "+")
       ) : null,
       modeIndex !== 2 ? e("foreignObject", {
-        x: 5 + u * layout.x - foreignObjectButtonOpts.width / 2 + (u * layout.w || u) / 2 || 5 - foreignObjectButtonOpts.width / 2 + (u * layout.w || u) / 2,
-        y: u * layout.y + (u * layout.h + 5 || u + 5) || 0 + (u * layout.h + 5 || u + 5),
+        x: 5 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 5 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+        y: unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,

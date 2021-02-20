@@ -13,11 +13,11 @@ export default class Device extends React.Component {
   }
 
   handleClick(evt) {
-    const {u} = this.props.defaultValues;
+    const {unit} = this.props.defaultValues;
     const client = evt.target.getBoundingClientRect();
     const x = evt.clientX - client.left;
     const y = evt.clientY - client.top;
-    console.info(x / u, y / u);
+    console.info(x / unit, y / unit);
   }
 
   render() {
@@ -69,14 +69,14 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    const {u, radius, housing, layouts} = this.props.defaultValues;
+    const {unit, radius, housing, layouts} = this.props.defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
     const color = shape_ ? info.housing[shape_]?.color || housing.color : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
         if (shape.p) return e("polygon", {
           key: i,
-          points: shape.p.map(point => point * u).join(","),
+          points: shape.p.map(point => point * unit).join(","),
           fill: isPrint ? "lightgray" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
@@ -84,10 +84,10 @@ export default class Device extends React.Component {
         });
         if (shape.w && shape.h) return e("rect", {
           key: i,
-          x: shape.x * u + 5 || 5,
-          y: shape.y * u + 5 || 5,
-          width: shape.w * u,
-          height: shape.h * u,
+          x: shape.x * unit + 5 || 5,
+          y: shape.y * unit + 5 || 5,
+          width: shape.w * unit,
+          height: shape.h * unit,
           fill: isPrint ? "lightgray" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
@@ -102,8 +102,8 @@ export default class Device extends React.Component {
     const size = getSize(info, layout);
     const [_width, _height] = size || [0, 0];
 
-    width = 10 + 1 + u * (width || _width);
-    height = 10 + 1 + u * (height || _height);
+    width = 10 + 1 + unit * (width || _width);
+    height = 10 + 1 + unit * (height || _height);
 
     return e(
       "div", {
@@ -134,8 +134,8 @@ export default class Device extends React.Component {
             (layout, i) => i === selectedKey ? e(
               Cross, {
                 key: i,
-                rx: layout.rx * u || 0,
-                ry: layout.ry * u || 0
+                rx: layout.rx * unit || 0,
+                ry: layout.ry * unit || 0
               }
             ) : null
           ),
@@ -148,11 +148,11 @@ export default class Device extends React.Component {
               (layout, i) => e(Keycap, {
                 key: i,
                 index: i,
-                u,
+                unit,
                 radius,
                 layouts,
-                x: u * layout.x || 0,
-                y: u * layout.y || 0,
+                x: unit * layout.x || 0,
+                y: unit * layout.y || 0,
                 w: layout.w,
                 h: layout.h,
                 ks: layout.ks,
@@ -160,8 +160,8 @@ export default class Device extends React.Component {
                 c: layout.c,
                 t: layout.t,
                 r: layout.r || 0,
-                rx: u * layout.rx || 0,
-                ry: u * layout.ry || 0,
+                rx: unit * layout.rx || 0,
+                ry: unit * layout.ry || 0,
                 label: layout.label,
                 code: "KC_NO",
                 keys: [],
@@ -179,7 +179,7 @@ export default class Device extends React.Component {
               ForeignObject, {
                 key: i,
                 intl,
-                u,
+                unit,
                 radius,
                 layout,
                 handleClickCallback: this.props.handleClickCallback,

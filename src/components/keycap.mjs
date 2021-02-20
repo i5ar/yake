@@ -31,12 +31,12 @@ export default class Keycap extends React.Component {
   }
 
   render() {
-    const {u, radius, layouts, r, rx, ry, x, y, c, t, w, h, p, isPrint, hasProfile} = this.props;
+    const {unit, radius, layouts, r, rx, ry, x, y, c, t, w, h, p, isPrint, hasProfile} = this.props;
 
-    const widthInner = u * w - 14;
-    const widthOuter = u * w - 2;
-    const heightInner = u * h - 14;
-    const heightOuter = u * h - 2;
+    const widthInner = unit * w - 14;
+    const widthOuter = unit * w - 2;
+    const heightInner = unit * h - 14;
+    const heightOuter = unit * h - 2;
     const colorInner = c || layouts.c;
     const colorOuter = shadeColor(colorInner, -16);
     const colorText = t || layouts.t;
@@ -78,8 +78,8 @@ export default class Keycap extends React.Component {
           className: "outer border",
           x: 1,
           y: 1,
-          width: widthOuter || u - 2,
-          height: heightOuter || u -2,
+          width: widthOuter || unit - 2,
+          height: heightOuter || unit -2,
           rx: radius,
           fill: isPrint ? "white" : colorOuter,
           stroke: isPrint ? "black" : this.props.selectedKey === this.props.index ? "var(--green)" : null,
@@ -89,8 +89,8 @@ export default class Keycap extends React.Component {
           className: "inner border",
           x: 7,
           y: 4,
-          width: widthInner || u - 14,
-          height: heightInner || u - 14,
+          width: widthInner || unit - 14,
+          height: heightInner || unit - 14,
           rx: radius,
           fill: isPrint ? "white" : colorInner,
           stroke: isPrint ? "black" : null,
@@ -99,8 +99,8 @@ export default class Keycap extends React.Component {
         hasProfile ? e(Rectangle, {
           x: 7,
           y: 4,
-          width: widthInner || u - 14,
-          height: heightInner || u - 14,
+          width: widthInner || unit - 14,
+          height: heightInner || unit - 14,
           rx: radius,
           fill: isPrint ? "white" : "url(#GRADIENT)"
         }) : null,
@@ -108,12 +108,12 @@ export default class Keycap extends React.Component {
       ));
     }
 
-    const A = [p[0] * u, p[1] * u];
-    const B = [p[2] * u, p[3] * u];
-    const C = [p[4] * u, p[5] * u];
-    const D = [p[6] * u, p[7] * u];
-    const E = [p[8] * u, p[9] * u];
-    const F = [p[10] * u, p[11] * u];
+    const A = [p[0] * unit, p[1] * unit];
+    const B = [p[2] * unit, p[3] * unit];
+    const C = [p[4] * unit, p[5] * unit];
+    const D = [p[6] * unit, p[7] * unit];
+    const E = [p[8] * unit, p[9] * unit];
+    const F = [p[10] * unit, p[11] * unit];
 
     const dOuter = `
             M ${+1 + A[0]} ${+1 + A[1] + radius}

@@ -32,7 +32,7 @@ class Root extends React.Component {
       hasCase: true,
       selectedKey: null,
       defaultValues: {
-        u: 54,
+        unit: 54,
         radius: 5,
         layouts: {
           label: "",
