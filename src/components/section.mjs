@@ -315,8 +315,8 @@ export default class Section extends React.Component {
             type: "button",
             className: "pure-button error",
             "data-tippy-content": intl.formatMessage(m({
-              id: "subtractKeycap",
-              defaultMessage: "Subtract keycap",
+              id: "removeKeycap",
+              defaultMessage: "Remove keycap",
             })),
             name: "remove",
             onClick: this.handleClick

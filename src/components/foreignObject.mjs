@@ -6,10 +6,10 @@ export default class ForeignObject extends React.Component {
     this.state = {
       modes: [
         "add",
-        "subtract",
-        "dimension",
+        "remove",
+        "scale",
         "rotate",
-        "flit"
+        "shift"
       ],
       modeIndex: 0
     }
@@ -19,7 +19,7 @@ export default class ForeignObject extends React.Component {
 
   handleChange(evt) {
     const value = parseInt(evt.target.value, 10);
-    if (value === 1) {  // subtract
+    if (value === 1) {  // remove
       this.props.handleChangeCallback(evt);
     } else {
       this.setState({
@@ -87,25 +87,34 @@ export default class ForeignObject extends React.Component {
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-right`
-      }, "+")
+      }, modeIndex === 3 ? "⤸" : "⇨")
       ),
-      modeIndex !== 3 ? e("foreignObject", {
+      e("foreignObject", {
         x: 5 + unit * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
         y: unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-left`
-      }, [2, 4].includes(modeIndex) ? "-" : "+")
+      }, modeIndex === 3 ? "⤹" : "⇦")
+      ),
+      modeIndex !== 3 ? e("foreignObject", {
+        x: - 10 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || -10 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+        y: unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5),
+        ...foreignObjectButtonOpts
+      }, e("button", {
+        ...buttonOpts,
+        name: `${modes[modeIndex]}-up`
+      }, "⇧")
       ) : null,
-      modeIndex !== 2 ? e("foreignObject", {
-        x: 5 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 5 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+      modeIndex !== 3 ? e("foreignObject", {
+        x: 20 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 20 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
         y: unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5),
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-down`
-      }, modeIndex === 3 ? "-" : "+")
+      }, "⇩")
       ) : null
     )
   }

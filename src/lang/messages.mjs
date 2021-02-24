@@ -12,13 +12,13 @@ export const messages = {
         labelColor: "Colore legenda:",
         // NOTE: modes in `foreignObject`.
         add: "aggiungi",
-        subtract: "sottrai",
-        dimension: "dimensiona",
+        remove: "rimuovi",
+        scale: "scala",
         rotate: "ruota",
-        flit: "flit",
+        shift: "sposta",
 
         addKeycap: "Aggiungi keycap",
-        subtractKeycap: "Sottrai keycap",
+        removeKeycap: "Rimuovi keycap",
 
         turn: "Turno delle {tt}"
     }
