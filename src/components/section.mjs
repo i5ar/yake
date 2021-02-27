@@ -30,7 +30,7 @@ export default class Section extends React.Component {
       theme: "solarized"
     });
     tippy("#generate button", {
-      placement: "top-end",
+      placement: "top-center",
       animateFill: false,
       theme: "solarized"
     });

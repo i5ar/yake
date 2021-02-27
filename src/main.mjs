@@ -774,6 +774,7 @@ class Root extends React.Component {
       e(
         Fragment, null,
         e(Nav, {
+          intl,
           isDevel,
           hasApi,
           isPrint,

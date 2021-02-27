@@ -20,6 +20,9 @@ export const messages = {
         addKeycap: "Aggiungi keycap",
         removeKeycap: "Rimuovi keycap",
 
+        about: "YAKE (Yet Another Keyboard Editor) è un semplice designer basato su QMK",
+        policy: "Questo applicativo usa cookies per migliorare l'esperienza utente",
+
         turn: "Turno delle {tt}"
     }
 }
