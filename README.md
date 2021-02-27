@@ -41,7 +41,7 @@ Use Mocha and Chai on the browser (i.e. <https://i5ar.github.io/yake/tests>).
 - [ ] Add case controller;
 - [ ] Fix label position parsing the string;
 - [x] Add polygonal case;
-- [ ] Add spinner;
+- [x] Add spinner;
 - [x] Make the data structure (`info.json`) editable;
 - [ ] Support KLE?
 - [ ] Move from [npm](https://www.npmjs.com/) to [crates](https://crates.io/).

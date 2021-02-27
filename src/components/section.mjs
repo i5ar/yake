@@ -45,8 +45,9 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, intl, layoutName, selectedKey, isLayouts, isHousing} = this.props;
+    const {info, intl, layoutName, selectedKey, isLayouts, isHousing, housingName} = this.props;
     this.keycap = info.layouts ? info.layouts[layoutName].layout[selectedKey] : {};
+    this.shape = info.layouts ? info.housing[housingName].shape[0] : {};
 
     return e(
       "section", {
@@ -414,7 +415,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-w",
-                  value: "",
+                  value: this.shape?.w || 1,
                   onChange: this.handleChange
                 })
               ),
@@ -426,7 +427,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-h",
-                  value: "",
+                  value: this.shape?.h || 1,
                   onChange: this.handleChange
                 })
               ),
@@ -438,7 +439,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-x",
-                  value: "",
+                  value: this.shape?.x || 0,
                   onChange: this.handleChange
                 })
               ),
@@ -448,9 +449,9 @@ export default class Section extends React.Component {
                   "data-tippy-content": "y"
                 }, "Ordinate: "),
                 e("input", {
-                  type: "text",
+                  type: "number",
                   name: "housing-y",
-                  value: "",
+                  value: this.shape?.y || 0,
                   onChange: this.handleChange
                 })
               )
@@ -473,7 +474,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-p",
-                  value: "",
+                  value: this.shape?.p || "",
                   onChange: this.handleChange
                 })
               )

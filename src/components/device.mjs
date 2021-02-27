@@ -95,9 +95,9 @@ export default class Device extends React.Component {
     // NOTE: Case.
     const {unit, radius, housing, layouts} = this.props.defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
-    const color = shape_ ? info.housing[shape_]?.color || housing.color : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
+        const color = info.housing?.[shape_].shape[i].c || housing.c;
         if (shape.p) return e("polygon", {
           key: i,
           points: shape.p.map(point => point * unit).join(","),
