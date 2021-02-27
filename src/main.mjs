@@ -21,9 +21,9 @@ class Root extends React.Component {
     this.state = {
       isDevel: true,  // when `false` hides the list from the nav.
       hasApi: false,  // when `true` starts with QMK keyboards.
-      keyboards: [],
+      keyboardNames: [],
       info: {},
-      keyboard: "",
+      keyboardName: "",
       layoutName: "",
       isInitial: true,
       isCustom: false,
@@ -189,16 +189,16 @@ class Root extends React.Component {
     });
   }
 
-  handleHashCallback(keyboards, keyboard, prevInfo) {
-    const info = this.state.hasApi ? prevInfo.keyboards[keyboard] : prevInfo
+  handleHashCallback(keyboardNames, keyboardName, prevInfo) {
+    const info = this.state.hasApi ? prevInfo.keyboards[keyboardName] : prevInfo
     const layoutName = Object.keys(info.layouts)[0];
     const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
     this.setState(s => ({
       fallbackKey,
       isInitial: false,
-      keyboards,
+      keyboardNames,
       info,
-      keyboard,
+      keyboardName,
       layoutName,
       defaultValues: {
         ...s.defaultValues,
@@ -268,7 +268,7 @@ class Root extends React.Component {
           const info = JSON.parse(evt.target.result);
           this.setState({
             info,
-            keyboard: info.keyboard_name.toLowerCase(),
+            keyboardName: info.keyboard_name.toLowerCase(),
             layoutName: Object.keys(info.layouts)[0],
             isCustom: true
           });
@@ -277,14 +277,14 @@ class Root extends React.Component {
     } else {
       if (name === "keyboard") {
         const {hasApi} = this.state;
-        const keyboard = value;
-        fetchKeyboard(hasApi, keyboard).then(prevInfo => {
-          const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
+        const keyboardName = value;
+        fetchKeyboard(hasApi, keyboardName).then(prevInfo => {
+          const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
           this.setState(s => ({
             info,
-            keyboard,
+            keyboardName,
             fallbackKey,
             layoutName,
             isCustom: false,
@@ -302,6 +302,10 @@ class Root extends React.Component {
           }));
           if (this.selectElement) this.selectElement.focus();
           if (this.formElement) this.formElement.reset();
+        });
+      } else if (name === "layout") {
+        this.setState({
+          layoutName: value
         });
       } else if (name === "mode" && parseInt(value, 10) === 1) { // remove
         this.setState(s => ({
@@ -544,19 +548,19 @@ class Root extends React.Component {
     const {defaultValues} = this.state;
     const {name, dataset} = evt.target;
     if (dataset.api) {
-      let {keyboard} = this.state;
+      let {keyboardName} = this.state;
       const hasApi = !!+dataset.api;
-      fetchKeyboards(hasApi).then(keyboards => {
-        keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
-        fetchKeyboard(hasApi, keyboard).then(prevInfo => {
-          const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
+      fetchKeyboards(hasApi).then(keyboardNames => {
+        keyboardName = keyboardNames.includes(keyboardName) ? keyboardName : keyboardNames[0];
+        fetchKeyboard(hasApi, keyboardName).then(prevInfo => {
+          const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
           this.setState({
             hasApi,
-            keyboards,
+            keyboardNames,
             info,
-            keyboard,
+            keyboardName,
             fallbackKey,
             layoutName,
             defaultValues: {
@@ -896,10 +900,10 @@ class Root extends React.Component {
     const {
       isDevel,
       hasApi,
-      keyboards,
+      keyboardNames,
       info,
       layoutName,
-      keyboard,
+      keyboardName,
       isInitial,
       isCustom,
       isPrint,
@@ -948,8 +952,8 @@ class Root extends React.Component {
               e(r(Dropdown), {
                 selectRef: elm => this.selectElement = elm,
                 name: "keyboard",
-                value: keyboard,
-                options: keyboards && keyboards.length ? keyboards : null,
+                value: keyboardName,
+                options: keyboardNames?.length ? keyboardNames : null,
                 handleChangeCallback: this.handleChangeCallback,
                 hasApi,
                 isInitial,
@@ -986,7 +990,7 @@ class Root extends React.Component {
               }),
             ),
             e(Route, {
-              path: `/${keyboard}`,
+              path: `/${keyboardName}`,
               children: match => e(Device, {
                 ...match,
                 deviceRef: elm => this.deviceElement = elm,
