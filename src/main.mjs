@@ -127,9 +127,9 @@ class Root extends React.Component {
                   p: null,
                   x: x(),
                   y: y(),
-                  r: selectedKey.r,
-                  rx: selectedKey.rx,
-                  ry: selectedKey.ry,
+                  r: selectedKey.r || 0,
+                  rx: selectedKey.rx || 0,
+                  ry: selectedKey.ry || 0,
                   label: ""
                 }
               ]
@@ -145,12 +145,12 @@ class Root extends React.Component {
       const w = (l) => {
         if (name === "scale-right") return (l.w || 1) + 0.25;
         else if (name === "scale-left") return (l.w || 1) - 0.25;
-        else return l.w;
+        else return l.w || 1;
       };
       const h = (l) => {
         if (name === "scale-down") return (l.h || 1) + 0.25;
         else if (name === "scale-up") return (l.h || 1) - 0.25;
-        else return l.h;
+        else return l.h || 1;
       };
       const x = (l) => {
         if (name === "translate-right") return l.x + 0.25;
@@ -165,7 +165,7 @@ class Root extends React.Component {
       const r = (l) => {
         if (name === "rotate-right") return l.r + 5;
         else if (name === "rotate-left") return l.r - 5;
-        else return l.r;
+        else return l.r || 0;
       }
       return {
         info: {
@@ -304,8 +304,12 @@ class Root extends React.Component {
           if (this.formElement) this.formElement.reset();
         });
       } else if (name === "layout") {
+        const {info} = this.state;
+        const layoutName = value;
+        const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
         this.setState({
-          layoutName: value
+          layoutName,
+          fallbackKey
         });
       } else if (name === "mode" && parseInt(value, 10) === 1) { // remove
         this.setState(s => ({
@@ -426,56 +430,92 @@ class Root extends React.Component {
               ...s.defaultValues,
               layouts: {
                 ...s.defaultValues.layouts,
-                h: parseFloat(value)
+                h: parseInt(value, 10)
               }
             }
           }));
         }
       } else if (name === "r") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                r: parseInt(value, 10)
+              }
+            }
+          }));
+        }
       } else if (name === "rx") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                rx: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "ry") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                ry: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "p") {
         this.setState(s => ({
           info: {
@@ -605,9 +645,9 @@ class Root extends React.Component {
                       p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
                       x: selectedKey.x + (selectedKey.w || 1),
                       y: selectedKey.y,
-                      r: selectedKey.r,
-                      rx: selectedKey.rx,
-                      ry: selectedKey.ry,
+                      r: selectedKey.r || 0,
+                      rx: selectedKey.rx || 0,
+                      ry: selectedKey.ry || 0,
                       label: ""
                     }
                   ]
@@ -619,6 +659,7 @@ class Root extends React.Component {
       } else {
         this.setState(s => {
           const layout = s.info.layouts[s.layoutName].layout;
+          console.log(s.info.layouts[s.layoutName].layout[s.fallbackKey]?.x || 0, defaultValues.layouts.x);
           return {
             selectedKey: layout.length,
             fallbackKey: s.fallbackKey + 1,
@@ -633,7 +674,8 @@ class Root extends React.Component {
                       w: defaultValues.layouts.w,  // "add-iso" 1.25
                       h: defaultValues.layouts.h,  // "add-iso" 2
                       p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
-                      x: defaultValues.layouts.x + (defaultValues.layouts.w || 1),
+                      // x: (s.info.layouts[s.layoutName].layout[s.fallbackKey]?.x || 0) + (s.info.layouts[s.layoutName].layout[s.fallbackKey]?.w || 1),
+                      x: defaultValues.layouts.x + s.info.layouts[s.layoutName].layout[s.fallbackKey]?.w || 1,
                       y: defaultValues.layouts.y,
                       r: defaultValues.layouts.r,
                       rx: defaultValues.layouts.rx,
@@ -669,11 +711,11 @@ class Root extends React.Component {
           ...s.defaultValues,
           layouts: {
             ...s.defaultValues.layouts,
-            x: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].x + (s.info.layouts[s.layoutName].layout[s.fallbackKey-1].w || 1) - 1,
-            y: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].y,
-            r: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].r,
-            rx: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].rx,
-            ry: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].ry
+            x: s.info.layouts[s.layoutName].layout[s.fallbackKey-1]?.x || 0,
+            y: s.info.layouts[s.layoutName].layout[s.fallbackKey-1]?.y || 0,
+            r: s.info.layouts[s.layoutName].layout[s.fallbackKey-1]?.r || 0,
+            rx: s.info.layouts[s.layoutName].layout[s.fallbackKey-1]?.rx || 0,
+            ry: s.info.layouts[s.layoutName].layout[s.fallbackKey-1]?.ry || 0
           }
         }
       }));
@@ -828,9 +870,9 @@ class Root extends React.Component {
                   {
                     x: s.info.layouts[s.layoutName].layout[_selectedKey].x + w,
                     y: s.info.layouts[s.layoutName].layout[_selectedKey].y,
-                    r: s.info.layouts[s.layoutName].layout[_selectedKey].r,
-                    rx: s.info.layouts[s.layoutName].layout[_selectedKey].rx,
-                    ry: s.info.layouts[s.layoutName].layout[_selectedKey].ry,
+                    r: s.info.layouts[s.layoutName].layout[_selectedKey].r || 0,
+                    rx: s.info.layouts[s.layoutName].layout[_selectedKey].rx || 0,
+                    ry: s.info.layouts[s.layoutName].layout[_selectedKey].ry || 0,
                     label: ""
                   }
                 ]
