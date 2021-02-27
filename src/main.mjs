@@ -31,6 +31,7 @@ class Root extends React.Component {
       hasProfile: true,
       hasCase: true,
       selectedKey: null,
+      fallbackKey: null,
       defaultValues: {
         unit: 54,
         radius: 5,
@@ -112,6 +113,7 @@ class Root extends React.Component {
       }
       return {
         selectedKey: layout.length,
+        fallbackKey: s.fallbackKey + 1,
         info: {
           ...s.info,
           layouts: {
@@ -187,15 +189,25 @@ class Root extends React.Component {
     });
   }
 
-  handleHashCallback(keyboards, keyboard, info) {
+  handleHashCallback(keyboards, keyboard, prevInfo) {
+    let info = this.state.hasApi ? prevInfo.keyboards[keyboard] : prevInfo
+    const layout = Object.keys(info.layouts)[0];
+    const fallbackKey = info.layouts[layout]?.layout.length - 1;
     this.setState(s => ({
+      fallbackKey,
       isInitial: false,
       keyboards,
-      info: s.hasApi ? info.keyboards[keyboard] : info,
+      info,
       keyboard,
-      layout: s.hasApi ? s.layout || Object.keys(
-        info.keyboards[keyboard].layouts)[0] : Object.keys(
-          info.layouts)[0]
+      layout,
+      defaultValues: {
+        ...s.defaultValues,
+        layouts: {
+          ...s.defaultValues.layouts,
+          x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
+          y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
+        }
+      }
     }));
   }
 
@@ -263,13 +275,13 @@ class Root extends React.Component {
       if (name === "keyboard") {
         const {hasApi} = this.state;
         const keyboard = value;
-        fetchKeyboard(hasApi, keyboard).then(info => {
+        fetchKeyboard(hasApi, keyboard).then(prevInfo => {
+          const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
           this.setState(s => ({
-            info: s.hasApi ? info.keyboards[keyboard] : info,
+            info,
             keyboard,
-            layout: s.hasApi ? Object.keys(
-              info.keyboards[keyboard].layouts)[0] : Object.keys(
-                info.layouts)[0],
+            fallbackKey: info.layouts[Object.keys(info.layouts)[0]]?.layout.length - 1,
+            layout: Object.keys(info.layouts)[0],
             isCustom: false
           }));
           if (this.selectElement) this.selectElement.focus();
@@ -278,6 +290,7 @@ class Root extends React.Component {
       } else if (name === "mode" && parseInt(value, 10) === 1) { // remove
         this.setState(s => ({
           selectedKey: null,
+          fallbackKey: s.fallbackKey - 1,
           info: {
             ...s.info,
             layouts: {
@@ -519,15 +532,15 @@ class Root extends React.Component {
       const hasApi = !!+dataset.api;
       fetchKeyboards(hasApi).then(keyboards => {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
-        fetchKeyboard(hasApi, keyboard).then(info => {
+        fetchKeyboard(hasApi, keyboard).then(prevInfo => {
+          const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
           this.setState({
             hasApi,
             keyboards,
-            info: hasApi ? info.keyboards[keyboard] : info,
+            info,
             keyboard,
-            layout: hasApi ? Object.keys(
-              info.keyboards[keyboard].layouts)[0] : Object.keys(
-                info.layouts)[0]
+            fallbackKey: info.layouts[Object.keys(info.layouts)[0]]?.layout.length - 1,
+            layout: Object.keys(info.layouts)[0]
           });
         });
       });
@@ -539,39 +552,72 @@ class Root extends React.Component {
         selectedKey: s.selectedKey === index ? null : index
       }));
     } else if (name === "add") {
-      this.setState(s => {
-        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layout].layout.length - 1;
-        const kd = s.info.layouts[s.layout].layout[_selectedKey];
-        const w = _selectedKey >= 0 ? kd.w || 1 : 1;
-        return {
-          selectedKey: s.info.layouts[s.layout].layout.length,
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: [
-                  ...s.info.layouts[s.layout].layout,
-                  {
-                    w: defaultValues.layouts.w,  // "add-iso" 1.25
-                    h: defaultValues.layouts.h,  // "add-iso" 2
-                    p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
-                    x: _selectedKey >= 0 ? kd.x + w : 0,
-                    y: _selectedKey >= 0 ? kd.y : 0,
-                    r: _selectedKey >= 0 ? kd.r : 0,
-                    rx: _selectedKey >= 0 ? kd.rx : 0,
-                    ry: _selectedKey >= 0 ? kd.ry : 0,
-                    label: ""
-                  }
-                ]
+      if (this.state.selectedKey !== null) {
+        this.setState(s => {
+          const layout = s.info.layouts[s.layout].layout;
+          const selectedKey = layout[s.selectedKey];
+          return {
+            selectedKey: layout.length,
+            fallbackKey: s.fallbackKey + 1,
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: [
+                    ...layout,
+                    {
+                      w: defaultValues.layouts.w,  // "add-iso" 1.25
+                      h: defaultValues.layouts.h,  // "add-iso" 2
+                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+                      x: selectedKey.x + (selectedKey.w || 1),
+                      y: selectedKey.y,
+                      r: selectedKey.r,
+                      rx: selectedKey.rx,
+                      ry: selectedKey.ry,
+                      label: ""
+                    }
+                  ]
+                }
               }
             }
-          }
-        };
-      });
+          };
+        });
+      } else {
+        this.setState(s => {
+          const layout = s.info.layouts[s.layout].layout;
+          return {
+            selectedKey: layout.length,
+            fallbackKey: s.fallbackKey + 1,
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: [
+                    ...layout,
+                    {
+                      w: defaultValues.layouts.w,  // "add-iso" 1.25
+                      h: defaultValues.layouts.h,  // "add-iso" 2
+                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+                      x: defaultValues.layouts.x + (defaultValues.layouts.w || 1),
+                      y: defaultValues.layouts.y,
+                      r: defaultValues.layouts.r,
+                      rx: defaultValues.layouts.rx,
+                      ry: defaultValues.layouts.ry,
+                      label: ""
+                    }
+                  ]
+                }
+              }
+            }
+          };
+        });
+      }
     } else if (name === "remove") {
       this.setState(s => ({
         selectedKey: null,
+        fallbackKey: s.fallbackKey - 1,
         info: {
           ...s.info,
           layouts: {
@@ -584,6 +630,17 @@ class Root extends React.Component {
                 return i !== s.selectedKey;
               })
             }
+          }
+        },
+        defaultValues: {
+          ...s.defaultValues,
+          layouts: {
+            ...s.defaultValues.layouts,
+            x: s.info.layouts[s.layout].layout[s.fallbackKey-1].x + (s.info.layouts[s.layout].layout[s.fallbackKey-1].w || 1) - 1,
+            y: s.info.layouts[s.layout].layout[s.fallbackKey-1].y,
+            r: s.info.layouts[s.layout].layout[s.fallbackKey-1].r,
+            rx: s.info.layouts[s.layout].layout[s.fallbackKey-1].rx,
+            ry: s.info.layouts[s.layout].layout[s.fallbackKey-1].ry
           }
         }
       }));
@@ -705,6 +762,7 @@ class Root extends React.Component {
     } else if (evt.key === "Delete") {
       this.setState(s => ({
         selectedKey: null,
+        fallbackKey: s.fallbackKey - 1,
         info: {
           ...s.info,
           layouts: {
@@ -726,6 +784,7 @@ class Root extends React.Component {
         const w = s.info.layouts[s.layout].layout[_selectedKey].w || 1;
         return {
           selectedKey: s.info.layouts[s.layout].layout.length,
+          fallbackKey: s.fallbackKey + 1,
           info: {
             ...s.info,
             layouts: {
