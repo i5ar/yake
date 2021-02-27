@@ -190,7 +190,7 @@ class Root extends React.Component {
   }
 
   handleHashCallback(keyboards, keyboard, prevInfo) {
-    let info = this.state.hasApi ? prevInfo.keyboards[keyboard] : prevInfo
+    const info = this.state.hasApi ? prevInfo.keyboards[keyboard] : prevInfo
     const layout = Object.keys(info.layouts)[0];
     const fallbackKey = info.layouts[layout]?.layout.length - 1;
     this.setState(s => ({
@@ -206,6 +206,9 @@ class Root extends React.Component {
           ...s.defaultValues.layouts,
           x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
           y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
+          rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
+          ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
+          r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0,
         }
       }
     }));
@@ -277,12 +280,25 @@ class Root extends React.Component {
         const keyboard = value;
         fetchKeyboard(hasApi, keyboard).then(prevInfo => {
           const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
+          const layout = Object.keys(info.layouts)[0];
+          const fallbackKey = info.layouts[layout]?.layout.length - 1;
           this.setState(s => ({
             info,
             keyboard,
-            fallbackKey: info.layouts[Object.keys(info.layouts)[0]]?.layout.length - 1,
-            layout: Object.keys(info.layouts)[0],
-            isCustom: false
+            fallbackKey,
+            layout,
+            isCustom: false,
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
+                y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
+                rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
+                ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
+                r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0
+              }
+            }
           }));
           if (this.selectElement) this.selectElement.focus();
           if (this.formElement) this.formElement.reset();
@@ -534,13 +550,26 @@ class Root extends React.Component {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
         fetchKeyboard(hasApi, keyboard).then(prevInfo => {
           const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
+          const layout = Object.keys(info.layouts)[0];
+          const fallbackKey = info.layouts[layout]?.layout.length - 1;
           this.setState({
             hasApi,
             keyboards,
             info,
             keyboard,
-            fallbackKey: info.layouts[Object.keys(info.layouts)[0]]?.layout.length - 1,
-            layout: Object.keys(info.layouts)[0]
+            fallbackKey,
+            layout,
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
+                y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
+                rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
+                ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
+                r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0
+              }
+            }
           });
         });
       });
