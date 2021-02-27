@@ -94,6 +94,97 @@ class Root extends React.Component {
     }
   }
 
+  addKey(name) {
+    this.setState(s => {
+      const layout = s.info.layouts[s.layout].layout;
+      const selectedKey = layout[s.selectedKey];
+      const x = () => {
+        if (name === "add-right") return selectedKey.x + (selectedKey.w || 1);
+        else if (name === "add-left") return selectedKey.x - 1;
+        else return selectedKey.x;
+      }
+      const y = () => {
+        if (name === "add-down") return selectedKey.y + (selectedKey.h || 1);
+        else if (name === "add-up") return selectedKey.y - 1;
+        else return selectedKey.y;
+      }
+      return {
+        selectedKey: layout.length,
+        info: {
+          ...s.info,
+          layouts: {
+            ...s.info.layouts,
+            [s.layout]: {
+              layout: [
+                ...layout,
+                {
+                  w: 1,
+                  h: 1,
+                  p: null,
+                  x: x(),
+                  y: y(),
+                  r: selectedKey.r,
+                  rx: selectedKey.rx,
+                  ry: selectedKey.ry,
+                  label: ""
+                }
+              ]
+            }
+          }
+        }
+      };
+    });
+  }
+
+  transformKey(name) {
+    this.setState(s => {
+      const w = (l) => {
+        if (name === "scale-right") return (l.w || 1) + 0.25;
+        else if (name === "scale-left") return (l.w || 1) - 0.25;
+        else return l.w;
+      };
+      const h = (l) => {
+        if (name === "scale-down") return (l.h || 1) + 0.25;
+        else if (name === "scale-up") return (l.h || 1) - 0.25;
+        else return l.h;
+      };
+      const x = (l) => {
+        if (name === "translate-right") return l.x + 0.25;
+        else if (name === "translate-left") return l.x - 0.25;
+        else return l.x;
+      }
+      const y = (l) => {
+        if (name === "translate-down") return l.y + 0.25;
+        else if (name === "translate-up") return l.y - 0.25;
+        else return l.y;
+      }
+      const r = (l) => {
+        if (name === "rotate-right") return l.r + 5;
+        else if (name === "rotate-left") return l.r - 5;
+        else return l.r;
+      }
+      return {
+        info: {
+        ...s.info,
+        layouts: {
+          ...s.info.layouts,
+          [s.layout]: {
+            layout: s.info.layouts[s.layout].layout.map(
+              (l, i) => i === s.selectedKey ? {
+                ...l,
+                x: x(l),
+                y: y(l),
+                w: w(l),
+                h: h(l),
+                r: r(l),
+              } : l)
+          }
+        }
+      }
+    }
+    });
+  }
+
   handleHashCallback(keyboards, keyboard, info) {
     this.setState(s => ({
       isInitial: false,
@@ -182,8 +273,20 @@ class Root extends React.Component {
           if (this.selectElement) this.selectElement.focus();
           if (this.formElement) this.formElement.reset();
         });
-      } else if (name === "mode" && parseInt(value, 10) === 1) {  // subtract
-        console.log("TODO: remove");
+      } else if (name === "mode" && parseInt(value, 10) === 1) { // remove
+        this.setState(s => ({
+          selectedKey: null,
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.filter(
+                  (l, i) => i !== s.selectedKey)
+              }
+            }
+          }
+        }));
       } else if (name === "x") {
         this.setState(s => ({
           info: {
@@ -432,18 +535,20 @@ class Root extends React.Component {
           }
         }
       }));
-    } else if (name === "TODO: add-right") {
-      console.log(name);
-    } else if (name === "TODO: add-left") {
-      console.log(name);
-    } else if (name === "TODO: add-down") {
-      console.log(name);
-    } else if (name === "TODO: translate-right") {
-      console.log(name);
-    } else if (name === "TODO: translate-left") {
-      console.log(name);
-    } else if (name === "TODO: translate-down") {
-      console.log(name);
+    } else if (name === "add-right" || name === "add-left" || name === "add-up" || name === "add-down") {
+      this.addKey(name);
+    } else if (
+      name === "scale-right" ||
+      name === "scale-left" ||
+      name === "scale-up" ||
+      name === "scale-down" ||
+      name === "rotate-right" ||
+      name === "rotate-left" ||
+      name === "translate-right" ||
+      name === "translate-left" ||
+      name === "translate-up" ||
+      name === "translate-down") {
+      this.transformKey(name);
     }
   }
 

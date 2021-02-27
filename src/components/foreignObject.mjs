@@ -9,7 +9,7 @@ export default class ForeignObject extends React.Component {
         "remove",
         "scale",
         "rotate",
-        "shift"
+        "translate"
       ],
       modeIndex: 0
     }
@@ -86,8 +86,9 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: `${modes[modeIndex]}-right`
-      }, modeIndex === 3 ? "⤸" : "⇨")
+        name: `${modes[modeIndex]}-right`,
+        className: modeIndex === 3 ? "fas fa-redo-alt" : "fas fa-caret-right"
+      })
       ),
       e("foreignObject", {
         x: 5 + unit * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
@@ -95,8 +96,9 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: `${modes[modeIndex]}-left`
-      }, modeIndex === 3 ? "⤹" : "⇦")
+        name: `${modes[modeIndex]}-left`,
+        className: modeIndex === 3 ? "fas fa-undo-alt" : "fas fa-caret-left"
+      })
       ),
       modeIndex !== 3 ? e("foreignObject", {
         x: - 10 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || -10 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
@@ -104,8 +106,9 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: `${modes[modeIndex]}-up`
-      }, "⇧")
+        name: `${modes[modeIndex]}-up`,
+        className: "fas fa-caret-up"
+      })
       ) : null,
       modeIndex !== 3 ? e("foreignObject", {
         x: 20 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 20 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
@@ -113,8 +116,9 @@ export default class ForeignObject extends React.Component {
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
-        name: `${modes[modeIndex]}-down`
-      }, "⇩")
+        name: `${modes[modeIndex]}-down`,
+        className: "fas fa-caret-down"
+      })
       ) : null
     )
   }

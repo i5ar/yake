@@ -15,7 +15,7 @@ export const messages = {
         remove: "rimuovi",
         scale: "scala",
         rotate: "ruota",
-        shift: "sposta",
+        translate: "trasla",
 
         addKeycap: "Aggiungi keycap",
         removeKeycap: "Rimuovi keycap",
