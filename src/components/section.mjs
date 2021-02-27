@@ -16,11 +16,11 @@ export default class Section extends React.Component {
   }
 
   get c() {
-    return this.keycap ? this.keycap.c || "" : this.props.defaultValues.layouts.c;
+    return this.keycap?.c || this.props.defaultValues.layouts.c;
   }
 
   get t() {
-    return this.keycap ? this.keycap.t || "" : this.props.defaultValues.layouts.t;
+    return this.keycap?.t || this.props.defaultValues.layouts.t;
   }
 
   componentDidUpdate() {
@@ -145,7 +145,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "x",
-                  value: this.keycap?.x !== undefined ? this.keycap.x : "",
+                  value: this.keycap?.x !== undefined ? this.keycap.x : this.props.defaultValues.layouts.x,
                   onChange: this.handleChange
                 })
               ),
@@ -161,7 +161,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "y",
-                  value: this.keycap?.y !== undefined ? this.keycap.y : "",
+                  value: this.keycap?.y !== undefined ? this.keycap.y : this.props.defaultValues.layouts.y,
                   onChange: this.handleChange
                 })
               )
@@ -201,7 +201,7 @@ export default class Section extends React.Component {
                   name: "r",
                   min: -180,
                   // max: 180,
-                  value: this.keycap?.r !== undefined ? this.keycap.r : "",
+                  value: this.keycap?.r !== undefined ? this.keycap.r : this.props.defaultValues.layouts.r,
                   onChange: this.handleChange
                 })
               ),
@@ -217,7 +217,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "rx",
-                  value: this.keycap?.rx !== undefined ? this.keycap.rx : "",
+                  value: this.keycap?.rx !== undefined ? this.keycap.rx : this.props.defaultValues.layouts.rx,
                   onChange: this.handleChange
                 })
               ),
@@ -233,7 +233,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "ry",
-                  value: this.keycap?.ry !== undefined ? this.keycap.ry : "",
+                  value: this.keycap?.ry !== undefined ? this.keycap.ry : this.props.defaultValues.layouts.ry,
                   onChange: this.handleChange
                 })
               )

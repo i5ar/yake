@@ -38,6 +38,8 @@ class Root extends React.Component {
           label: "",
           w: 1,
           h: 1,
+          x: 0,
+          y: 0,
           r: 0,
           rx: 0,
           ry: 0,
@@ -288,65 +290,114 @@ class Root extends React.Component {
           }
         }));
       } else if (name === "x") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, x: parseFloat(value)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null){
+          console.log("bar");
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, x: parseFloat(value)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                x: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "y") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, y: parseFloat(value)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null){
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, y: parseFloat(value)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                y: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "w") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, w: parseFloat(value)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null){
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, w: parseFloat(value)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                w: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "h") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
-                  return l;
-                })
+        if (this.state.selectedKey !== null){
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layout]: {
+                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                h: parseFloat(value)
+              }
+            }
+          }));
+        }
       } else if (name === "r") {
         this.setState(s => ({
           info: {
@@ -392,21 +443,6 @@ class Root extends React.Component {
             }
           }
         }));
-      } else if (name === "label") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, label: value};
-                  return l;
-                })
-              }
-            }
-          }
-        }));
       } else if (name === "p") {
         this.setState(s => ({
           info: {
@@ -416,6 +452,21 @@ class Root extends React.Component {
               [s.layout]: {
                 layout: s.info.layouts[s.layout].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, p: value.split(",")};
+                  return l;
+                })
+              }
+            }
+          }
+        }));
+      } else if (name === "label") {
+        this.setState(s => ({
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [s.layout]: {
+                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                  if (i === s.selectedKey) return {...l, label: value};
                   return l;
                 })
               }
@@ -461,6 +512,7 @@ class Root extends React.Component {
   }
 
   handleClickCallback(evt) {
+    const {defaultValues} = this.state;
     const {name, dataset} = evt.target;
     if (dataset.api) {
       let {keyboard} = this.state;
@@ -501,8 +553,8 @@ class Root extends React.Component {
                 layout: [
                   ...s.info.layouts[s.layout].layout,
                   {
-                    w: 1,  // "add-iso" 1.25
-                    h: 1,  // "add-iso" 2
+                    w: defaultValues.layouts.w,  // "add-iso" 1.25
+                    h: defaultValues.layouts.h,  // "add-iso" 2
                     p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
                     x: _selectedKey >= 0 ? kd.x + w : 0,
                     y: _selectedKey >= 0 ? kd.y : 0,
