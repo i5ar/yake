@@ -24,12 +24,12 @@ export default class Section extends React.Component {
   }
 
   componentDidUpdate() {
-    // tippy(".section label", {
-    //   placement: "top-end",
-    //   animateFill: false,
-    //   theme: "solarized"
-    // });
-    tippy(".section div#generate button", {
+    tippy("#configure label", {
+      placement: "top-end",
+      animateFill: false,
+      theme: "solarized"
+    });
+    tippy("#generate button", {
       placement: "top-end",
       animateFill: false,
       theme: "solarized"
@@ -64,7 +64,7 @@ export default class Section extends React.Component {
             display: isLayouts ? "inherit" : "none"
           }
         }, e(
-          "div", null,
+          "div", {id: "configure"},
 
           // e(
           //   "form", {
@@ -101,17 +101,16 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "w"
-                }, e(FormattedMessage, {
-                  id: "width",
-                  defaultMessage: "Width: "
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "width",
+                    defaultMessage: "Width",
+                  }))
+                }, "width:"),
                 e("input", {
                   type: "number",
                   step: 0.25,
                   name: "w",
                   min: 1,
-                  // max: 15,
                   value: this.width,
                   onChange: this.handleChange
                 })
@@ -119,11 +118,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "h"
-                }, e(FormattedMessage, {
-                  id: "height",
-                  defaultMessage: "Height: "
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "height",
+                    defaultMessage: "Height",
+                  }))
+                }, "height:"),
                 e("input", {
                   type: "number",
                   step: 1,
@@ -137,11 +136,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "x"
-                }, e(FormattedMessage, {
-                  id: "abscissa",
-                  defaultMessage: "Abscissa: "
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "abscissa",
+                    defaultMessage: "Abscissa",
+                  }))
+                }, "x:"),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -153,11 +152,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "y"
-                }, e(FormattedMessage, {
-                  id: "ordinate",
-                  defaultMessage: "Ordinate: "
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "ordinate",
+                    defaultMessage: "Ordinate",
+                  }))
+                }, "y:"),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -191,11 +190,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "r"
-                }, e(FormattedMessage, {
-                  id: "rotation",
-                  defaultMessage: "Rotation:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "r",
+                    defaultMessage: "Rotation",
+                  }))
+                }, "r:"),
                 e("input", {
                   type: "number",
                   step: 5,
@@ -209,11 +208,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "rx"
-                }, e(FormattedMessage, {
-                  id: "abscissaRotation",
-                  defaultMessage: "Abscissa rotat.:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "rx",
+                    defaultMessage: "Abscissa rotat.",
+                  }))
+                }, "rx:"),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -225,11 +224,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "ry"
-                }, e(FormattedMessage, {
-                  id: "ordinateRotation",
-                  defaultMessage: "Ordinate rotat.:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "ry",
+                    defaultMessage: "Ordinate rotat.",
+                  }))
+                }, "ry:"),
                 e("input", {
                   type: "number",
                   step: 0.25,
@@ -252,11 +251,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "label"
-                }, e(FormattedMessage, {
-                  id: "label",
-                  defaultMessage: "Label:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "label",
+                    defaultMessage: "Label",
+                  }))
+                }, "label:"),
                 e("input", {
                   type: "text",
                   name: "label",
@@ -268,11 +267,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "c"
-                }, e(FormattedMessage, {
-                  id: "groundColor",
-                  defaultMessage: "Ground color:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "c",
+                    defaultMessage: "Ground color",
+                  }))
+                }, "c:"),
                 e("input", {
                   type: "text",  // color
                   name: "c",
@@ -287,11 +286,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "t"
-                }, e(FormattedMessage, {
-                  id: "labelColor",
-                  defaultMessage: "Label color:"
-                })),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "t",
+                    defaultMessage: "Label color",
+                  }))
+                }, "t:"),
                 e("input", {
                   type: "text",  // color
                   name: "t",
@@ -410,7 +409,7 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "w"
+                  "data-tippy-content": "w",
                 }, "Width: "),
                 e("input", {
                   type: "number",

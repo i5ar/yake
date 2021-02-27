@@ -12,8 +12,11 @@
     );
 }
 
-.section > div > div:first-child {
+.section > div > div {
     display: flex;
+}
+
+.section > div > div:first-child {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
@@ -31,9 +34,13 @@
     color: var(--base02);
 }
 
+.section label {
+    width: 4em !important;
+}
+
 .section fieldset div input[type=text],
 .section fieldset div input[type=number] {
-    width: auto;
+    width: 8em;
 }
 
 .section fieldset div:first-child input[type=color],
@@ -56,9 +63,9 @@
 
 /* Buttons */
 
-.section div button {
-    border-radius: 0;
-    width: 100%;
+.section div > div:last-child button {
+    flex-grow: 1;
+    border-radius: 0 !important;
 }
 
 .section div button:first-child {
@@ -83,9 +90,6 @@
 
 @media only screen and (min-width: 768px) {
     /* Buttons */
-    .section div button {
-        width: auto;
-    }
     .section div button:first-child {
         border-radius: var(--radius) 0 0 var(--radius);
     }
