@@ -45,8 +45,8 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, intl, layout, selectedKey, isLayouts, isHousing} = this.props;
-    this.keycap = info.layouts ? info.layouts[layout].layout[selectedKey] : {};
+    const {info, intl, layoutName, selectedKey, isLayouts, isHousing} = this.props;
+    this.keycap = info.layouts ? info.layouts[layoutName].layout[selectedKey] : {};
 
     return e(
       "section", {
@@ -83,7 +83,7 @@ export default class Section extends React.Component {
           //       e("input", {
           //         type: "number",
           //         name: "keycaps",
-          //         defaultValue: info.layouts ? info.layouts[layout].layout.length : 0
+          //         defaultValue: info.layouts ? info.layouts[layoutName].layout.length : 0
           //       })
           //     )
           //   )

@@ -25,7 +25,7 @@ export default class Device extends React.Component {
       intl,
       info,
       selectedKey,
-      layout,
+      layoutName,
       isPrint,
       hasProfile,
       hasCase
@@ -123,7 +123,7 @@ export default class Device extends React.Component {
     let [width, height] = Object.keys(info).length !== 0 ? [info.width, info.height] : [0, 0];
 
     // NOTE: Guess size when `width` and `height` are not present in `info.json`.
-    const size = getSize(info, layout);
+    const size = getSize(info, layoutName);
     const [_width, _height] = size || [0, 0];
 
     width = 10 + 1 + unit * (width || _width);
@@ -154,7 +154,7 @@ export default class Device extends React.Component {
             shapes
           ) : null,
           // NOTE: Add origin cross.
-          info?.layouts?.[layout].layout.map(
+          info?.layouts?.[layoutName].layout.map(
             (layout, i) => i === selectedKey && !isPrint ? e(
               Cross, {
                 key: i,
@@ -168,7 +168,7 @@ export default class Device extends React.Component {
               transform: "translate(5, 5)"
             },
             // NOTE: Add keycaps.
-            info?.layouts?.[layout].layout.map(
+            info?.layouts?.[layoutName].layout.map(
               (layout, i) => e(Keycap, {
                 key: i,
                 index: i,
@@ -198,7 +198,7 @@ export default class Device extends React.Component {
             )
           ),
           // NOTE: Add arrows.
-          info?.layouts?.[layout].layout.map(
+          info?.layouts?.[layoutName].layout.map(
             (layout, i) => i === selectedKey ? e(
               ForeignObject, {
                 key: i,

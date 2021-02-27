@@ -24,7 +24,7 @@ class Root extends React.Component {
       keyboards: [],
       info: {},
       keyboard: "",
-      layout: "",
+      layoutName: "",
       isInitial: true,
       isCustom: false,
       isPrint: false,
@@ -99,7 +99,7 @@ class Root extends React.Component {
 
   addKey(name) {
     this.setState(s => {
-      const layout = s.info.layouts[s.layout].layout;
+      const layout = s.info.layouts[s.layoutName].layout;
       const selectedKey = layout[s.selectedKey];
       const x = () => {
         if (name === "add-right") return selectedKey.x + (selectedKey.w || 1);
@@ -118,7 +118,7 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
+            [s.layoutName]: {
               layout: [
                 ...layout,
                 {
@@ -172,8 +172,8 @@ class Root extends React.Component {
         ...s.info,
         layouts: {
           ...s.info.layouts,
-          [s.layout]: {
-            layout: s.info.layouts[s.layout].layout.map(
+          [s.layoutName]: {
+            layout: s.info.layouts[s.layoutName].layout.map(
               (l, i) => i === s.selectedKey ? {
                 ...l,
                 x: x(l),
@@ -191,24 +191,24 @@ class Root extends React.Component {
 
   handleHashCallback(keyboards, keyboard, prevInfo) {
     const info = this.state.hasApi ? prevInfo.keyboards[keyboard] : prevInfo
-    const layout = Object.keys(info.layouts)[0];
-    const fallbackKey = info.layouts[layout]?.layout.length - 1;
+    const layoutName = Object.keys(info.layouts)[0];
+    const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
     this.setState(s => ({
       fallbackKey,
       isInitial: false,
       keyboards,
       info,
       keyboard,
-      layout,
+      layoutName,
       defaultValues: {
         ...s.defaultValues,
         layouts: {
           ...s.defaultValues.layouts,
-          x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
-          y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
-          rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
-          ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
-          r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0,
+          x: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].x : 0,
+          y: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].y : 0,
+          rx: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].rx || 0 : 0,
+          ry: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].ry || 0 : 0,
+          r: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].r || 0 : 0,
         }
       }
     }));
@@ -219,14 +219,14 @@ class Root extends React.Component {
 
     // if (name === "keycaps") {
     //   this.setState(s => {
-    //     if (value < s.info.layouts[this.state.layout].layout.length) {
+    //     if (value < s.info.layouts[this.state.layoutName].layout.length) {
     //       return {
     //         info: {
     //           ...s.info,
     //           layouts: {
-    //             [this.state.layout]: {
-    //               layout: s.info.layouts[this.state.layout].layout.filter((l, i) => {
-    //                 return i < s.info.layouts[this.state.layout].layout.length - 1;
+    //             [this.state.layoutName]: {
+    //               layout: s.info.layouts[this.state.layoutName].layout.filter((l, i) => {
+    //                 return i < s.info.layouts[this.state.layoutName].layout.length - 1;
     //               })
     //             }
     //           }
@@ -237,9 +237,9 @@ class Root extends React.Component {
     //       info: {
     //         ...s.info,
     //         layouts: {
-    //           [this.state.layout]: {
+    //           [this.state.layoutName]: {
     //             layout: [
-    //               ...s.info.layouts[this.state.layout].layout,
+    //               ...s.info.layouts[this.state.layoutName].layout,
     //               {
     //                 w: 1,
     //                 x: 0,
@@ -269,7 +269,7 @@ class Root extends React.Component {
           this.setState({
             info,
             keyboard: info.keyboard_name.toLowerCase(),
-            layout: Object.keys(info.layouts)[0],
+            layoutName: Object.keys(info.layouts)[0],
             isCustom: true
           });
         };
@@ -280,23 +280,23 @@ class Root extends React.Component {
         const keyboard = value;
         fetchKeyboard(hasApi, keyboard).then(prevInfo => {
           const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
-          const layout = Object.keys(info.layouts)[0];
-          const fallbackKey = info.layouts[layout]?.layout.length - 1;
+          const layoutName = Object.keys(info.layouts)[0];
+          const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
           this.setState(s => ({
             info,
             keyboard,
             fallbackKey,
-            layout,
+            layoutName,
             isCustom: false,
             defaultValues: {
               ...s.defaultValues,
               layouts: {
                 ...s.defaultValues.layouts,
-                x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
-                y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
-                rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
-                ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
-                r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0
+                x: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].x : 0,
+                y: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].y : 0,
+                rx: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].rx || 0 : 0,
+                ry: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].ry || 0 : 0,
+                r: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].r || 0 : 0
               }
             }
           }));
@@ -311,8 +311,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.filter(
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.filter(
                   (l, i) => i !== s.selectedKey)
               }
             }
@@ -326,8 +326,8 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
-                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                     if (i === s.selectedKey) return {...l, x: parseFloat(value)};
                     return l;
                   })
@@ -353,8 +353,8 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
-                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                     if (i === s.selectedKey) return {...l, y: parseFloat(value)};
                     return l;
                   })
@@ -380,8 +380,8 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
-                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                     if (i === s.selectedKey) return {...l, w: parseFloat(value)};
                     return l;
                   })
@@ -407,8 +407,8 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
-                  layout: s.info.layouts[s.layout].layout.map((l, i) => {
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                     if (i === s.selectedKey) return {...l, h: parseInt(value, 10)};
                     return l;
                   })
@@ -433,8 +433,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, r: parseInt(value, 10)};
                   return l;
                 })
@@ -448,8 +448,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, rx: parseFloat(value)};
                   return l;
                 })
@@ -463,8 +463,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, ry: parseFloat(value)};
                   return l;
                 })
@@ -478,8 +478,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, p: value.split(",")};
                   return l;
                 })
@@ -493,8 +493,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, label: value};
                   return l;
                 })
@@ -508,8 +508,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, c: value};
                   return l;
                 })
@@ -523,8 +523,8 @@ class Root extends React.Component {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
-                layout: s.info.layouts[s.layout].layout.map((l, i) => {
+              [s.layoutName]: {
+                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                   if (i === s.selectedKey) return {...l, t: value};
                   return l;
                 })
@@ -550,24 +550,24 @@ class Root extends React.Component {
         keyboard = keyboards.includes(keyboard) ? keyboard : keyboards[0];
         fetchKeyboard(hasApi, keyboard).then(prevInfo => {
           const info = hasApi ? prevInfo.keyboards[keyboard] : prevInfo;
-          const layout = Object.keys(info.layouts)[0];
-          const fallbackKey = info.layouts[layout]?.layout.length - 1;
+          const layoutName = Object.keys(info.layouts)[0];
+          const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
           this.setState({
             hasApi,
             keyboards,
             info,
             keyboard,
             fallbackKey,
-            layout,
+            layoutName,
             defaultValues: {
               ...s.defaultValues,
               layouts: {
                 ...s.defaultValues.layouts,
-                x: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].x : 0,
-                y: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].y : 0,
-                rx: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].rx || 0 : 0,
-                ry: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].ry || 0 : 0,
-                r: fallbackKey !== null ? info.layouts[layout].layout[fallbackKey].r || 0 : 0
+                x: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].x : 0,
+                y: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].y : 0,
+                rx: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].rx || 0 : 0,
+                ry: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].ry || 0 : 0,
+                r: fallbackKey !== null ? info.layouts[layoutName].layout[fallbackKey].r || 0 : 0
               }
             }
           });
@@ -583,7 +583,7 @@ class Root extends React.Component {
     } else if (name === "add") {
       if (this.state.selectedKey !== null) {
         this.setState(s => {
-          const layout = s.info.layouts[s.layout].layout;
+          const layout = s.info.layouts[s.layoutName].layout;
           const selectedKey = layout[s.selectedKey];
           return {
             selectedKey: layout.length,
@@ -592,7 +592,7 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
+                [s.layoutName]: {
                   layout: [
                     ...layout,
                     {
@@ -614,7 +614,7 @@ class Root extends React.Component {
         });
       } else {
         this.setState(s => {
-          const layout = s.info.layouts[s.layout].layout;
+          const layout = s.info.layouts[s.layoutName].layout;
           return {
             selectedKey: layout.length,
             fallbackKey: s.fallbackKey + 1,
@@ -622,7 +622,7 @@ class Root extends React.Component {
               ...s.info,
               layouts: {
                 ...s.info.layouts,
-                [s.layout]: {
+                [s.layoutName]: {
                   layout: [
                     ...layout,
                     {
@@ -651,10 +651,10 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.filter((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.filter((l, i) => {
                 if (s.selectedKey === null) {
-                  return i < s.info.layouts[s.layout].layout.length - 1;
+                  return i < s.info.layouts[s.layoutName].layout.length - 1;
                 }
                 return i !== s.selectedKey;
               })
@@ -665,11 +665,11 @@ class Root extends React.Component {
           ...s.defaultValues,
           layouts: {
             ...s.defaultValues.layouts,
-            x: s.info.layouts[s.layout].layout[s.fallbackKey-1].x + (s.info.layouts[s.layout].layout[s.fallbackKey-1].w || 1) - 1,
-            y: s.info.layouts[s.layout].layout[s.fallbackKey-1].y,
-            r: s.info.layouts[s.layout].layout[s.fallbackKey-1].r,
-            rx: s.info.layouts[s.layout].layout[s.fallbackKey-1].rx,
-            ry: s.info.layouts[s.layout].layout[s.fallbackKey-1].ry
+            x: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].x + (s.info.layouts[s.layoutName].layout[s.fallbackKey-1].w || 1) - 1,
+            y: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].y,
+            r: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].r,
+            rx: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].rx,
+            ry: s.info.layouts[s.layoutName].layout[s.fallbackKey-1].ry
           }
         }
       }));
@@ -710,8 +710,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   rx: parseFloat(l.rx || 0) + 0.25
@@ -731,8 +731,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   rx: parseFloat(l.rx || 0) - 0.25
@@ -752,8 +752,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   ry: parseFloat(l.ry || 0) - 0.25
@@ -773,8 +773,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return evt.ctrlKey ? {
                   ...l,
                   ry: parseFloat(l.ry || 0) + 0.25
@@ -796,10 +796,10 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.filter((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.filter((l, i) => {
                 if (s.selectedKey === null) {
-                  return i < s.info.layouts[s.layout].layout.length - 1;
+                  return i < s.info.layouts[s.layoutName].layout.length - 1;
                 }
                 return i !== s.selectedKey;
               })
@@ -809,24 +809,24 @@ class Root extends React.Component {
       }));
     } else if (evt.key === "Insert") {
       this.setState(s => {
-        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layout].layout.length - 1;
-        const w = s.info.layouts[s.layout].layout[_selectedKey].w || 1;
+        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layoutName].layout.length - 1;
+        const w = s.info.layouts[s.layoutName].layout[_selectedKey].w || 1;
         return {
-          selectedKey: s.info.layouts[s.layout].layout.length,
+          selectedKey: s.info.layouts[s.layoutName].layout.length,
           fallbackKey: s.fallbackKey + 1,
           info: {
             ...s.info,
             layouts: {
               ...s.info.layouts,
-              [s.layout]: {
+              [s.layoutName]: {
                 layout: [
-                  ...s.info.layouts[s.layout].layout,
+                  ...s.info.layouts[s.layoutName].layout,
                   {
-                    x: s.info.layouts[s.layout].layout[_selectedKey].x + w,
-                    y: s.info.layouts[s.layout].layout[_selectedKey].y,
-                    r: s.info.layouts[s.layout].layout[_selectedKey].r,
-                    rx: s.info.layouts[s.layout].layout[_selectedKey].rx,
-                    ry: s.info.layouts[s.layout].layout[_selectedKey].ry,
+                    x: s.info.layouts[s.layoutName].layout[_selectedKey].x + w,
+                    y: s.info.layouts[s.layoutName].layout[_selectedKey].y,
+                    r: s.info.layouts[s.layoutName].layout[_selectedKey].r,
+                    rx: s.info.layouts[s.layoutName].layout[_selectedKey].rx,
+                    ry: s.info.layouts[s.layoutName].layout[_selectedKey].ry,
                     label: ""
                   }
                 ]
@@ -841,8 +841,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return {...l, x: 0, y: 0};
                 return l;
               })
@@ -858,8 +858,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return evt.code === "ShiftLeft" ? {
                   ...l,
                   r: parseFloat(l.r) -5
@@ -880,8 +880,8 @@ class Root extends React.Component {
           ...s.info,
           layouts: {
             ...s.info.layouts,
-            [s.layout]: {
-              layout: s.info.layouts[s.layout].layout.map((l, i) => {
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
                 if (i === selectedKey) return {...l, label: _key};
                 return l;
               })
@@ -898,7 +898,7 @@ class Root extends React.Component {
       hasApi,
       keyboards,
       info,
-      layout,
+      layoutName,
       keyboard,
       isInitial,
       isCustom,
@@ -958,7 +958,7 @@ class Root extends React.Component {
               }),
               e(Dropdown, {
                 name: "layout",
-                value: layout,
+                value: layoutName,
                 options: info && info.layouts && Object.keys(
                   info.layouts).length ? Object.keys(
                     info.layouts) : null,
@@ -978,7 +978,7 @@ class Root extends React.Component {
               e(Header, {
                 info,
                 intl,
-                layout,
+                layoutName,
                 selectedKey,
                 defaultValues,
                 handleClickCallback: this.handleClickCallback,
@@ -992,7 +992,7 @@ class Root extends React.Component {
                 deviceRef: elm => this.deviceElement = elm,
                 info,
                 intl,
-                layout,
+                layoutName,
                 isPrint,
                 hasProfile,
                 hasCase,
