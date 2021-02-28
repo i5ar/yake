@@ -117,6 +117,7 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
+    const zz = 20; // 5
     const {unit, radius, housing, layouts} = this.props.defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
@@ -124,6 +125,7 @@ export default class Device extends React.Component {
         const color = info.housing?.[shape_].shape[i].c || housing.c;
         if (shape.p) return e("polygon", {
           key: i,
+          // TODO: Parse to normalize zz.
           points: shape.p.map(point => point * unit).join(","),
           fill: isPrint ? "url(#DIAGONALS)" : color,
           stroke: isPrint ? "lightgray" : color,
@@ -132,8 +134,8 @@ export default class Device extends React.Component {
         });
         if (shape.w && shape.h) return e("rect", {
           key: i,
-          x: shape.x * unit + 5 || 5,
-          y: shape.y * unit + 5 || 5,
+          x: shape.x * unit + zz || zz,
+          y: shape.y * unit + zz || zz,
           width: shape.w * unit,
           height: shape.h * unit,
           fill: isPrint ? "url(#DIAGONALS)" : color,
@@ -150,8 +152,8 @@ export default class Device extends React.Component {
     const size = getSize(info, layoutName);
     const [_width, _height] = size || [0, 0];
 
-    width = 10 + 1 + unit * (width || _width);
-    height = 10 + 1 + unit * (height || _height);
+    width = 40 + 1 + unit * (width || _width);  // 10 + 1
+    height = 40 + 1 + unit * (height || _height);  // 10 + 1
 
     return e(
       "div", {
@@ -189,7 +191,7 @@ export default class Device extends React.Component {
           ),
           e(
             "g", {
-              transform: "translate(5, 5)"
+              transform: "translate(20, 20)" // (5, 5)
             },
             // NOTE: Add keycaps.
             info?.layouts?.[layoutName].layout.map(
