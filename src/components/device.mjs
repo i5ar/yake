@@ -67,29 +67,53 @@ export default class Device extends React.Component {
           }
         )
       ),
-      // NOTE: Pattern.
+      // NOTE: Patterns.
       e("pattern", {
-        id: "SBIECO",
-        x: 10,
-        y: 10,
-        width: 20,
-        height: 20,
+        id: "BOXES",
+        width: 10,
+        height: 10,
         patternUnits: "userSpaceOnUse"
-        },
-        e("rect", {
-          width: 20,
-          height: 20,
-          fill: "lightgray"
-        }),
-        e("line", {
-          x1: 0,
-          y1: 0,
-          x2: 20,
-          y2: 20,
-          stroke: "white",
-          strokeWidth: 2
-        })
-      )
+      }, e("g", {
+        fill:'lightgray',
+        fillRule: 'evenodd',
+        fillOpacity: 1
+      }, e("path", {
+        d: "M0 0h10L0 10z"
+      }
+      ))),
+
+      e("pattern", {
+        id: "DIAGONALS",
+        width: 6,
+        height: 6,
+        patternUnits: "userSpaceOnUse"
+      }, e("g", {
+        fill:'lightgray',
+        fillRule: 'evenodd',
+        fillOpacity: 1
+      }, e("path", {
+        d: "M5 0h1L0 6V5zM6 5v1H5z"
+      }))),
+
+      e("pattern", {
+        id: "DOTS",
+        width: 10,
+        height: 10,
+        patternUnits: "userSpaceOnUse"
+      }, e("g", {
+        fill:'lightgray',
+        fillRule: 'evenodd',
+        fillOpacity: 1
+      }, e("circle", {
+        cx:'3',
+        cy:'3',
+        r:'2'
+      }),
+      e("circle", {
+        cx:'8',
+        cy:'8',
+        r:'2'
+      })))
     );
 
     // NOTE: Case.
@@ -101,7 +125,7 @@ export default class Device extends React.Component {
         if (shape.p) return e("polygon", {
           key: i,
           points: shape.p.map(point => point * unit).join(","),
-          fill: isPrint ? "url(#SBIECO)" : color,
+          fill: isPrint ? "url(#DIAGONALS)" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
           strokeLinejoin: "round"
@@ -112,7 +136,7 @@ export default class Device extends React.Component {
           y: shape.y * unit + 5 || 5,
           width: shape.w * unit,
           height: shape.h * unit,
-          fill: isPrint ? "url(#SBIECO)" : color,
+          fill: isPrint ? "url(#DIAGONALS)" : color,
           stroke: isPrint ? "lightgray" : color,
           strokeWidth: radius * 2,
           strokeLinejoin: "round"

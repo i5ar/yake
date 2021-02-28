@@ -95,7 +95,7 @@ export default class Keycap extends React.Component {
           rx: radius,
           fill: isPrint ? "white" : colorInner,
           stroke: isPrint ? "black" : null,
-          strokeWidth: isPrint ? 1 : null
+          strokeWidth: isPrint ? 0.5 : null
         }),
         hasProfile ? e(Rectangle, {
           index: this.props.index,
@@ -104,7 +104,7 @@ export default class Keycap extends React.Component {
           width: widthInner || unit - 14,
           height: heightInner || unit - 14,
           rx: radius,
-          fill: isPrint ? "white" : "url(#GRADIENT)"
+          fill: isPrint ? "transparent" : "url(#GRADIENT)"
         }) : null,
         text
       ));
