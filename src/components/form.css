@@ -8,6 +8,12 @@
     width: inherit;
 }
 
+.form fieldset {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
 @media only screen and (min-width: 768px) {
     .form {
         width: initial;

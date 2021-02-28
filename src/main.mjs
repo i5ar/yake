@@ -48,7 +48,10 @@ class Root extends React.Component {
           t: "#d33682"
         },
         housing: {
-          c: "#93a1a1"
+          w: "",
+          h: "",
+          c: "#93a1a1",
+          t: ""
         }
       },
       housingName: ""
@@ -63,9 +66,10 @@ class Root extends React.Component {
     this.selectElement = null;
     this.formElement = null;
 
-    this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleHashCallback = this.handleHashCallback.bind(this);
+    this.handleChangeCallback = this.handleChangeCallback.bind(this);
     this.handleClickCallback = this.handleClickCallback.bind(this);
+    this.handleSubmitCallback = this.handleSubmitCallback.bind(this);
     this.handleKeyDownCallback = this.handleKeyDownCallback.bind(this);
     this.handleAceCallback = debounce(this.handleAceCallback.bind(this), 1000);
   }
@@ -164,7 +168,6 @@ class Root extends React.Component {
         else return l.y || 0;
       }
       const r = (l) => {
-        console.log(l);
         if (name === "rotate-right") return (l.r || 0) + 5;
         else if (name === "rotate-left") return (l.r || 0) - 5;
         else return l.r || 0;
@@ -205,6 +208,24 @@ class Root extends React.Component {
       housingName,
       layoutName
     }));
+  }
+
+  handleSubmitCallback(evt) {
+    const {name, value} = evt.target.querySelector("input[name=create]");
+    if (name === "create") {
+      this.setState(s => {
+        return {
+          layoutName: value,
+          info: {
+            ...s.info,
+            layouts: {
+              ...s.info.layouts,
+              [value]: s.info.layouts[s.layoutName]
+            }
+          }
+        }
+      });
+    }
   }
 
   handleChangeCallback(evt) {
@@ -275,7 +296,7 @@ class Root extends React.Component {
           const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
-          const housingName = Object.keys(info.housing)[0];
+          const housingName = info.housing ? Object.keys(info.housing)[0] : "";
           this.setState(s => ({
             info,
             keyboardName,
@@ -365,7 +386,7 @@ class Root extends React.Component {
           }));
         }
       } else if (name === "w") {
-        if (this.state.selectedKey !== null){
+        if (this.state.selectedKey !== null) {
           this.setState(s => ({
             info: {
               ...s.info,
@@ -515,50 +536,86 @@ class Root extends React.Component {
           }
         }));
       } else if (name === "label") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, label: value};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, label: value};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                label: value
+              }
+            }
+          }));
+        }
       } else if (name === "c") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, c: value};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, c: value};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                c: value
+              }
+            }
+          }));
+        }
       } else if (name === "t") {
-        this.setState(s => ({
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                  if (i === s.selectedKey) return {...l, t: value};
-                  return l;
-                })
+        if (this.state.selectedKey !== null) {
+          this.setState(s => ({
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
+                    if (i === s.selectedKey) return {...l, t: value};
+                    return l;
+                  })
+                }
               }
             }
-          }
-        }));
+          }));
+        } else {
+          this.setState(s => ({
+            defaultValues: {
+              ...s.defaultValues,
+              layouts: {
+                ...s.defaultValues.layouts,
+                t: value
+              }
+            }
+          }));
+        }
       } else if (name === "housing-w") {
         this.setState(s => {
           return {
@@ -638,7 +695,7 @@ class Root extends React.Component {
           const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
-          const housingName = Object.keys(info.housing)[0];
+          const housingName = info.housing ? Object.keys(info.housing)[0] : "";
           this.setState({
             hasApi,
             keyboardNames,
@@ -769,7 +826,6 @@ class Root extends React.Component {
 
   handleKeyDownCallback(evt) {
     const {selectedKey} = this.state;
-    console.log(evt);
     if (evt.key === "ArrowRight") {
       this.setState(s => ({
         info: {
@@ -873,72 +929,6 @@ class Root extends React.Component {
           }
         }
       }));
-    } else if (evt.key === "Insert") {
-      this.setState(s => {
-        const _selectedKey = s.selectedKey !== null ? s.selectedKey : s.info.layouts[s.layoutName].layout.length - 1;
-        const w = s.info.layouts[s.layoutName].layout[_selectedKey].w || 1;
-        return {
-          selectedKey: s.info.layouts[s.layoutName].layout.length,
-          fallbackKey: s.fallbackKey + 1,
-          info: {
-            ...s.info,
-            layouts: {
-              ...s.info.layouts,
-              [s.layoutName]: {
-                layout: [
-                  ...s.info.layouts[s.layoutName].layout,
-                  {
-                    x: s.info.layouts[s.layoutName].layout[_selectedKey].x + w,
-                    y: s.info.layouts[s.layoutName].layout[_selectedKey].y,
-                    r: s.info.layouts[s.layoutName].layout[_selectedKey].r || 0,
-                    rx: s.info.layouts[s.layoutName].layout[_selectedKey].rx || 0,
-                    ry: s.info.layouts[s.layoutName].layout[_selectedKey].ry || 0,
-                    label: ""
-                  }
-                ]
-              }
-            }
-          }
-        };
-      });
-    } else if (evt.key === "Home") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layoutName]: {
-              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                if (i === selectedKey) return {...l, x: 0, y: 0};
-                return l;
-              })
-            }
-          }
-        }
-      }));
-    } else if (evt.key === "End") {
-      // TODO: Get keyboard size.
-    } else if (evt.key === "Shift") {
-      this.setState(s => ({
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layoutName]: {
-              layout: s.info.layouts[s.layoutName].layout.map((l, i) => {
-                if (i === selectedKey) return evt.code === "ShiftLeft" ? {
-                  ...l,
-                  r: parseFloat(l.r) -5
-                } : {
-                  ...l,
-                  r: parseFloat(l.r) + 5
-                }
-                return l;
-              })
-            }
-          }
-        }
-      }));
     } else if (evt.key.length === 1 && evt.key !== " " && evt.location === 0) {
       const _key = evt.key;
       this.setState(s => ({
@@ -1032,9 +1022,14 @@ class Root extends React.Component {
                   handleChangeCallback: this.handleChangeCallback
               }),
               e(Form, {
+                action: "info",
                 formRef: elm => this.formElement = elm,
                 handleChangeCallback: this.handleChangeCallback
-              })
+              }),
+              e(Form, {
+                action: "create",
+                handleSubmitCallback: this.handleSubmitCallback
+              }),
             ),
             e("div",
               {

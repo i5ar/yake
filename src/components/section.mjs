@@ -8,23 +8,62 @@ export default class Section extends React.Component {
   }
 
   get width() {
-    return this.keycap ? this.keycap.w || "1" : this.props.defaultValues.layouts.w;
+    const {w} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.w || w : w;
   }
 
   get height() {
-    return this.keycap ? this.keycap.h || "1" : this.props.defaultValues.layouts.h;
+    const {h} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.h || h : h;
+  }
+
+  get x() {
+    const {x} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.x || x : x;
+  }
+
+  get y() {
+    const {y} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.y || y : y;
+  }
+
+  get r() {
+    const {r} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.r || r : r;
+  }
+
+  get rx() {
+    const {rx} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.rx || rx : rx;
+  }
+
+  get ry() {
+    const {ry} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap.ry || ry : ry;
+  }
+
+  get label() {
+    const {label} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap?.label || label : label;
   }
 
   get c() {
-    return this.keycap?.c || this.props.defaultValues.layouts.c;
+    const {c} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap?.c || c : c;
   }
 
   get t() {
-    return this.keycap?.t || this.props.defaultValues.layouts.t;
+    const {t} = this.props.defaultValues.layouts;
+    return this.props.selectedKey !== null ? this.keycap?.t || t : t;
   }
 
   componentDidUpdate() {
     tippy("#configure label", {
+      placement: "top-end",
+      animateFill: false,
+      theme: "solarized"
+    });
+    tippy("#house label", {
       placement: "top-end",
       animateFill: false,
       theme: "solarized"
@@ -46,8 +85,8 @@ export default class Section extends React.Component {
 
   render() {
     const {info, intl, layoutName, selectedKey, isLayouts, isHousing, housingName} = this.props;
-    this.keycap = info.layouts ? info.layouts[layoutName].layout[selectedKey] : {};
-    this.shape = info.layouts ? info.housing[housingName].shape[0] : {};
+    this.keycap = info.layouts?.[layoutName].layout[selectedKey] || {};
+    this.shape = info.housing?.[housingName].shape[0] || {};
 
     return e(
       "section", {
@@ -138,7 +177,7 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": intl.formatMessage(m({
-                    id: "abscissa",
+                    id: "x",
                     defaultMessage: "Abscissa",
                   }))
                 }, "x:"),
@@ -146,7 +185,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "x",
-                  value: this.keycap?.x !== undefined ? this.keycap.x : this.props.defaultValues.layouts.x,
+                  value: this.x,
                   onChange: this.handleChange
                 })
               ),
@@ -154,7 +193,7 @@ export default class Section extends React.Component {
                 "div", null,
                 e("label", {
                   "data-tippy-content": intl.formatMessage(m({
-                    id: "ordinate",
+                    id: "y",
                     defaultMessage: "Ordinate",
                   }))
                 }, "y:"),
@@ -162,7 +201,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "y",
-                  value: this.keycap?.y !== undefined ? this.keycap.y : this.props.defaultValues.layouts.y,
+                  value: this.y,
                   onChange: this.handleChange
                 })
               )
@@ -202,7 +241,7 @@ export default class Section extends React.Component {
                   name: "r",
                   min: -180,
                   // max: 180,
-                  value: this.keycap?.r !== undefined ? this.keycap.r : this.props.defaultValues.layouts.r,
+                  value: this.r,
                   onChange: this.handleChange
                 })
               ),
@@ -218,7 +257,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "rx",
-                  value: this.keycap?.rx !== undefined ? this.keycap.rx : this.props.defaultValues.layouts.rx,
+                  value: this.rx,
                   onChange: this.handleChange
                 })
               ),
@@ -234,7 +273,7 @@ export default class Section extends React.Component {
                   type: "number",
                   step: 0.25,
                   name: "ry",
-                  value: this.keycap?.ry !== undefined ? this.keycap.ry : this.props.defaultValues.layouts.ry,
+                  value: this.ry,
                   onChange: this.handleChange
                 })
               )
@@ -260,8 +299,8 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "text",
                   name: "label",
-                  maxLength: this.keycap?.w !== undefined ? Math.floor(6 * (this.keycap.w - 0.25)) : 4,
-                  value: this.keycap?.label !== undefined ? this.keycap.label : "",
+                  maxLength: this.width > 1 ? Math.floor(6 * (this.width - 0.25)) : 4,
+                  value: this.label,
                   onChange: this.handleChange
                 })
               ),
@@ -396,8 +435,7 @@ export default class Section extends React.Component {
             display: isHousing ? "inherit" : "none"
           }
         }, e(
-          "div", null,
-
+          "div", {id: "house"},
           e(
             "form",
             {
@@ -410,8 +448,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "w",
-                }, "Width: "),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "width",
+                    defaultMessage: "Width",
+                  })),
+                }, "width:"),
                 e("input", {
                   type: "number",
                   name: "housing-w",
@@ -422,8 +463,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "h"
-                }, "Height: "),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "height",
+                    defaultMessage: "Height",
+                  }))
+                }, "height:"),
                 e("input", {
                   type: "number",
                   name: "housing-h",
@@ -434,8 +478,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "x"
-                }, "Abscissa: "),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "x",
+                    defaultMessage: "Abscissa",
+                  }))
+                }, "x:"),
                 e("input", {
                   type: "number",
                   name: "housing-x",
@@ -446,8 +493,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "y"
-                }, "Ordinate: "),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "y",
+                    defaultMessage: "Ordinate",
+                  }))
+                }, "y:"),
                 e("input", {
                   type: "number",
                   name: "housing-y",
@@ -469,8 +519,11 @@ export default class Section extends React.Component {
               e(
                 "div", null,
                 e("label", {
-                  "data-tippy-content": "p"
-                }, "Points: "),
+                  "data-tippy-content": intl.formatMessage(m({
+                    id: "p",
+                    defaultMessage: "Points",
+                  }))
+                }, "p:"),
                 e("input", {
                   type: "text",
                   name: "housing-p",
