@@ -5,11 +5,11 @@ export default class ForeignObject extends React.Component {
     super();
     this.state = {
       modes: [
-        "add",
-        "remove",
-        "scale",
-        "rotate",
-        "translate"
+        "add",      // 0
+        "remove",   // 1
+        "scale",    // 2
+        "rotate",   // 3
+        "translate" // 4
       ],
       modeIndex: 0
     }
@@ -58,6 +58,54 @@ export default class ForeignObject extends React.Component {
       },
       onClick: this.handleClick
     }
+    const xLeft = 5 + unit * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width;
+    const xRight = 5 + unit * layout.x + (unit * layout.w || unit) || 5 + (unit * layout.w || unit);
+    const yTopDown = unit * layout.y + 5 || 5;
+    const yBottomUp = unit * layout.y + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height) + 5 || 0 + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height) + 5;
+    const xCenter = 5 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 5 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2;
+    const yBottom = unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5);
+    const yCenter = unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5);
+    const right = {
+      x: xRight,
+      y: yCenter
+    };
+    const left = {
+      x: xLeft,
+      y: yCenter
+    };
+    const bottom = {
+      x: xCenter,
+      y: yBottom
+    };
+    const leftTop = {
+      x: xLeft,
+      // y: yCenter
+    };
+    const rightTopDown = {
+      x: xRight,
+      y: yTopDown
+    };
+    const rightBottomUp = {
+      x: xRight,
+      y: yBottomUp
+    };
+    const leftTopDown = {
+      x: xLeft,
+      y: yTopDown
+    };
+    const leftBottomUp = {
+      x: xLeft,
+      y: yBottomUp
+    };
+    const bottomRight = {
+      x: 20 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 20 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+      y: yBottom
+    };
+    const bottomLeft = {
+      x: - 10 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || -10 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+      y: yBottom
+    };
+
 
     return e(Fragment, null,
       e("foreignObject", foreignObjectSelectOpts,
@@ -80,46 +128,66 @@ export default class ForeignObject extends React.Component {
           )
         )
       ),
-      e("foreignObject", {
-        x: 5 + unit * layout.x + (unit * layout.w || unit) || 5 + (unit * layout.w || unit),
-        y: unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5),
+
+      [2].includes(modeIndex) ? e("foreignObject", {
+        ...rightTopDown,
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-right`,
-        className: modeIndex === 3 ? "fas fa-redo-alt" : "fas fa-caret-right"
-      })
-      ),
-      e("foreignObject", {
-        x: 5 + unit * layout.x - foreignObjectButtonOpts.width || 5 - foreignObjectButtonOpts.width,
-        y: unit * layout.y + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5) || 0 + (unit * layout.h / 2 - 7.5 || unit / 2 - 7.5),
+        className: "fas fa-caret-right"
+      })) : null,
+      [2].includes(modeIndex) ? e("foreignObject", {
+        ...rightBottomUp,
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-left`,
-        className: modeIndex === 3 ? "fas fa-undo-alt" : "fas fa-caret-left"
-      })
-      ),
-      modeIndex !== 3 ? e("foreignObject", {
-        x: - 10 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || -10 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
-        y: unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5),
+        className: "fas fa-caret-left"
+      })) : null,
+
+      [0, 3, 4].includes(modeIndex) ? e("foreignObject", {
+        ...right,
+        ...foreignObjectButtonOpts
+      }, e("button", {
+        ...buttonOpts,
+        name: `${modes[modeIndex]}-right`,
+        className: modeIndex === 3 ? "fas fa-redo-alt" : modeIndex === 0 ? "fas fa-plus" : "fas fa-caret-right"
+      })) : null,
+      [0, 3, 4].includes(modeIndex) ? e("foreignObject", {
+        ...left,
+        ...foreignObjectButtonOpts
+      }, e("button", {
+        ...buttonOpts,
+        name: `${modes[modeIndex]}-left`,
+        className: modeIndex === 3 ? "fas fa-undo-alt" : modeIndex === 0 ? "fas fa-plus" : "fas fa-caret-left"
+      })) : null,
+
+      [0, 4].includes(modeIndex) ? e("foreignObject", {
+        ...bottom,
+        ...foreignObjectButtonOpts
+      }, e("button", {
+        ...buttonOpts,
+        name: `${modes[modeIndex]}-down`,
+        className: modeIndex === 0 ? "fas fa-plus" : "fas fa-caret-down"
+      })) : null,
+
+      [2].includes(modeIndex) ? e("foreignObject", {
+        ...bottomLeft,
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-up`,
         className: "fas fa-caret-up"
-      })
-      ) : null,
-      modeIndex !== 3 ? e("foreignObject", {
-        x: 20 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 20 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
-        y: unit * layout.y + (unit * layout.h + 5 || unit + 5) || 0 + (unit * layout.h + 5 || unit + 5),
+      })) : null,
+      [2].includes(modeIndex) ? e("foreignObject", {
+        ...bottomRight,
         ...foreignObjectButtonOpts
       }, e("button", {
         ...buttonOpts,
         name: `${modes[modeIndex]}-down`,
         className: "fas fa-caret-down"
-      })
-      ) : null
+      })) : null
     )
   }
 }

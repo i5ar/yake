@@ -154,18 +154,19 @@ class Root extends React.Component {
         else return l.h || 1;
       };
       const x = (l) => {
-        if (name === "translate-right") return l.x + 0.25;
-        else if (name === "translate-left") return l.x - 0.25;
-        else return l.x;
+        if (name === "translate-right") return (l.x || 0) + 0.25;
+        else if (name === "translate-left") return (l.x || 0) - 0.25;
+        else return l.x || 0;
       }
       const y = (l) => {
-        if (name === "translate-down") return l.y + 0.25;
-        else if (name === "translate-up") return l.y - 0.25;
-        else return l.y;
+        if (name === "translate-down") return (l.y || 0) + 0.25;
+        else if (name === "translate-up") return (l.y || 0) - 0.25;
+        else return l.y || 0;
       }
       const r = (l) => {
-        if (name === "rotate-right") return l.r + 5;
-        else if (name === "rotate-left") return l.r - 5;
+        console.log(l);
+        if (name === "rotate-right") return (l.r || 0) + 5;
+        else if (name === "rotate-left") return (l.r || 0) - 5;
         else return l.r || 0;
       }
       return {
