@@ -51,7 +51,7 @@ class Root extends React.Component {
           c: "#93a1a1"
         }
       },
-      housingName: "ORTHO"
+      housingName: ""
 
       // TODO: Add features.
       // keycap color "c" and legend color "t"
@@ -194,12 +194,14 @@ class Root extends React.Component {
     const info = this.state.hasApi ? prevInfo.keyboards[keyboardName] : prevInfo
     const layoutName = Object.keys(info.layouts)[0];
     const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
+    const housingName = Object.keys(info.housing)[0];
     this.setState(s => ({
       fallbackKey,
       isInitial: false,
       keyboardNames,
       info,
       keyboardName,
+      housingName,
       layoutName
     }));
   }
@@ -272,9 +274,11 @@ class Root extends React.Component {
           const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
+          const housingName = Object.keys(info.housing)[0];
           this.setState(s => ({
             info,
             keyboardName,
+            housingName,
             fallbackKey,
             layoutName,
             isCustom: false
@@ -633,11 +637,13 @@ class Root extends React.Component {
           const info = hasApi ? prevInfo.keyboards[keyboardName] : prevInfo;
           const layoutName = Object.keys(info.layouts)[0];
           const fallbackKey = info.layouts[layoutName]?.layout.length - 1;
+          const housingName = Object.keys(info.housing)[0];
           this.setState({
             hasApi,
             keyboardNames,
             info,
             keyboardName,
+            housingName,
             fallbackKey,
             layoutName
           });
