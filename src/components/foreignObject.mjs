@@ -33,15 +33,15 @@ export default class ForeignObject extends React.Component {
   }
 
   render() {
-    const {unit, radius, layout, intl} = this.props;
+    const {unit, layout, intl} = this.props;
     const {modes, modeIndex} = this.state;
     const r = layout.r || 0;
     const rx = unit * layout.rx || 0;
     const ry = unit * layout.ry || 0;
 
     const foreignObjectSelectOpts = {
-      x: unit * layout.x + 20 || 0,  // 5
-      y: unit * layout.y - 4 || 0,  // -19
+      x: unit * layout.x || 0,
+      y: (unit * layout.y || 0) - 24,
       width: unit * layout.w || unit,
       height: 24,
       transform: `rotate(${r} ${rx} ${ry})`
@@ -58,15 +58,14 @@ export default class ForeignObject extends React.Component {
       },
       onClick: this.handleClick
     }
-    const zz = 20;  // 5
-    const zzz = 7.5 - 15  // 7.5
-    const xLeft = zz + unit * layout.x - foreignObjectButtonOpts.width || zz - foreignObjectButtonOpts.width;
-    const xRight = zz + unit * layout.x + (unit * layout.w || unit) || zz + (unit * layout.w || unit);
-    const yTopDown = unit * layout.y + zz || zz;
-    const yBottomUp = unit * layout.y + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height) + zz || 0 + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height) + zz;
-    const xCenter = zz + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || zz + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2;
-    const yBottom = unit * layout.y + (unit * layout.h + zz || unit + zz) || 0 + (unit * layout.h + zz || unit + zz);
-    const yCenter = unit * layout.y + (unit * layout.h / 2 - zzz || unit / 2 - zzz) || 0 + (unit * layout.h / 2 - zzz || unit / 2 - zzz);
+    const coeff = 12
+    const xLeft = unit * layout.x - foreignObjectButtonOpts.width || foreignObjectButtonOpts.width;
+    const xRight = unit * layout.x + (unit * layout.w || unit) || (unit * layout.w || unit);
+    const yTopDown = unit * layout.y || 0;
+    const yBottomUp = unit * layout.y + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height) || 0 + (unit * layout.h - foreignObjectButtonOpts.height || unit - foreignObjectButtonOpts.height);
+    const xCenter = unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2;
+    const yBottom = unit * layout.y + (unit * layout.h || unit) || 0 + (unit * layout.h || unit);
+    const yCenter = unit * layout.y + (unit * layout.h / 2 - coeff || unit / 2 - coeff) || 0 + (unit * layout.h / 2 - coeff || unit / 2 - coeff);
     const right = {
       x: xRight,
       y: yCenter
@@ -79,10 +78,6 @@ export default class ForeignObject extends React.Component {
       x: xCenter,
       y: yBottom
     };
-    const leftTop = {
-      x: xLeft,
-      // y: yCenter
-    };
     const rightTopDown = {
       x: xRight,
       y: yTopDown
@@ -91,23 +86,14 @@ export default class ForeignObject extends React.Component {
       x: xRight,
       y: yBottomUp
     };
-    const leftTopDown = {
-      x: xLeft,
-      y: yTopDown
-    };
-    const leftBottomUp = {
-      x: xLeft,
-      y: yBottomUp
-    };
     const bottomRight = {
-      x: zz + 15 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || zz + 15 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+      x: 15 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || 15 - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
       y: yBottom
     };
     const bottomLeft = {
-      x: zz - 15 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || zz - 15 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
+      x: - 15 + unit * layout.x - foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2 || - 15 + foreignObjectButtonOpts.width / 2 + (unit * layout.w || unit) / 2,
       y: yBottom
     };
-
 
     return e(Fragment, null,
       e("foreignObject", foreignObjectSelectOpts,

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.mjs";
-import Cross from "./cross.mjs";
 import ForeignObject from "./foreignObject.mjs";
 import {
   getSize
@@ -117,15 +116,14 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    const zz = 20; // 5
-    const {unit, radius, housing, layouts} = this.props.defaultValues;
+    const {unit, pivot, radius, housing, layouts} = this.props.defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
         const color = info.housing?.[shape_].shape[i].c || housing.c;
         if (shape.p) return e("polygon", {
           key: i,
-          // TODO: Parse to normalize zz.
+          // TODO: Parse to normalize pivot.
           points: shape.p.map(point => point * unit).join(","),
           fill: isPrint ? "url(#DIAGONALS)" : color,
           stroke: isPrint ? "lightgray" : color,
@@ -134,8 +132,8 @@ export default class Device extends React.Component {
         });
         if (shape.w && shape.h) return e("rect", {
           key: i,
-          x: shape.x * unit + zz || zz,
-          y: shape.y * unit + zz || zz,
+          x: shape.x * unit + pivot || pivot,
+          y: shape.y * unit + pivot || pivot,
           width: shape.w * unit,
           height: shape.h * unit,
           fill: isPrint ? "url(#DIAGONALS)" : color,
@@ -152,8 +150,8 @@ export default class Device extends React.Component {
     const size = getSize(info, layoutName);
     const [_width, _height] = size || [0, 0];
 
-    width = 40 + 1 + unit * (width || _width);  // 10 + 1
-    height = 40 + 1 + unit * (height || _height);  // 10 + 1
+    width = pivot * 2 + 1 + unit * (width || _width);
+    height = pivot * 2 + 1 + unit * (height || _height);
 
     return e(
       "div", {
@@ -174,26 +172,46 @@ export default class Device extends React.Component {
           {
             id: "viewport"
           },
+          // NOTE: Add case.
           hasCase ? e(
-            "g",
-            null,
+            "g", {
+              transform: `translate(${pivot}, ${pivot})`
+            },
             shapes
           ) : null,
-          // NOTE: Add origin cross.
+          // NOTE: Add pivot cross.
           info?.layouts?.[layoutName].layout.map(
-            (layout, i) => i === selectedKey && !isPrint ? e(
-              Cross, {
-                key: i,
-                rx: layout.rx * unit || 0,
-                ry: layout.ry * unit || 0
-              }
+            (layout, i) => i === selectedKey && !isPrint ? e("g", {
+              key: i,
+              transform: `translate(${pivot + (layout.rx * unit || 0)}, ${pivot + (layout.ry * unit || 0)})`
+            },
+              e("circle", {
+                cx: 0,
+                cy: 0,
+                r: 5,
+                fill: "var(--base0)"
+              }),
+              e("rect", {
+                width: 2,
+                height: 18,
+                x: -1,
+                y: -9,
+                fill: "var(--base0)"
+              }),
+              e("rect", {
+                width: 18,
+                height: 2,
+                x: -9,
+                y: -1,
+                fill: "var(--base0)"
+              })
             ) : null
           ),
+          // NOTE: Add keycaps.
           e(
             "g", {
-              transform: "translate(20, 20)" // (5, 5)
+              transform: `translate(${pivot}, ${pivot})`
             },
-            // NOTE: Add keycaps.
             info?.layouts?.[layoutName].layout.map(
               (layout, i) => e(Keycap, {
                 key: i,
@@ -226,15 +244,18 @@ export default class Device extends React.Component {
           // NOTE: Add arrows.
           info?.layouts?.[layoutName].layout.map(
             (layout, i) => i === selectedKey ? e(
-              ForeignObject, {
+              "g", {
                 key: i,
+                transform: `translate(${pivot}, ${pivot})`
+              },
+              e(ForeignObject, {
                 intl,
                 unit,
                 radius,
                 layout,
                 handleClickCallback: this.props.handleClickCallback,
                 handleChangeCallback: this.props.handleChangeCallback
-              }
+              })
             ) : null
           )
         )

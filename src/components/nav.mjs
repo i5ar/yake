@@ -87,8 +87,8 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    const {isDevel, hasApi} = this.props;
-    const opts = isDevel ? ["YAKE", "QMK"] : [];
+    const {hasMenu, hasApi} = this.props;
+    const opts = hasMenu ? ["YAKE", "QMK"] : [];
 
     return e(
       "nav",
@@ -105,7 +105,7 @@ export default class Nav extends React.Component {
             e("span", null, "E")
           )
         ),
-        isDevel ? e(
+        hasMenu ? e(
           "ul",
           {
             style: {
