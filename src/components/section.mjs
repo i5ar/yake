@@ -57,6 +57,31 @@ export default class Section extends React.Component {
     return this.props.selectedKey !== null ? this.keycap?.t || t : t;
   }
 
+  get widthShape() {
+    const {w} = this.props.defaultValues.housing;
+    return this.props.selectedCase !== null ? this.shape.w || w : w;
+  }
+
+  get heightShape() {
+    const {h} = this.props.defaultValues.housing;
+    return this.props.selectedCase !== null ? this.shape.h || h : h;
+  }
+
+  get xShape() {
+    const {x} = this.props.defaultValues.housing;
+    return this.props.selectedCase !== null ? this.shape.x || x : x;
+  }
+
+  get yShape() {
+    const {y} = this.props.defaultValues.housing;
+    return this.props.selectedCase !== null ? this.shape.y || y : y;
+  }
+
+  get pShape() {
+    const {p} = this.props.defaultValues.housing;
+    return this.props.selectedCase !== null ? this.shape.p || p : p;
+  }
+
   componentDidUpdate() {
     tippy("#configure label", {
       placement: "top-end",
@@ -84,9 +109,9 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, intl, layoutName, selectedKey, isLayouts, isHousing, housingName} = this.props;
+    const {info, intl, layoutName, selectedKey, selectedCase, isLayouts, isHousing, housingName} = this.props;
     this.keycap = info.layouts?.[layoutName].layout[selectedKey] || {};
-    this.shape = info.housing?.[housingName].shape[0] || {};
+    this.shape = info.housing?.[housingName].shape[selectedCase] || {};
 
     return e(
       "section", {
@@ -456,7 +481,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-w",
-                  value: this.shape?.w || 1,
+                  value: this.widthShape,
                   onChange: this.handleChange
                 })
               ),
@@ -471,7 +496,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-h",
-                  value: this.shape?.h || 1,
+                  value: this.heightShape,
                   onChange: this.handleChange
                 })
               ),
@@ -486,7 +511,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-x",
-                  value: this.shape?.x || 0,
+                  value: this.xShape,
                   onChange: this.handleChange
                 })
               ),
@@ -501,7 +526,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "number",
                   name: "housing-y",
-                  value: this.shape?.y || 0,
+                  value: this.yShape,
                   onChange: this.handleChange
                 })
               )
@@ -527,7 +552,7 @@ export default class Section extends React.Component {
                 e("input", {
                   type: "text",
                   name: "housing-p",
-                  value: this.shape?.p || "",
+                  value: this.pShape,
                   onChange: this.handleChange
                 })
               )

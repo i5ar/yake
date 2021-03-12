@@ -21,6 +21,7 @@ class Root extends React.Component {
     this.state = {
       hasMenu: true,  // when `false` hides the list from the nav.
       hasApi: false,  // when `true` starts with QMK keyboards.
+      hasEditor: false,
       keyboardNames: [],
       info: {},
       keyboardName: "",
@@ -31,10 +32,11 @@ class Root extends React.Component {
       hasProfile: true,
       hasCase: true,
       selectedKey: null,
+      selectedCase: null,
       fallbackKey: null,
       defaultValues: {
         unit: 54,
-        pivot: 20,  // pivot `x` and `y` 20px
+        pivot: 20,  // x, y = 20px
         radius: 5,
         layouts: {
           label: "",
@@ -49,10 +51,12 @@ class Root extends React.Component {
           t: "#d33682"
         },
         housing: {
-          w: "",
-          h: "",
-          c: "#93a1a1",
-          t: ""
+          w: 1,
+          h: 1,
+          x: 0,
+          y: 0,
+          p: [],
+          c: "#93a1a1"
         }
       },
       housingName: ""
@@ -905,6 +909,7 @@ class Root extends React.Component {
     const {
       hasMenu,
       hasApi,
+      hasEditor,
       keyboardNames,
       info,
       layoutName,
@@ -916,6 +921,7 @@ class Root extends React.Component {
       hasProfile,
       hasCase,
       selectedKey,
+      selectedCase,
       defaultValues
     } = this.state;
     const {intl} = this.props;
@@ -996,6 +1002,7 @@ class Root extends React.Component {
                 layoutName,
                 housingName,
                 selectedKey,
+                selectedCase,
                 defaultValues,
                 handleClickCallback: this.handleClickCallback,
                 handleChangeCallback: this.handleChangeCallback
@@ -1013,6 +1020,7 @@ class Root extends React.Component {
                 hasProfile,
                 hasCase,
                 selectedKey,
+                selectedCase,
                 defaultValues,
                 handleClickCallback: this.handleClickCallback,
                 handleChangeCallback: this.handleChangeCallback,
@@ -1020,11 +1028,11 @@ class Root extends React.Component {
               })
             }),
           ),
-          e(Editor, {
+          hasEditor ? e(Editor, {
             info,
             selectedKey,
             handleAceCallback: this.handleAceCallback
-          }),
+          }) : null,
           e(Footer)
         )
       )

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import Keycap from "./keycap.mjs";
-import ForeignObject from "./foreignObject.mjs";
+import ForeignObjects from "./foreignObjects.mjs";
 import {
   getSize
 } from "../common/size.mjs";
@@ -23,6 +23,7 @@ export default class Device extends React.Component {
     const {
       intl,
       info,
+      selectedCase,
       selectedKey,
       layoutName,
       isPrint,
@@ -132,8 +133,8 @@ export default class Device extends React.Component {
         });
         if (shape.w && shape.h) return e("rect", {
           key: i,
-          x: shape.x * unit + pivot || pivot,
-          y: shape.y * unit + pivot || pivot,
+          x: shape.x * unit || 0,
+          y: shape.y * unit || 0,
           width: shape.w * unit,
           height: shape.h * unit,
           fill: isPrint ? "url(#DIAGONALS)" : color,
@@ -248,7 +249,7 @@ export default class Device extends React.Component {
                 key: i,
                 transform: `translate(${pivot}, ${pivot})`
               },
-              e(ForeignObject, {
+              e(ForeignObjects, {
                 intl,
                 unit,
                 radius,

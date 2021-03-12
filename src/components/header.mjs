@@ -40,7 +40,7 @@ export default class Button extends React.Component {
 
   render() {
     const {isLayouts, isHousing} = this.state;
-    const {info, intl, layoutName, selectedKey, defaultValues, housingName} = this.props;
+    const {info, intl, layoutName, selectedKey, selectedCase, defaultValues, housingName} = this.props;
     const style = {
       backgroundColor: "var(--orange)"
     };
@@ -84,6 +84,7 @@ export default class Button extends React.Component {
         layoutName,
         housingName,
         selectedKey,
+        selectedCase,
         defaultValues,
         handleClickCallback: this.props.handleClickCallback,
         handleChangeCallback: this.props.handleChangeCallback

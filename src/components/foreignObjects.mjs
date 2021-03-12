@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-export default class ForeignObject extends React.Component {
+export default class ForeignObjects extends React.Component {
   constructor() {
     super();
     this.state = {

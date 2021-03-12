@@ -5,7 +5,7 @@
 @import "./components/header.css";
 @import "./components/section.css";
 @import "./components/keycap.css";
-@import "./components/foreignObject.css";
+@import "./components/foreignObjects.css";
 
 :root {
     --cursive: "Righteous", cursive;
