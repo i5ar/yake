@@ -3,6 +3,10 @@
 export default class Section extends React.Component {
   constructor() {
     super();
+    this.state = {
+      isLayouts: true,
+      isHousing: false
+    };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -101,7 +105,28 @@ export default class Section extends React.Component {
   }
 
   handleClick(evt) {
-    this.props.handleClickCallback(evt);
+    const {name} = evt.target;
+    if (name === "isLayouts" || name === "isHousing") {
+      this.setState(s => {
+        const stateKeys = Object.keys(s);
+        const index = stateKeys.indexOf(name);
+        if (index !== -1) stateKeys.splice(index, 1);
+        return stateKeys.map(
+          key => ({
+            [key]: false
+          })).reduce(
+          (acc, cur) => ({
+            ...acc,
+            [Object.keys(cur)]: cur[Object.keys(cur)]
+          }),
+          {
+            [name]: !s[name]
+          }
+        );
+      });
+    } else {
+      this.props.handleClickCallback(evt);
+    }
   }
 
   handleChange(evt) {
@@ -109,12 +134,55 @@ export default class Section extends React.Component {
   }
 
   render() {
-    const {info, intl, layoutName, selectedKey, selectedCase, isLayouts, isHousing, housingName} = this.props;
+    const {info, intl, layoutName, selectedKey, selectedCase, housingName} = this.props;
+    const {isLayouts, isHousing} = this.state;
     this.keycap = info.layouts?.[layoutName].layout[selectedKey] || {};
     this.shape = info.housing?.[housingName].shape[selectedCase] || {};
 
-    return e(
-      "section", {
+    const buttonStyle = {
+      backgroundColor: "var(--orange)",
+      width: "100%",
+      borderRadius: 0
+    };
+    const liStyle = {
+      flexGrow: 1
+    };
+    return e(Fragment, null,
+      e(
+        "ul", {
+          className: "mode",
+          style: {
+            display: "flex",
+            flexDirection: "row",
+            listStyleType: "none",
+            margin: 0,
+            padding: 0
+          }
+        },
+        e("li", {
+          style: liStyle
+        },
+          e(
+            "button", {
+              style: buttonStyle,
+              type: "button",
+              name: "isLayouts",
+              className: isLayouts ? "pure-button pure-button-active" : "pure-button",
+              onClick: this.handleClick
+            }, "Layouts",
+          )), e("li", {
+            style: liStyle
+          },
+          e("button", {
+            style: buttonStyle,
+            type: "button",
+            name: "isHousing",
+            className: isHousing ? "pure-button pure-button-active" : "pure-button",
+            onClick: this.handleClick
+          }, "Housing")
+        )
+      ),
+      e("section", {
         className: "section",
         style: {
           display: isLayouts || isHousing ? "inherit" : "none"
@@ -562,6 +630,6 @@ export default class Section extends React.Component {
         )
       )
 
-    );
+    ));
   }
 }
