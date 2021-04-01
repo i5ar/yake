@@ -77,6 +77,7 @@ export default class Form extends React.Component {
       })) : null,
       action === "create" ? e(
         "form", {
+          id: "create",
           className: "form pure-form",
           onSubmit: this.handleSubmit
         },
@@ -99,7 +100,6 @@ export default class Form extends React.Component {
             onChange: this.handleChange
           }), e("input", {
             style: {
-              borderRadius: "var(--radius)",
               borderTopLeftRadius: 0,
               borderBottomLeftRadius: 0
             },

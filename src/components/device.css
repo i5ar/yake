@@ -1,8 +1,3 @@
-.device {
-    overflow-x: auto;
-    padding: 0.5em 0;
-}
-
 .device svg {
     display: block;
     margin: auto;

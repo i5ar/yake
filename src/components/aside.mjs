@@ -56,7 +56,7 @@ export default class Aside extends React.Component {
         }
       });
     }
-  
+
     handleClick(evt) {
       const {hasPolicy, hasAbout} = this.state;
       const {id} = evt.target;
@@ -64,7 +64,7 @@ export default class Aside extends React.Component {
         evt.preventDefault();
         const element = document.createElement("a");
         element.setAttribute(
-          "href", "data:text/plain;charset=utf-8," + encodeURIComponent(this.props.deviceHtml.innerHTML));
+          "href", "data:text/plain;charset=utf-8," + encodeURIComponent(this.props.svgHtml.outerHTML));
         element.setAttribute("download", "keyboard.svg");
         element.style.display = "none";
         document.body.appendChild(element);

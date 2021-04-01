@@ -25,6 +25,7 @@ class Root extends React.Component {
       info: {},
       keyboardName: "",
       layoutName: "",
+      step: 0,  // design: 0, assign: 1
       isInitial: true,
       isCustom: false,
       isPrint: false,
@@ -215,8 +216,9 @@ class Root extends React.Component {
   }
 
   handleSubmitCallback(evt) {
-    const {name, value} = evt.target.querySelector("input[name=create]");
-    if (name === "create") {
+    const {id} = evt.target;
+    if (id === "create") {
+      const {value} = evt.target.querySelector("input[name=create]");
       this.setState(s => {
         return {
           layoutName: value,
@@ -229,6 +231,12 @@ class Root extends React.Component {
           }
         }
       });
+    } else if (id === "add") {
+      // TODO:
+
+    } else if (id === "remove") {
+      // TODO: 
+
     }
   }
 
@@ -936,7 +944,6 @@ class Root extends React.Component {
           hasProfile,
           hasCase,
           handleClickCallback: this.handleClickCallback,
-          deviceHtml: this.deviceElement,
           handleChangeCallback: this.handleChangeCallback
         }),
         e(
@@ -986,7 +993,7 @@ class Root extends React.Component {
             path: `/${keyboardName}`,
             children: match => e(Device, {
               ...match,
-              deviceRef: elm => this.deviceElement = elm,
+              deviceRef: elm => this.svgElement = elm,
               info,
               intl,
               layoutName,
@@ -999,6 +1006,7 @@ class Root extends React.Component {
               defaultValues,
               handleClickCallback: this.handleClickCallback,
               handleChangeCallback: this.handleChangeCallback,
+              handleSubmitCallback: this.handleSubmitCallback,
               handleKeyDownCallback: this.handleKeyDownCallback
             })
           }),
@@ -1015,7 +1023,7 @@ class Root extends React.Component {
           hasProfile,
           hasCase,
           handleClickCallback: this.handleClickCallback,
-          deviceHtml: this.deviceElement,
+          svgHtml: this.svgElement,
           handleChangeCallback: this.handleChangeCallback
         }),
         e(Footer)

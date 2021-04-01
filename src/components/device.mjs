@@ -15,6 +15,12 @@ export default class Device extends React.Component {
       isAssign: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.props.handleSubmitCallback(evt);
   }
 
   handleClick(evt) {
@@ -182,7 +188,7 @@ export default class Device extends React.Component {
       flexGrow: 1
     };
     const buttonStyle = {
-      backgroundColor: "var(--orange)",
+      backgroundColor: "var(--blue)",
       width: "100%",
       borderRadius: 0
     };
@@ -217,125 +223,180 @@ export default class Device extends React.Component {
           }, "Assign")
         )
       ),
-      e(
-      "div", {
-        className: "device",
-        ref: this.props.deviceRef
-      },
-      e(
-        "svg", {
-          xmlns: "http://www.w3.org/2000/svg",
-          width,
-          height,
-          viewBox: `0 0 ${width} ${height}`,
-          onClick: this.handleClick
-        },
-        defs,
-        e(
-          "g",
-          {
-            id: "viewport"
+      e("article", null,
+          e("form", {
+            id: "remove",
+            className: "form pure-form",
+            style: {margin: 0},
+            onSubmit: this.handleSubmit
           },
-          // NOTE: Add case.
-          hasCase ? e(
-            "g", {
-              transform: `translate(${pivot}, ${pivot})`
+          e("fieldset", null,
+            e("select", {
+              style: {borderRadius: 0}
             },
-            shapes
-          ) : null,
-          // NOTE: Add pivot cross.
-          info?.layouts?.[layoutName].layout.map(
-            (layout, i) => i === selectedKey && !isPrint ? e("g", {
-              key: i,
-              transform: `translate(${pivot + (layout.rx * unit || 0)}, ${pivot + (layout.ry * unit || 0)})`
-            },
-              e("circle", {
-                cx: 0,
-                cy: 0,
-                r: 5,
-                fill: "var(--base0)"
-              }),
-              e("rect", {
-                width: 2,
-                height: 18,
-                x: -1,
-                y: -9,
-                fill: "var(--base0)"
-              }),
-              e("rect", {
-                width: 18,
-                height: 2,
-                x: -9,
-                y: -1,
-                fill: "var(--base0)"
-              })
-            ) : null
-          ),
-          // NOTE: Add keycaps.
+              e("option", null, "keycap")
+            ),
+            e("input", {
+              className: "pure-button",
+              style: {
+                borderRadius: 0,
+                backgroundColor: "var(--red)",
+                flexGrow: 1
+              },
+              type: "submit",
+              name: "remove",
+              value: "remove"
+            })
+          )
+        ),
+        e(
+        "div", {
+          className: "device",
+          style: {
+            overflowX: "auto",
+            padding: "0.5em 0"
+          }
+        },
+        e(
+          "svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            width,
+            height,
+            viewBox: `0 0 ${width} ${height}`,
+            onClick: this.handleClick,
+            ref: this.props.deviceRef
+          },
+          defs,
           e(
-            "g", {
-              transform: `translate(${pivot}, ${pivot})`
+            "g",
+            {
+              id: "viewport"
             },
-            info?.layouts?.[layoutName].layout.map(
-              (layout, i) => e(Keycap, {
-                key: i,
-                index: i,
-                unit,
-                radius,
-                layouts,
-                x: unit * layout.x || 0,
-                y: unit * layout.y || 0,
-                w: layout.w,
-                h: layout.h,
-                ks: layout.ks,
-                p: layout.p,
-                c: layout.c,
-                t: layout.t,
-                r: layout.r || 0,
-                rx: unit * layout.rx || 0,
-                ry: unit * layout.ry || 0,
-                label: layout.label,
-                code: "KC_NO",
-                keys: [],
-                selectedKey,
-                isPrint,
-                hasProfile,
-                handleClickCallback: this.props.handleClickCallback,
-                handleKeyDownCallback: this.props.handleKeyDownCallback
-              })
-            )
-          ),
-          // NOTE: Add arrows.
-          info?.layouts?.[layoutName].layout.map(
-            (layout, i) => i === selectedKey ? e(
+            // NOTE: Add case.
+            hasCase ? e(
               "g", {
-                key: i,
                 transform: `translate(${pivot}, ${pivot})`
               },
-              e(ForeignObjects, {
-                intl,
-                unit,
-                radius,
-                layout,
-                handleClickCallback: this.props.handleClickCallback,
-                handleChangeCallback: this.props.handleChangeCallback
-              })
-            ) : null
+              shapes
+            ) : null,
+            // NOTE: Add pivot cross.
+            info?.layouts?.[layoutName].layout.map(
+              (layout, i) => i === selectedKey && !isPrint ? e("g", {
+                key: i,
+                transform: `translate(${pivot + (layout.rx * unit || 0)}, ${pivot + (layout.ry * unit || 0)})`
+              },
+                e("circle", {
+                  cx: 0,
+                  cy: 0,
+                  r: 5,
+                  fill: "var(--base0)"
+                }),
+                e("rect", {
+                  width: 2,
+                  height: 18,
+                  x: -1,
+                  y: -9,
+                  fill: "var(--base0)"
+                }),
+                e("rect", {
+                  width: 18,
+                  height: 2,
+                  x: -9,
+                  y: -1,
+                  fill: "var(--base0)"
+                })
+              ) : null
+            ),
+            // NOTE: Add keycaps.
+            e(
+              "g", {
+                transform: `translate(${pivot}, ${pivot})`
+              },
+              info?.layouts?.[layoutName].layout.map(
+                (layout, i) => e(Keycap, {
+                  key: i,
+                  index: i,
+                  unit,
+                  radius,
+                  layouts,
+                  x: unit * layout.x || 0,
+                  y: unit * layout.y || 0,
+                  w: layout.w,
+                  h: layout.h,
+                  ks: layout.ks,
+                  p: layout.p,
+                  c: layout.c,
+                  t: layout.t,
+                  r: layout.r || 0,
+                  rx: unit * layout.rx || 0,
+                  ry: unit * layout.ry || 0,
+                  label: layout.label,
+                  code: "KC_NO",
+                  keys: [],
+                  selectedKey,
+                  isPrint,
+                  hasProfile,
+                  handleClickCallback: this.props.handleClickCallback,
+                  handleKeyDownCallback: this.props.handleKeyDownCallback
+                })
+              )
+            ),
+            // NOTE: Add arrows.
+            info?.layouts?.[layoutName].layout.map(
+              (layout, i) => i === selectedKey ? e(
+                "g", {
+                  key: i,
+                  transform: `translate(${pivot}, ${pivot})`
+                },
+                e(ForeignObjects, {
+                  intl,
+                  unit,
+                  radius,
+                  layout,
+                  handleClickCallback: this.props.handleClickCallback,
+                  handleChangeCallback: this.props.handleChangeCallback
+                })
+              ) : null
+            )
           )
         )
+      ),
+      e("form", {
+        id: "add",
+        className: "form pure-form",
+        style: {margin: 0},
+        onSubmit: this.handleSubmit
+      },
+      e("fieldset", null,
+        e("select", {
+          style: {borderRadius: 0}
+        },
+          e("option", null, "keycap"),
+          e("option", null, "case"),
+        ),
+        e("input", {
+          type: "submit",
+          style: {
+            borderRadius: 0,
+            backgroundColor: "var(--green)",
+            flexGrow: 1
+          },
+          className: "pure-button",
+          name: "add",
+          value: "add"
+      }))),
+      e(Header, {
+        info,
+        intl,
+        layoutName,
+        housingName,
+        selectedKey,
+        selectedCase,
+        defaultValues,
+        handleClickCallback: this.props.handleClickCallback,
+        handleChangeCallback: this.props.handleChangeCallback
+      })
       )
-    ),
-    e(Header, {
-      info,
-      intl,
-      layoutName,
-      housingName,
-      selectedKey,
-      selectedCase,
-      defaultValues,
-      handleClickCallback: this.props.handleClickCallback,
-      handleChangeCallback: this.props.handleChangeCallback
-    })
     );
   }
 }
