@@ -2,7 +2,7 @@
 
 import Section from "./section.mjs";
 
-export default class Button extends React.Component {
+export default class Header extends React.Component {
   constructor() {
     super();
     this.state = {
