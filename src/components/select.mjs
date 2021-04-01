@@ -5,7 +5,7 @@ import {
   fetchKeyboard
 } from "../common/service.mjs";
 
-export default class Dropdown extends React.Component {
+export default class Select extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -36,7 +36,7 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
-    const {options, name, value, isCustom, selectRef} = this.props;
+    const {options, name, value, isCustom, selectRef, borders} = this.props;
     const option = options ? options.map(
       (value, i) => e("option", {
         key: i,
@@ -50,8 +50,10 @@ export default class Dropdown extends React.Component {
 
     return e("select", {
       style: {
-        borderTopRightRadius: name === "layout" ? 0 : null,
-        borderBottomRightRadius: name === "layout" ? 0 : null
+        borderTopLeftRadius: borders?.[0] ? 0 : null,
+        borderTopRightRadius: borders?.[1] ? 0 : null,
+        borderBottomRightRadius: borders?.[2] ? 0 : null,
+        borderBottomLeftRadius: borders?.[3] ? 0 : null
       },
       className: "dropdown",
       ref: selectRef,

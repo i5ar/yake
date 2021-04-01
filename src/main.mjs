@@ -1,4 +1,3 @@
-import Dropdown from "./components/dropdown.mjs";
 import Device from "./components/device.mjs";
 import Form from "./components/form.mjs";
 import Nav from "./components/nav.mjs";

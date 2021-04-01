@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import Dropdown from "./dropdown.mjs";
+import Select from "./select.mjs";
 
 export default class Form extends React.Component {
   constructor() {
@@ -60,9 +60,11 @@ export default class Form extends React.Component {
         onChange: this.handleChange,
         onClick: this.handleClick
       })) : null,
-      action === "keyboard" ? e("div", {
-        className: "form pure-form",
-      }, e(r(Dropdown), {
+      action === "keyboard" ? e(
+        "div", {
+          className: "form pure-form",
+        },
+        e(r(Select), {
         selectRef,
         name: "keyboard",
         value: keyboardName,
@@ -79,9 +81,10 @@ export default class Form extends React.Component {
           onSubmit: this.handleSubmit
         },
         e("fieldset", null,
-          e(Dropdown, {
+          e(Select, {
             name: "layout",
             value: layoutName,
+            borders: [false, true, true, false],
             options: info && info.layouts && Object.keys(
               info.layouts).length ? Object.keys(
                 info.layouts) : null,
