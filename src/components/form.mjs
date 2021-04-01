@@ -44,65 +44,69 @@ export default class Form extends React.Component {
       info,
       handleChangeCallback,
       handleHashCallback,
-      formRef,
+      // formRef,
       action,
       layoutName
     } = this.props;
-    return e(
-      "form", {
-        className: "form pure-form",
-        ref: formRef,
-        onSubmit: this.handleSubmit
-      },
-      action === "info" ? e("input", {
+    return e(Fragment, null,
+      action === "info" ? e("div", {
+        // ref: formRef,
+        className: "form pure-form"
+      }, e("input", {
         className: "pure-button",
         type: "file",
         name: action,
         accept: ".json",
         onChange: this.handleChange,
         onClick: this.handleClick
-      }) : null,
-      action === "create" ? e("fieldset", null,
-        e(Dropdown, {
-          name: "layout",
-          value: layoutName,
-          options: info && info.layouts && Object.keys(
-            info.layouts).length ? Object.keys(
-              info.layouts) : null,
-            handleChangeCallback
-        }),
-        e("input", {
-          style: {
-            borderRadius: "var(--radius)",
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0
-          },
-          name: action,
-          type: "text",
-          onChange: this.handleChange
-        }), e("input", {
-          style: {
-            borderRadius: "var(--radius)",
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0
-          },
-          className: "pure-button",
-          type: "submit",
-          value: "Create",
-          // name: "create",
-          // onClick: this.handleSubmitClick
-        })) : null,
-        action === "keyboard" ? e(r(Dropdown), {
-          selectRef,
-          name: "keyboard",
-          value: keyboardName,
-          options: keyboardNames?.length ? keyboardNames : null,
-          handleChangeCallback,
-          hasApi,
-          isInitial,
-          isCustom,
-          onHashCallback: handleHashCallback,
-        }) : null
+      })) : null,
+      action === "keyboard" ? e("div", {
+        className: "form pure-form",
+      }, e(r(Dropdown), {
+        selectRef,
+        name: "keyboard",
+        value: keyboardName,
+        options: keyboardNames?.length ? keyboardNames : null,
+        handleChangeCallback,
+        hasApi,
+        isInitial,
+        isCustom,
+        onHashCallback: handleHashCallback,
+      })) : null,
+      action === "create" ? e(
+        "form", {
+          className: "form pure-form",
+          onSubmit: this.handleSubmit
+        },
+        e("fieldset", null,
+          e(Dropdown, {
+            name: "layout",
+            value: layoutName,
+            options: info && info.layouts && Object.keys(
+              info.layouts).length ? Object.keys(
+                info.layouts) : null,
+              handleChangeCallback
+          }),
+          e("input", {
+            style: {
+              borderRadius: 0
+            },
+            name: action,
+            type: "text",
+            onChange: this.handleChange
+          }), e("input", {
+            style: {
+              borderRadius: "var(--radius)",
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0
+            },
+            className: "pure-button",
+            type: "submit",
+            value: "Create",
+            // name: "create",
+            // onClick: this.handleSubmitClick
+          }))
+        ) : null
     );
   }
 }

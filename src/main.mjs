@@ -69,7 +69,7 @@ class Root extends React.Component {
 
     this.deviceInput = null;
     this.selectElement = null;
-    this.formElement = null;
+    // this.formElement = null;
 
     this.handleHashCallback = this.handleHashCallback.bind(this);
     this.handleChangeCallback = this.handleChangeCallback.bind(this);
@@ -311,7 +311,7 @@ class Root extends React.Component {
             isCustom: false
           }));
           if (this.selectElement) this.selectElement.focus();
-          if (this.formElement) this.formElement.reset();
+          // if (this.formElement) this.formElement.reset();
         });
       } else if (name === "layout") {
         const {info} = this.state;
@@ -961,12 +961,12 @@ class Root extends React.Component {
             },
             e(Form, {
               action: "info",
-              formRef: elm => this.formElement = elm,
+              // formRef: elm => this.formElement = elm,
               handleChangeCallback: this.handleChangeCallback
             }),
             e(Form, {
-              selectRef: elm => this.selectElement = elm,
               action: "keyboard",
+              selectRef: elm => this.selectElement = elm,
               hasApi,
               isInitial,
               isCustom,
