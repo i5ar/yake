@@ -4,7 +4,7 @@ import Form from "./components/form.mjs";
 import Nav from "./components/nav.mjs";
 import Footer from "./components/footer.mjs";
 import Editor from "./components/editor.mjs";
-import Header from "./components/header.mjs";
+import Aside from "./components/aside.mjs";
 import {
   fetchKeyboard,
   fetchKeyboards
@@ -21,7 +21,7 @@ class Root extends React.Component {
     this.state = {
       hasMenu: true,  // when `false` hides the list from the nav.
       hasApi: false,  // when `true` starts with QMK keyboards.
-      hasEditor: false,
+      hasEditor: true,
       keyboardNames: [],
       info: {},
       keyboardName: "",
@@ -950,91 +950,81 @@ class Root extends React.Component {
             }
           },
           e(
-            "div", null,
-            e(
-              "div",
-              {
-                style: {
-                  display: "flex",
-                  flexWrap: "wrap",
-                  padding: "0.5em 0 0 0",
-                  justifyContent: "center"
-                }
-              },
-              e(r(Dropdown), {
-                selectRef: elm => this.selectElement = elm,
-                name: "keyboard",
-                value: keyboardName,
-                options: keyboardNames?.length ? keyboardNames : null,
-                handleChangeCallback: this.handleChangeCallback,
-                hasApi,
-                isInitial,
-                isCustom,
-                onHashCallback: this.handleHashCallback
-              }),
-              e(Dropdown, {
-                name: "layout",
-                value: layoutName,
-                options: info && info.layouts && Object.keys(
-                  info.layouts).length ? Object.keys(
-                    info.layouts) : null,
-                  handleChangeCallback: this.handleChangeCallback
-              }),
-              e(Form, {
-                action: "info",
-                formRef: elm => this.formElement = elm,
+            "section",
+            {
+              style: {
+                display: "flex",
+                flexWrap: "wrap",
+                padding: "0.5em 0 0 0",
+                justifyContent: "center"
+              }
+            },
+            e(r(Dropdown), {
+              selectRef: elm => this.selectElement = elm,
+              name: "keyboard",
+              value: keyboardName,
+              options: keyboardNames?.length ? keyboardNames : null,
+              handleChangeCallback: this.handleChangeCallback,
+              hasApi,
+              isInitial,
+              isCustom,
+              onHashCallback: this.handleHashCallback
+            }),
+            e(Dropdown, {
+              name: "layout",
+              value: layoutName,
+              options: info && info.layouts && Object.keys(
+                info.layouts).length ? Object.keys(
+                  info.layouts) : null,
                 handleChangeCallback: this.handleChangeCallback
-              }),
-              e(Form, {
-                action: "create",
-                handleSubmitCallback: this.handleSubmitCallback
-              }),
-            ),
-            e("div",
-              {
-                style: {
-                  padding: "0 0 0.5em 0"
-                }
-              },
-              e(Header, {
-                info,
-                intl,
-                layoutName,
-                housingName,
-                selectedKey,
-                selectedCase,
-                defaultValues,
-                handleClickCallback: this.handleClickCallback,
-                handleChangeCallback: this.handleChangeCallback
-              }),
-            ),
-            e(Route, {
-              path: `/${keyboardName}`,
-              children: match => e(Device, {
-                ...match,
-                deviceRef: elm => this.deviceElement = elm,
-                info,
-                intl,
-                layoutName,
-                isPrint,
-                hasProfile,
-                hasCase,
-                selectedKey,
-                selectedCase,
-                defaultValues,
-                handleClickCallback: this.handleClickCallback,
-                handleChangeCallback: this.handleChangeCallback,
-                handleKeyDownCallback: this.handleKeyDownCallback
-              })
+            }),
+            e(Form, {
+              action: "info",
+              formRef: elm => this.formElement = elm,
+              handleChangeCallback: this.handleChangeCallback
+            }),
+            e(Form, {
+              action: "create",
+              handleSubmitCallback: this.handleSubmitCallback
             }),
           ),
+          e(Route, {
+            path: `/${keyboardName}`,
+            children: match => e(Device, {
+              ...match,
+              deviceRef: elm => this.deviceElement = elm,
+              info,
+              intl,
+              layoutName,
+              housingName,
+              isPrint,
+              hasProfile,
+              hasCase,
+              selectedKey,
+              selectedCase,
+              defaultValues,
+              handleClickCallback: this.handleClickCallback,
+              handleChangeCallback: this.handleChangeCallback,
+              handleKeyDownCallback: this.handleKeyDownCallback
+            })
+          }),
           hasEditor ? e(Editor, {
             info,
             selectedKey,
             handleAceCallback: this.handleAceCallback
-          }) : null,
-          e(Footer)
-        )
+          }) : null),
+        e(Aside, {
+          intl,
+          hasMenu,
+          hasApi,
+          isPrint,
+          hasProfile,
+          hasCase,
+          handleClickCallback: this.handleClickCallback,
+          deviceHtml: this.deviceElement,
+          handleChangeCallback: this.handleChangeCallback
+        }),
+        e(Footer)
       )
     );
   }

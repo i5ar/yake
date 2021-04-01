@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import Header from "./header.mjs";
+
 import Keycap from "./keycap.mjs";
 import ForeignObjects from "./foreignObjects.mjs";
 import {
@@ -26,6 +28,8 @@ export default class Device extends React.Component {
       selectedCase,
       selectedKey,
       layoutName,
+      housingName,
+      defaultValues,
       isPrint,
       hasProfile,
       hasCase
@@ -117,7 +121,7 @@ export default class Device extends React.Component {
     );
 
     // NOTE: Case.
-    const {unit, pivot, radius, housing, layouts} = this.props.defaultValues;
+    const {unit, pivot, radius, housing, layouts} = defaultValues;
     const shape_ = info?.housing ? Object.keys(info.housing)[0] : null;
     const shapes = shape_ ? info.housing[shape_]?.shape.map(
       (shape, i) => {
@@ -155,10 +159,16 @@ export default class Device extends React.Component {
     height = pivot * 2 + 1 + unit * (height || _height);
 
     return e(
+      "section", {},
+      e(
       "div", {
         className: "device",
         ref: this.props.deviceRef
       },
+
+
+
+
       e(
         "svg", {
           xmlns: "http://www.w3.org/2000/svg",
@@ -261,6 +271,18 @@ export default class Device extends React.Component {
           )
         )
       )
+    ),
+    e(Header, {
+      info,
+      intl,
+      layoutName,
+      housingName,
+      selectedKey,
+      selectedCase,
+      defaultValues,
+      handleClickCallback: this.props.handleClickCallback,
+      handleChangeCallback: this.props.handleChangeCallback
+    })
     );
   }
 }

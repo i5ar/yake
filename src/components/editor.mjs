@@ -37,7 +37,7 @@ export default class Editor extends React.Component {
 
   render() {
     return e(
-      "div", {
+      "section", {
         style: {
           flexGrow: 1
         }

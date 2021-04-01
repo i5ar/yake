@@ -48,33 +48,29 @@ export default class Header extends React.Component {
     return e(
       "header", {
         style: {
-          margin: "0.5em 0"
+          // margin: "0.5em 0"
         }
       },
       e(
-        "div", {
-          style: {
-            margin: "auto",
-            display: "block",
-            textAlign: "center"
-          }
-        },
-        e(
-          "button", {
+        "ul", null,
+        e("li", null,
+          e(
+            "button", {
+              style,
+              type: "button",
+              name: "isLayouts",
+              className: isLayouts ? "pure-button pure-button-active" : "pure-button",
+              onClick: this.handleClick
+            }, "Layouts",
+          )), e("li", null,
+          e("button", {
             style,
             type: "button",
-            name: "isLayouts",
-            className: isLayouts ? "pure-button pure-button-active" : "pure-button",
+            name: "isHousing",
+            className: isHousing ? "pure-button pure-button-active" : "pure-button",
             onClick: this.handleClick
-          }, "Layouts",
-        ),
-        e("button", {
-          style,
-          type: "button",
-          name: "isHousing",
-          className: isHousing ? "pure-button pure-button-active" : "pure-button",
-          onClick: this.handleClick
-        }, "Housing"),
+          }, "Housing")
+        )
       ),
       e(Section, {
         isLayouts,

@@ -5,6 +5,7 @@
 @import "./components/header.css";
 @import "./components/section.css";
 @import "./components/keycap.css";
+@import "./components/aside.css";
 @import "./components/foreignObjects.css";
 
 :root {
@@ -44,14 +45,37 @@ body {
 /* NOTE: Flexbox. */
 
 #root {
-    display: flex;
-    flex-direction: column;
+    min-height: 100%;  /* sticky footer */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;  /* sticky footer */
+    grid-template-areas:
+        "n"
+        "m"
+        "a"
+        "f";
 }
+
+  nav {
+    grid-area: n;
+  }
+  main {
+    grid-area: m;
+  }
+  aside {
+    grid-area: a;
+  }
+  footer {
+    grid-area: f;
+  }
 
 @media only screen and (min-width: 768px) {
     #root {
-        flex-direction: row;
-        height: inherit;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: 1fr auto;  /* sticky footer */
+        grid-template-areas:
+          "n m a"
+          "f f f";
     }
 }
 

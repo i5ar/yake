@@ -1,0 +1,29 @@
+aside {
+    background-color: var(--base02);
+    color: var(--base2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+aside .display {
+    margin: 1em;
+    width: auto;
+    color: var(--base2);
+}
+aside .display input {
+    margin: 0 1em 0 0;
+}
+aside .display label {
+    display: block;
+}
+aside .download {
+    margin: 1em;
+    flex-grow: 1;
+}
+aside .download button {
+    color: var(--base02);
+    width: 100%;
+}
+aside .more {
+    margin: 1em;
+}
