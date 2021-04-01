@@ -5,11 +5,6 @@ import Section from "./section.mjs";
 export default class Header extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isLayouts: true,
-      isHousing: false
-    };
-
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -39,39 +34,20 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const {isLayouts, isHousing} = this.state;
-    const {info, intl, layoutName, selectedKey, selectedCase, defaultValues, housingName} = this.props;
-    const style = {
-      backgroundColor: "var(--orange)"
-    };
+    const {
+      info,
+      intl,
+      isLayouts,
+      isHousing,
+      layoutName,
+      selectedKey,
+      selectedCase,
+      defaultValues,
+      housingName
+    } = this.props;
 
     return e(
-      "header", {
-        style: {
-          // margin: "0.5em 0"
-        }
-      },
-      e(
-        "ul", null,
-        e("li", null,
-          e(
-            "button", {
-              style,
-              type: "button",
-              name: "isLayouts",
-              className: isLayouts ? "pure-button pure-button-active" : "pure-button",
-              onClick: this.handleClick
-            }, "Layouts",
-          )), e("li", null,
-          e("button", {
-            style,
-            type: "button",
-            name: "isHousing",
-            className: isHousing ? "pure-button pure-button-active" : "pure-button",
-            onClick: this.handleClick
-          }, "Housing")
-        )
-      ),
+      "header", null,
       e(Section, {
         isLayouts,
         isHousing,

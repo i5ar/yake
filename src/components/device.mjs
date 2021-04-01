@@ -10,15 +10,40 @@ import {
 export default class Device extends React.Component {
   constructor() {
     super();
+    this.state = {
+      isLayouts: true,
+      isHousing: false
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(evt) {
-    const {unit} = this.props.defaultValues;
-    const client = evt.target.getBoundingClientRect();
-    const x = evt.clientX - client.left;
-    const y = evt.clientY - client.top;
-    console.info(x / unit, y / unit);
+    const {name} = evt.target;
+    if (name === "isLayouts" || name === "isHousing") {
+      this.setState(s => {
+        const _keys = Object.keys(s);
+        const index = _keys.indexOf(name);
+        if (index !== -1) _keys.splice(index, 1);
+        return _keys.map(
+          key => ({
+            [key]: false
+          })).reduce(
+          (acc, cur) => ({
+            ...acc,
+            [Object.keys(cur)]: cur[Object.keys(cur)]
+          }),
+          {
+            [name]: !s[name]
+          }
+        );
+      });
+    } else {
+      const {unit} = this.props.defaultValues;
+      const client = evt.target.getBoundingClientRect();
+      const x = evt.clientX - client.left;
+      const y = evt.clientY - client.top;
+      console.info(x / unit, y / unit);
+    }
   }
 
   render() {
@@ -158,17 +183,56 @@ export default class Device extends React.Component {
     width = pivot * 2 + 1 + unit * (width || _width);
     height = pivot * 2 + 1 + unit * (height || _height);
 
+    const {isLayouts, isHousing} = this.state;
+    const buttonStyle = {
+      backgroundColor: "var(--orange)",
+      width: "100%",
+      borderRadius: 0
+    };
+    const liStyle = {
+      flexGrow: 1
+    };
     return e(
       "section", {},
+      e(
+        "ul", {
+          className: "mode",
+          style: {
+            display: "flex",
+            flexDirection: "row",
+            listStyleType: "none",
+            margin: 0,
+            padding: 0
+          }
+        },
+        e("li", {
+          style: liStyle
+        },
+          e(
+            "button", {
+              style: buttonStyle,
+              type: "button",
+              name: "isLayouts",
+              className: isLayouts ? "pure-button pure-button-active" : "pure-button",
+              onClick: this.handleClick
+            }, "Layouts",
+          )), e("li", {
+            style: liStyle
+          },
+          e("button", {
+            style: buttonStyle,
+            type: "button",
+            name: "isHousing",
+            className: isHousing ? "pure-button pure-button-active" : "pure-button",
+            onClick: this.handleClick
+          }, "Housing")
+        )
+      ),
       e(
       "div", {
         className: "device",
         ref: this.props.deviceRef
       },
-
-
-
-
       e(
         "svg", {
           xmlns: "http://www.w3.org/2000/svg",
@@ -275,6 +339,8 @@ export default class Device extends React.Component {
     e(Header, {
       info,
       intl,
+      isLayouts,
+      isHousing,
       layoutName,
       housingName,
       selectedKey,
