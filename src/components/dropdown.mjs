@@ -45,17 +45,12 @@ export default class Dropdown extends React.Component {
     ) : e("option");
     if (isCustom) option.push(e("option", {value}, value));
 
-    const span = e("span", null,
-      e("select", {
+    return e("select", {
+        className: "dropdown",
         ref: selectRef,
         name,
         value,
         onChange: this.handleChange
-      }, option));
-
-    return e(
-      "div", {
-        className: "dropdown"
-      }, span);
+      }, option);
   }
 }

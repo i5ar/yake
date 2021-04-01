@@ -959,32 +959,27 @@ class Root extends React.Component {
                 justifyContent: "center"
               }
             },
-            e(r(Dropdown), {
-              selectRef: elm => this.selectElement = elm,
-              name: "keyboard",
-              value: keyboardName,
-              options: keyboardNames?.length ? keyboardNames : null,
-              handleChangeCallback: this.handleChangeCallback,
-              hasApi,
-              isInitial,
-              isCustom,
-              onHashCallback: this.handleHashCallback
-            }),
-            e(Dropdown, {
-              name: "layout",
-              value: layoutName,
-              options: info && info.layouts && Object.keys(
-                info.layouts).length ? Object.keys(
-                  info.layouts) : null,
-                handleChangeCallback: this.handleChangeCallback
-            }),
             e(Form, {
               action: "info",
               formRef: elm => this.formElement = elm,
               handleChangeCallback: this.handleChangeCallback
             }),
             e(Form, {
+              selectRef: elm => this.selectElement = elm,
+              action: "keyboard",
+              hasApi,
+              isInitial,
+              isCustom,
+              keyboardName,
+              keyboardNames,
+              handleChangeCallback: this.handleChangeCallback,
+              handleHashCallback: this.handleHashCallback
+            }),
+            e(Form, {
+              info,
+              layoutName,
               action: "create",
+              handleChangeCallback: this.handleChangeCallback,
               handleSubmitCallback: this.handleSubmitCallback
             }),
           ),
