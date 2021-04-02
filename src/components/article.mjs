@@ -7,13 +7,9 @@ import {
   getSize
 } from "../common/size.mjs";
 
-export default class Device extends React.Component {
+export default class Article extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isDesign: true,
-      isAssign: false
-    };
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,19 +20,11 @@ export default class Device extends React.Component {
   }
 
   handleClick(evt) {
-    const {name} = evt.target;
-    if (name === "design" || name === "assign") {
-      this.setState({
-       isDesign: name === "design" ? true : false,
-       isAssign: name === "assign" ? true : false
-      });
-    } else {
-      const {unit} = this.props.defaultValues;
-      const client = evt.target.getBoundingClientRect();
-      const x = evt.clientX - client.left;
-      const y = evt.clientY - client.top;
-      console.info(x / unit, y / unit);
-    }
+    const {unit} = this.props.defaultValues;
+    const client = evt.target.getBoundingClientRect();
+    const x = evt.clientX - client.left;
+    const y = evt.clientY - client.top;
+    console.info(x / unit, y / unit);
   }
 
   render() {
@@ -176,54 +164,7 @@ export default class Device extends React.Component {
     width = pivot * 2 + 1 + unit * (width || _width);
     height = pivot * 2 + 1 + unit * (height || _height);
 
-    const {isDesign, isAssign} = this.state;
-    const ulStyle = {
-      display: "flex",
-      flexDirection: "row",
-      listStyleType: "none",
-      margin: 0,
-      padding: 0
-    }
-    const liStyle = {
-      flexGrow: 1
-    };
-    const buttonStyle = {
-      backgroundColor: "var(--blue)",
-      width: "100%",
-      borderRadius: 0
-    };
-
-    return e(
-      "section", {},
-      e(
-        "ul", {
-          className: "step",
-          style: ulStyle
-        },
-        e("li", {
-          style: liStyle
-        },
-          e(
-            "button", {
-              style: buttonStyle,
-              type: "button",
-              name: "design",
-              className: isDesign ? "pure-button pure-button-active" : "pure-button",
-              onClick: this.handleClick
-            }, "Design",
-          )), e("li", {
-            style: liStyle
-          },
-          e("button", {
-            style: buttonStyle,
-            type: "button",
-            name: "assign",
-            className: isAssign ? "pure-button pure-button-active" : "pure-button",
-            onClick: this.handleClick
-          }, "Assign")
-        )
-      ),
-      e("article", null,
+    return e("article", null,
           e("form", {
             id: "remove",
             className: "form pure-form",
@@ -264,7 +205,7 @@ export default class Device extends React.Component {
             height,
             viewBox: `0 0 ${width} ${height}`,
             onClick: this.handleClick,
-            ref: this.props.deviceRef
+            ref: this.props.svgRef
           },
           defs,
           e(
@@ -396,7 +337,6 @@ export default class Device extends React.Component {
         handleClickCallback: this.props.handleClickCallback,
         handleChangeCallback: this.props.handleChangeCallback
       })
-      )
     );
   }
 }

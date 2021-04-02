@@ -1,5 +1,4 @@
-import Device from "./components/device.mjs";
-import Form from "./components/form.mjs";
+import Section from "./components/section.mjs";
 import Nav from "./components/nav.mjs";
 import Footer from "./components/footer.mjs";
 import Editor from "./components/editor.mjs";
@@ -67,7 +66,7 @@ class Root extends React.Component {
 
     this.protip;
 
-    this.deviceInput = null;
+    this.sectionInput = null;
     this.selectElement = null;
     // this.formElement = null;
 
@@ -955,45 +954,26 @@ class Root extends React.Component {
               overflowX: "auto"
             }
           },
-          e(
-            "section",
-            {
-              style: {
-                display: "flex",
-                flexWrap: "wrap",
-                padding: "0.5em 0 0 0",
-                justifyContent: "center"
-              }
-            },
-            e(Form, {
-              action: "info",
-              // formRef: elm => this.formElement = elm,
-              handleChangeCallback: this.handleChangeCallback
-            }),
-            e(Form, {
-              action: "keyboard",
-              selectRef: elm => this.selectElement = elm,
-              hasApi,
-              isInitial,
-              isCustom,
-              keyboardName,
-              keyboardNames,
-              handleChangeCallback: this.handleChangeCallback,
-              handleHashCallback: this.handleHashCallback
-            }),
-            e(Form, {
-              info,
-              layoutName,
-              action: "create",
-              handleChangeCallback: this.handleChangeCallback,
-              handleSubmitCallback: this.handleSubmitCallback
-            }),
-          ),
+          e(Section, {
+            action: "top",
+            selectRef: elm => this.selectElement = elm,
+            hasApi,
+            isInitial,
+            isCustom,
+            keyboardName,
+            keyboardNames,
+            info,
+            layoutName,
+            handleChangeCallback: this.handleChangeCallback,
+            handleHashCallback: this.handleHashCallback,
+            handleSubmitCallback: this.handleSubmitCallback
+          }),
           e(Route, {
             path: `/${keyboardName}`,
-            children: match => e(Device, {
+            children: match => e(Section, {
               ...match,
-              deviceRef: elm => this.svgElement = elm,
+              action: "bottom",
+              svgRef: elm => this.svgElement = elm,
               info,
               intl,
               layoutName,
