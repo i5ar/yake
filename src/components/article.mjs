@@ -10,13 +10,25 @@ import {
 export default class Article extends React.Component {
   constructor() {
     super();
+    this.state = {
+      designNames: ["keycap", "case"],
+      designName: "keycap"
+    };
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.handleSubmitCallback(evt);
+  }
+
+  handleChange(evt) {
+    const {name, value} = evt.target;
+    this.setState({
+      [name]: value
+    });
   }
 
   handleClick(evt) {
@@ -40,6 +52,11 @@ export default class Article extends React.Component {
       hasProfile,
       hasCase
     } = this.props;
+
+    const {
+      designName,
+      designNames
+    } = this.state;
 
     const defs = e(
       "defs", null,
@@ -173,10 +190,13 @@ export default class Article extends React.Component {
           },
           e("fieldset", null,
             e("select", {
-              style: {borderRadius: 0}
-            },
-              e("option", null, "keycap")
-            ),
+              name: "designName",
+              style: {borderRadius: 0},
+              value: designName,
+              onChange: this.handleChange
+            }, this.state.designNames.map(
+              name => e("option", {key: name}, name)
+            )),
             e("input", {
               className: "pure-button",
               style: {
@@ -310,11 +330,13 @@ export default class Article extends React.Component {
       },
       e("fieldset", null,
         e("select", {
-          style: {borderRadius: 0}
-        },
-          e("option", null, "keycap"),
-          e("option", null, "case"),
-        ),
+          name: "designName",
+          style: {borderRadius: 0},
+          value: designName,
+          onChange: this.handleChange
+        }, this.state.designNames.map(
+          name => e("option", {key: name}, name)
+        )),
         e("input", {
           type: "submit",
           style: {
@@ -329,6 +351,8 @@ export default class Article extends React.Component {
       e(Header, {
         info,
         intl,
+        designName,
+        designNames,
         layoutName,
         housingName,
         selectedKey,

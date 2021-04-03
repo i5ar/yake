@@ -3,10 +3,6 @@
 export default class Header extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isLayouts: true,
-      isHousing: false
-    };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -113,29 +109,7 @@ export default class Header extends React.Component {
    * @param {string} evt
    */
   handleClick(evt) {
-    const {name} = evt.target;
-
-    if (name === "isLayouts" || name === "isHousing") {
-      this.setState(s => {
-        const stateKeys = Object.keys(s);
-        const index = stateKeys.indexOf(name);
-        if (index !== -1) stateKeys.splice(index, 1);
-        return stateKeys.map(
-          key => ({
-            [key]: false
-          })).reduce(
-          (acc, cur) => ({
-            ...acc,
-            [Object.keys(cur)]: cur[Object.keys(cur)]
-          }),
-          {
-            [name]: !s[name]
-          }
-        );
-      });
-    } else {
-      this.props.handleClickCallback(evt);
-    }
+    this.props.handleClickCallback(evt);
   }
 
   render() {
@@ -145,13 +119,9 @@ export default class Header extends React.Component {
       layoutName,
       selectedKey,
       selectedCase,
-      defaultValues,
-      housingName
+      housingName,
+      designName
     } = this.props;
-    const {
-      isLayouts,
-      isHousing
-    } = this.state;
     this.keycap = info.layouts?.[layoutName].layout[selectedKey] || {};
     this.shape = info.housing?.[housingName].shape[selectedCase] || {};
 
@@ -166,48 +136,15 @@ export default class Header extends React.Component {
 
     return e(
       "header", null,
-          e(
-            "ul", {
-              className: "mode",
-              style: {
-                display: "flex",
-                flexDirection: "row",
-                listStyleType: "none",
-                margin: 0,
-                padding: 0
-              }
-            },
-            e("li", {
-                style: liStyle
-            }, e("button", {
-                  style: buttonStyle,
-                  type: "button",
-                  name: "isLayouts",
-                  className: isLayouts ? "pure-button pure-button-active" : "pure-button",
-                  onClick: this.handleClick
-                }, "Layouts",
-              )), e("li", {
-                style: liStyle
-              },
-              e("button", {
-                style: buttonStyle,
-                type: "button",
-                name: "isHousing",
-                className: isHousing ? "pure-button pure-button-active" : "pure-button",
-                onClick: this.handleClick
-              }, "Housing")
-            )
-          ),
           e("div", {
             className: "control",
             style: {
-              display: isLayouts || isHousing ? "inherit" : "none"
+              display: "inherit"
             }
           }, e("div", {
               id: "layouts",
-              // className: isLayouts ? "slide-in" : "slide-out",
               style: {
-                display: isLayouts ? "inherit" : "none"
+                display: designName === "keycap" ? "inherit" : "none"
               }
             }, e(
               "div", {id: "configure"},
@@ -532,9 +469,8 @@ export default class Header extends React.Component {
           e(
             "div", {
               id: "housing",
-              // className: isHousing ? "slide-in" : "slide-out",
               style: {
-                display: isHousing ? "inherit" : "none"
+                display: designName === "case" ? "inherit" : "none"
               }
             }, e(
               "div", {id: "house"},
