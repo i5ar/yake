@@ -36,20 +36,14 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    return e(
-      "section", {
-        style: {
-          flexGrow: 1
-        }
-      },
-      e("div", {
+    return e("div", {
         id: "editor",
         style: {
           minHeight: "16em",
-          height: "100%"
+          height: "100%",
+          flexGrow: 1
         },
         ref: el => this.textInput = el
-      })
-    );
+      });
   }
 }

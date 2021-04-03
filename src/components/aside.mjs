@@ -84,8 +84,7 @@ export default class Aside extends React.Component {
     }
   
     render() {
-      return e(
-        "aside", null,
+      return e("aside", null,
           e(
             "form", {className: "display"},
             e(

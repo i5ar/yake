@@ -13,7 +13,7 @@ header li > button {
     border-radius: 0 !important;
 }
 
-.section {
+.control {
     padding: 1em 0 0;
     font-family: var(--monospace);
     color: var(--base1);
@@ -26,97 +26,97 @@ header li > button {
     );
 }
 
-.section > div > div {
+.control > div > div {
     display: flex;
 }
 
-.section > div > div:first-child {
+.control > div > div:first-child {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-.section > div > div:last-child {
+.control > div > div:last-child {
     text-align: center;
 }
 
 /* Form */
 
-.section input[type=color],
-.section input[type=text],
-.section input[type=number] {
+.control input[type=color],
+.control input[type=text],
+.control input[type=number] {
     border-radius: 0;
     color: var(--base02);
 }
 
-.section label {
+.control label {
     width: 4em !important;
 }
 
-.section fieldset div input[type=text],
-.section fieldset div input[type=number] {
+.control fieldset div input[type=text],
+.control fieldset div input[type=number] {
     width: 8em;
 }
 
-.section fieldset div:first-child input[type=color],
-.section fieldset div:first-child input[type=text],
-.section fieldset div:first-child input[type=number] {
+.control fieldset div:first-child input[type=color],
+.control fieldset div:first-child input[type=text],
+.control fieldset div:first-child input[type=number] {
     border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.section fieldset div:last-child input[type=color],
-.section fieldset div:last-child input[type=text],
-.section fieldset div:last-child input[type=number] {
+.control fieldset div:last-child input[type=color],
+.control fieldset div:last-child input[type=text],
+.control fieldset div:last-child input[type=number] {
     border-radius: 0 0 var(--radius) var(--radius);
 }
 
-.section fieldset div:only-child input[type=color],
-.section fieldset div:only-child input[type=text],
-.section fieldset div:only-child input[type=number] {
+.control fieldset div:only-child input[type=color],
+.control fieldset div:only-child input[type=text],
+.control fieldset div:only-child input[type=number] {
     border-radius: var(--radius);
 }
 
 /* Buttons */
 
-.section div > div:last-child button {
+.control div > div:last-child button {
     flex-grow: 1;
     border-radius: 0 !important;
 }
 
-.section div button:first-child {
+.control div button:first-child {
     border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.section div button:last-child {
+.control div button:last-child {
     border-radius: 0 0 var(--radius) var(--radius);
 }
 
-.section div button:only-child {
+.control div button:only-child {
     border-radius: var(--radius);
 }
 
-.section div button.error {
+.control div button.error {
     background-color: var(--orange);
 }
 
-.section div button.success {
+.control div button.success {
     background-color: var(--green);
 }
 
 @media only screen and (min-width: 768px) {
     /* Buttons */
-    .section div button:first-child {
+    .control div button:first-child {
         border-radius: var(--radius) 0 0 var(--radius);
     }
-    .section div button:last-child {
+    .control div button:last-child {
         border-radius: 0 var(--radius) var(--radius) 0;
     }
-    .section div button:only-child {
+    .control div button:only-child {
         border-radius: var(--radius);
     }
 }
 
 /* Animation
-.section {
+.control {
     overflow-x: hidden;
 }
 #layouts {

@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import Article from "./article.mjs";
-import Form from "./form.mjs";
+import Forms from "./forms.mjs";
 
-export default class Section extends React.Component {
+export default class Sections extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -75,12 +75,12 @@ export default class Section extends React.Component {
           justifyContent: "center"
         }
       },
-      e(Form, {
+      e(Forms, {
         action: "info",
         // formRef: elm => this.formElement = elm,
         handleChangeCallback
       }),
-      e(Form, {
+      e(Forms, {
         action: "keyboard",
         selectRef,
         hasApi,
@@ -91,7 +91,7 @@ export default class Section extends React.Component {
         handleChangeCallback,
         handleHashCallback
       }),
-      e(Form, {
+      e(Forms, {
         info,
         layoutName,
         action: "create",

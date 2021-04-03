@@ -178,10 +178,8 @@ export default class Header extends React.Component {
               }
             },
             e("li", {
-              style: liStyle
-            },
-              e(
-                "button", {
+                style: liStyle
+            }, e("button", {
                   style: buttonStyle,
                   type: "button",
                   name: "isLayouts",
@@ -200,14 +198,12 @@ export default class Header extends React.Component {
               }, "Housing")
             )
           ),
-          e("section", {
-            className: "section",
+          e("div", {
+            className: "control",
             style: {
               display: isLayouts || isHousing ? "inherit" : "none"
             }
-          },
-          e(
-            "div", {
+          }, e("div", {
               id: "layouts",
               // className: isLayouts ? "slide-in" : "slide-out",
               style: {

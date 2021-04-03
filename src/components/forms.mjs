@@ -2,7 +2,7 @@
 
 import Select from "./select.mjs";
 
-export default class Form extends React.Component {
+export default class Forms extends React.Component {
   constructor() {
     super();
     this.state = {value: ""};

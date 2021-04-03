@@ -1,4 +1,4 @@
-import Section from "./components/section.mjs";
+import Sections from "./components/sections.mjs";
 import Nav from "./components/nav.mjs";
 import Footer from "./components/footer.mjs";
 import Editor from "./components/editor.mjs";
@@ -954,7 +954,7 @@ class Root extends React.Component {
               overflowX: "auto"
             }
           },
-          e(Section, {
+          e(Sections, {
             action: "top",
             selectRef: elm => this.selectElement = elm,
             hasApi,
@@ -970,7 +970,7 @@ class Root extends React.Component {
           }),
           e(Route, {
             path: `/${keyboardName}`,
-            children: match => e(Section, {
+            children: match => e(Sections, {
               ...match,
               action: "bottom",
               svgRef: elm => this.svgElement = elm,

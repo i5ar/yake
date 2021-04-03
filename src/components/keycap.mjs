@@ -71,7 +71,7 @@ export default class Keycap extends React.Component {
     );
 
     if (!this.props.p) {
-      return e(Fragment, {}, e(
+      return e(
         "g", opts,
         e(Rectangle, {
           index: this.props.index,
@@ -107,7 +107,7 @@ export default class Keycap extends React.Component {
           fill: isPrint ? "transparent" : "url(#GRADIENT)"
         }) : null,
         text
-      ));
+      );
     }
 
     const A = [p[0] * unit, p[1] * unit];
