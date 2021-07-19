@@ -4,22 +4,6 @@ import Article from "./article.mjs";
 import Forms from "./forms.mjs";
 
 export default class Sections extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isDesign: true,
-      isAssign: false
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(evt) {
-    const {name} = evt.target;
-    this.setState({
-      isDesign: name === "design" ? true : false,
-      isAssign: name === "assign" ? true : false
-    });
-  }
 
   render() {
     const {
@@ -41,6 +25,7 @@ export default class Sections extends React.Component {
       isPrint,
       hasProfile,
       hasCase,
+      step,
       handleHashCallback,
       handleClickCallback,
       handleChangeCallback,
@@ -48,7 +33,6 @@ export default class Sections extends React.Component {
       handleKeyDownCallback
     } = this.props;
 
-    const {isDesign, isAssign} = this.state;
     const ulStyle = {
       display: "flex",
       flexDirection: "row",
@@ -114,8 +98,8 @@ export default class Sections extends React.Component {
               style: buttonStyle,
               type: "button",
               name: "design",
-              className: isDesign ? "pure-button pure-button-active" : "pure-button",
-              onClick: this.handleClick
+              className: step === 0 ? "pure-button pure-button-active" : "pure-button",
+              onClick: handleClickCallback
             }, "Design",
           )), e("li", {
             style: liStyle
@@ -124,8 +108,8 @@ export default class Sections extends React.Component {
             style: buttonStyle,
             type: "button",
             name: "assign",
-            className: isAssign ? "pure-button pure-button-active" : "pure-button",
-            onClick: this.handleClick
+            className: step === 1 ? "pure-button pure-button-active" : "pure-button",
+            onClick: handleClickCallback
           }, "Assign")
         )
       ),

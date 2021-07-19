@@ -25,6 +25,7 @@ class Root extends React.Component {
       keyboardName: "",
       layoutName: "",
       step: 0,  // design: 0, assign: 1
+      item: 0,  // keycap: 0, case: 1, etc.
       isInitial: true,
       isCustom: false,
       isPrint: false,
@@ -231,11 +232,88 @@ class Root extends React.Component {
         }
       });
     } else if (id === "add") {
-      // TODO:
-
+      const {defaultValues} = this.state;
+      if (this.state.selectedKey !== null) {
+        this.setState(s => {
+          const layout = s.info.layouts[s.layoutName].layout;
+          const selectedKey = layout[s.selectedKey];
+          return {
+            selectedKey: layout.length,
+            fallbackKey: s.fallbackKey + 1,
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: [
+                    ...layout,
+                    {
+                      w: defaultValues.layouts.w,  // "add-iso" 1.25
+                      h: defaultValues.layouts.h,  // "add-iso" 2
+                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+                      x: selectedKey.x + (selectedKey.w || 1),
+                      y: selectedKey.y,
+                      r: selectedKey.r || 0,
+                      rx: selectedKey.rx || 0,
+                      ry: selectedKey.ry || 0,
+                      label: ""
+                    }
+                  ]
+                }
+              }
+            }
+          };
+        });
+      } else {
+        this.setState(s => {
+          const layout = s.info.layouts[s.layoutName].layout;
+          return {
+            selectedKey: layout.length,
+            fallbackKey: s.fallbackKey + 1,
+            info: {
+              ...s.info,
+              layouts: {
+                ...s.info.layouts,
+                [s.layoutName]: {
+                  layout: [
+                    ...layout,
+                    {
+                      w: defaultValues.layouts.w,  // "add-iso" 1.25
+                      h: defaultValues.layouts.h,  // "add-iso" 2
+                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
+                      x: defaultValues.layouts.x,
+                      y: defaultValues.layouts.y,
+                      r: defaultValues.layouts.r,
+                      rx: defaultValues.layouts.rx,
+                      ry: defaultValues.layouts.ry,
+                      label: ""
+                    }
+                  ]
+                }
+              }
+            }
+          };
+        });
+      }
     } else if (id === "remove") {
-      // TODO: 
-
+      this.setState(s => ({
+        selectedKey: null,
+        fallbackKey: s.fallbackKey - 1,
+        info: {
+          ...s.info,
+          layouts: {
+            ...s.info.layouts,
+            [s.layoutName]: {
+              layout: s.info.layouts[s.layoutName].layout.filter((l, i) => {
+                if (s.selectedKey === null) {
+                  return i < s.info.layouts[s.layoutName].layout.length - 1;
+                }
+                return i !== s.selectedKey;
+              })
+            }
+          }
+        }
+      }));
     }
   }
 
@@ -647,7 +725,6 @@ class Root extends React.Component {
   }
 
   handleClickCallback(evt) {
-    const {defaultValues} = this.state;
     const {name, dataset} = evt.target;
     if (dataset.api) {
       let {keyboardName} = this.state;
@@ -677,89 +754,11 @@ class Root extends React.Component {
         // NOTE: Make the key `null` if the previous value was the same (toggle).
         selectedKey: s.selectedKey === index ? null : index
       }));
-    } else if (name === "add") {
-      if (this.state.selectedKey !== null) {
-        this.setState(s => {
-          const layout = s.info.layouts[s.layoutName].layout;
-          const selectedKey = layout[s.selectedKey];
-          return {
-            selectedKey: layout.length,
-            fallbackKey: s.fallbackKey + 1,
-            info: {
-              ...s.info,
-              layouts: {
-                ...s.info.layouts,
-                [s.layoutName]: {
-                  layout: [
-                    ...layout,
-                    {
-                      w: defaultValues.layouts.w,  // "add-iso" 1.25
-                      h: defaultValues.layouts.h,  // "add-iso" 2
-                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
-                      x: selectedKey.x + (selectedKey.w || 1),
-                      y: selectedKey.y,
-                      r: selectedKey.r || 0,
-                      rx: selectedKey.rx || 0,
-                      ry: selectedKey.ry || 0,
-                      label: ""
-                    }
-                  ]
-                }
-              }
-            }
-          };
-        });
-      } else {
-        this.setState(s => {
-          const layout = s.info.layouts[s.layoutName].layout;
-          return {
-            selectedKey: layout.length,
-            fallbackKey: s.fallbackKey + 1,
-            info: {
-              ...s.info,
-              layouts: {
-                ...s.info.layouts,
-                [s.layoutName]: {
-                  layout: [
-                    ...layout,
-                    {
-                      w: defaultValues.layouts.w,  // "add-iso" 1.25
-                      h: defaultValues.layouts.h,  // "add-iso" 2
-                      p: null,  // "add-iso" [-0.25, 0, 1.25, 0, 1.25, 2, 0, 2, 0, 1, -0.25, 1]
-                      x: defaultValues.layouts.x,
-                      y: defaultValues.layouts.y,
-                      r: defaultValues.layouts.r,
-                      rx: defaultValues.layouts.rx,
-                      ry: defaultValues.layouts.ry,
-                      label: ""
-                    }
-                  ]
-                }
-              }
-            }
-          };
-        });
-      }
-    } else if (name === "remove") {
-      this.setState(s => ({
-        selectedKey: null,
-        fallbackKey: s.fallbackKey - 1,
-        info: {
-          ...s.info,
-          layouts: {
-            ...s.info.layouts,
-            [s.layoutName]: {
-              layout: s.info.layouts[s.layoutName].layout.filter((l, i) => {
-                if (s.selectedKey === null) {
-                  return i < s.info.layouts[s.layoutName].layout.length - 1;
-                }
-                return i !== s.selectedKey;
-              })
-            }
-          }
-        }
-      }));
-    } else if (name === "add-right" || name === "add-left" || name === "add-up" || name === "add-down") {
+    } else if (
+      name === "add-right" ||
+      name === "add-left" ||
+      name === "add-up" ||
+      name === "add-down") {
       this.addKey(name);
     } else if (
       name === "scale-right" ||
@@ -773,6 +772,14 @@ class Root extends React.Component {
       name === "translate-up" ||
       name === "translate-down") {
       this.transformKey(name);
+    } else if (name === "design") {
+      this.setState({
+        step: 0
+      });
+    } else if (name === "assign") {
+      this.setState({
+        step: 1
+      });
     }
   }
 
@@ -926,6 +933,8 @@ class Root extends React.Component {
       isPrint,
       hasProfile,
       hasCase,
+      step,
+      item,
       selectedKey,
       selectedCase,
       defaultValues
@@ -984,6 +993,8 @@ class Root extends React.Component {
               selectedKey,
               selectedCase,
               defaultValues,
+              step,
+              item,
               handleClickCallback: this.handleClickCallback,
               handleChangeCallback: this.handleChangeCallback,
               handleSubmitCallback: this.handleSubmitCallback,
